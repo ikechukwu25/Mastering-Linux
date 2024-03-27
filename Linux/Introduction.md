@@ -440,3 +440,9 @@ To search for man pages by name:
 Use the `-f` option with the man command to display man pages matching a specific name and provide their section number and a brief description.
 
 To search for the location of a command or its man pages, use the `whereis` command, which searches for commands, source files, and man pages in typical locations where these files are stored.
+
+
+On most systems, there is a directory where additional documentation (such as documentation files stored by third-party software vendors) is found.
+‌⁠
+These documentation files are often called readme files since the files typically have names such as README or readme.txt. The location of these files can vary depending on the distribution that you are using. Typical locations include `/usr/share/doc` and `/usr/doc`.
+Typically, this directory is where system administrators go to learn how to set up more complex software services. However, sometimes regular users also find this documentation to be useful.
