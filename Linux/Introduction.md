@@ -364,10 +364,10 @@ If a command does not behave as expected or if a command is not accessible that 
 ### FUNCTIONS
 Functions can also be built using existing commands to either create new commands or to override commands built-in to the shell or commands stored in files.
 
-function_name () 
-{
-   commands
-}
+function_name () </br>
+{ </br>
+    commands </br>
+} </br>
 
 
 # SINGLE QUOTES
@@ -389,8 +389,8 @@ In this case, use a backslash \ character in front of the dollar sign $ char
 ### BACKQUOTES:
 Backquotes, or backticks, are used to specify a command within a command, a process called command **substitution**. This allows for powerful and sophisticated use of commands.
 
-*      sysadmin@localhost:~$ echo Today is `date`                       
-*      Today is Mon Nov 4 03:40:04 UTC 2018
+`sysadmin@localhost:~$ echo Today is `\`date\`                       
+`Today is Mon Nov 4 03:40:04 UTC 2018`
 
 ### SEMICOLON
 `command1; command2; command3`
