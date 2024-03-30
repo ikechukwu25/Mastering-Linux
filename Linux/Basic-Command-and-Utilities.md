@@ -68,19 +68,19 @@ Live file changes can be viewed by using the `-f` option to the tail command
 ### LOCATING FILES
 
 - Locate:
-To locate files efficiently, you can utilize the `locate` and `find` commands. Begin by installing `locate` if not already available on your system `sudo apt install locate`. "Locate" efficiently finds strings within absolute path names by searching its own database. Remember to update the database with `sudo updatedb` before searching for newly created files. For example</br>
-`locate -b string` = searches for files with the strings in their name. 
-`locate -b "\string"` =  does not use the default *name* searches system but searches for the exact string. 
+To locate files efficiently, you can utilize the `locate` and `find` commands. Begin by installing `locate` if not already available on your system `sudo apt install locate`. "Locate" efficiently finds strings within absolute path names by searching its own database. Remember to update the database with `sudo updatedb` before searching for newly created files. For example
+  - `locate -b string` = searches for files with the strings in their name. 
+  - `locate -b "\string"` =  does not use the default *name* searches system but searches for the exact string. 
 
 - Which: 
-The `which` command helps find the location of an executable command. For example; </br>
-`which ls` will display the location of the ls command.
-`which cd` won't display anything since cd is a shell built-in command, not an executable.
-`which -a locate` will display all instances of the locate command found in the PATH.
+The `which` command helps find the location of an executable command. For example;
+  - `which ls` will display the location of the ls command.
+  - `which cd` won't display anything since cd is a shell built-in command, not an executable.
+  - `which -a locate` will display all instances of the locate command found in the PATH.
 
 - Find: 
 The find command in Linux is a powerful utility for searching files and directories based on various criteria within a directory hierarchy. It allows users to locate files by specifying conditions such as filenames, modification times, ownership, and more. For example; </br>
-`find . -name linux.txt` : This command searches for files named "linux.txt" starting from the current directory (.) and displays the path to each file found.
-`find -iname "*Pub*"` : This command searches for files with names containing "Pub" (ignoring case due to -i). The asterisks (*) are wildcards, allowing for matches with any characters before and after "Pub".
-`find -name "*txt*"`: This command finds files with names containing the string "txt" (case-sensitive). Again, the asterisks act as wildcards, matching any characters before and after "txt".
+  - `find . -name linux.txt` : This command searches for files named "linux.txt" starting from the current directory (.) and displays the path to each file found.
+  - `find -iname "*Pub*"` : This command searches for files with names containing "Pub" (ignoring case due to -i). The asterisks (*) are wildcards, allowing for matches with any characters before and after "Pub".
+  - `find -name "*txt*"`: This command finds files with names containing the string "txt" (case-sensitive). Again, the asterisks act as wildcards, matching any characters before and after "txt".
 
