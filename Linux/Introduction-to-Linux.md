@@ -458,7 +458,7 @@ NB: The man page is displayed with the less command
 
 When dealing with shell built-in commands in Linux, you can use the `help` command followed by the built-in command name to get information about its usage and options. For example:
 
-help command    => Ex: `help cd`
+help command    => Ex: `help cd` </br>
 command --help  => Ex: `rm --help`
 
 On most systems, there is a directory where additional documentation (such as documentation files stored by third-party software vendors) is found.
