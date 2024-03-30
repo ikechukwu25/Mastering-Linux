@@ -13,7 +13,7 @@ To copy files in Linux, users commonly employ the `cp` command. It's simple yet 
 
 Two options can be used to safeguard against accidental overwrites. With the `-i` interactive option, the cp command prompts the user before overwriting a file. The following example demonstrates this option, first restoring the content of the original file:
 
-ikechukwu@ubuntu:~$ `cp -i /etc/hosts example.txt`                  
+`ikechukwu@ubuntu:~$ cp -i /etc/hosts example.txt`                  
 `cp: overwrite '/home/sysadmin/example.txt'?`
 
 NB: Also, users should use the `-i` option when deleting multiple files: eg: `rm -i /etc/ssh/ssdh_config`
@@ -120,8 +120,8 @@ Linux provides several tools to compress files; the most common is gzip.
 Compressed files can be restored to their original form using either the gunzip command or the gzip –d command. This process is called decompression.
 
 `ikechukwu@ubuntu-22-04-3:~/Documents$ gunzip longfile.txt.gz` </br>
-`ikechukwu@ubuntu-22-04-3:~/Documents$ ls -l longfile*`</br>
-`-rw-r--r-- 1 ikechukwu ikechukwu 66540 Dec 20  2017 longfile.txt`</br>
+`ikechukwu@ubuntu-22-04-3:~/Documents$ ls -l longfile*` </br>
+`-rw-r--r-- 1 ikechukwu ikechukwu 66540 Dec 20  2017 longfile.txt` </br>
 
 The `tar` command has three modes that are helpful to become familiar with:
 
@@ -137,14 +137,12 @@ The `tar` command has variety of functions depending on the option being utilize
 
 - The `tar` command is primarily used to archive files only. However, you can compress a file using the `-z` option. For example; </br>
 `tar -czvf archive.tar.gz /etc/` = creates a file where the compressed directory -etc is located. 
-`-c` = create an archive
+`-c` = create an archive.
 `-z` = tells tar to compress the archive using gz (file has to be filename.tar.gz)
 `-v` = verbose
-`-f` = file. 
-
-While, 
-
-`tar -cjvf archive.tar.bz2 /etc/` 
+`-f` = file. </br>
+While, </br>
+`tar -cjvf archive.tar.bz2 /etc/` </br>
 `-j` = tells tar to compress the archive using bz2 (file has to be `filename.tar.bz2`)
 
 - To exclude specific files using a suffix. This command will exclude the .txt and .config files from the archive. </br>
@@ -154,14 +152,19 @@ While,
 `tar -czvf etc-$(date +%F).tar.gz /etc/`
 
 - To add a file to an existing archive, use the -r option to the tar command. Execute the following commands to perform this action and verify the existence of the new file in the tar archive: </br>
-`tar -rvf udev.tar /etc/hosts` = To add to an existing archived file.
+`tar -rvf udev.tar /etc/hosts` = To add to an existing archived file.</br>
+`tar -rzvf udev.tar /etc/hosts` = To add to an existing archived file. The z tells tar to compress the archive using gzip.</br>
 `tar –tvf udev.tar` = To list an existing archived file. </br>
+`tar –tzvf udev.tar` = To list an existing archived file. The z tells tar to compress the archive using gzip.
 
-`tar -rzvf udev.tar /etc/hosts` = To add to an existing archived file. The z tells tar to compress the archive using gzip.
-`tar –tzvf udev.tar` = To list an existing archived file.  The z tells tar to compress the archive using gzip.
-
-
-It should be noted that tar requires the –f option to indicate a filename is being passed, while zip and unzip require a filename and therefore don’t need you to inform the command a filename is being passed.
+- To extract a compressed file, use the `-x` option. For example; </br>
+  `tar -xzvf archive.tar.gz /etc/` </br>
+  `-x` = extract a file. </br>
+  `tar -xzvf etc.tar.gz -C my.backup/` </br>
+  `-C` = helps extract a file to a specific directory. </br>
+  `-t` = to see the content of an archive </br>
+  
+It should be noted that tar requires the `–f` option to indicate a filename is being passed, while zip and unzip require a filename and therefore don’t need you to inform the command a filename is being passed.
 
 Here's how you would use each command:
 
@@ -180,7 +183,7 @@ For unzip:
 `unzip archive.zip` </br>
 where `archive.zip` is the filename of the archive being extracted.
 
-Furthermore, the zip command will not recurse into subdirectories by default, which is a different behavior than the `tar` command. If you want tar-like behavior, you must use the `–r` option to indicate recursion is to be used. For example ;
+The `zip` command will not recurse into subdirectories by default, which is a different behavior than the `tar` command. If you want tar-like behavior, you must use the `–r` option to indicate recursion is to be used. For example ;
 
 `zip -r archive.zip directory/` 
 
@@ -202,5 +205,7 @@ This can be avoided by copying the zip file into a new directory:
    `creating: School/Engineering/` </br>
   `inflating: School/Engineering/hello.sh`
 
-
+Using bzip2 and bunzip2 to compress and uncompress a file is very similar to using gzip and gunzip. The compressed file is created with a .bz2 extension.
+`gzip` and `gunzip` = are used to compress and extract a file or directory respectively. (.gz files) </br>
+`bzip2` and `bunzip2` = are used to compress and extract a file or directory respectively. (.bz2 files)
 
