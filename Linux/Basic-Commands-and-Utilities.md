@@ -5,7 +5,7 @@ Linux users prefer the terminal over GUI for its efficiency, flexibility, and po
 
 # BASIC COMMANDS AND THEIR UTILITIES. 
 
-Below is a list of the basic Linux commands and their utilities; 
+Basic commands in a terminal environment serve as fundamental tools for users to interact with their operating systems efficiently. From listing files with 'ls' to navigating directories with 'cd,' manipulating files with 'cp' and 'rm,' and performing system tasks with 'pwd' and 'mkdir,' these commands empower users to accomplish various tasks seamlessly. Understanding these commands and their utilities is fundamental for effective system administration and development workflows.
 
 ## COPYING FILES
 
@@ -175,5 +175,5 @@ This can be avoided by copying the zip file into a new directory:
    `creating: School/Engineering/` </br>
   `inflating: School/Engineering/hello.sh`
 
-  
+
 
