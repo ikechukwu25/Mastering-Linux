@@ -225,5 +225,8 @@ Using bzip2 and bunzip2 to compress and uncompress a file is very similar to
 - sha256: Calculates the SHA-256 hash of each file and displays the difference if they are not identical. For example;</br>
     `sha256 /usr/bin/ls ./ls` = shows the difference in the hash
 - diff: Used primarily for comparing text files. It shows the actual differences between two files line by line. For example;</br>
+    `diff linux.txt ours.txt` = The output e.g. `1c1,17` means that the first line in the initial file should be replaced with the 1 - 17th
+    lines in the latter file to make them similar.  </br>
     `diff -y /etc/ssh/sshd_config ./sshd_config` = The `-y` option juxtaposes the selected files and shows the contents side by side.
+
 
