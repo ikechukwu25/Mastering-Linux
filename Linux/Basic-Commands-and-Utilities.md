@@ -241,7 +241,7 @@ Special Directory References: These symbols provide convenient ways to reference
 
 Navigation in a Linux system primarily involves moving between directories and exploring the file system. It is important to note these paths in a Linux system; 
 
-Here are some common commands for navigation:
+Here are some common commands for navigating between directories:
 
 - `cd`: (Change directory) Use this command followed by the name of the directory you want to navigate to. For example:
     - `cd /home/ikechukwu` = This will change the current directory to the directory named "ikechukwu" within the "/home" directory
@@ -254,7 +254,23 @@ Here are some common commands for navigation:
     - `ls -l /home/ikechukwu` = lists the contents of the directory named "ikechukwu" in a long listing format.
     - `ls -lhS /etc/` = Shows the content of the etc dir in a human-readable format (-h) and sorted by file size in descending order (-S).
     - `ls -ld` = This command lists information about the current working directory without recursively listing its contents.
-  
+- `mkdir` : 
+
+Listed below are the commands utilized for accessing a file:
+
+cat, less, more, head, tail, vim, nano
+
+- `cat`: The `cat` command is a simple utility for viewing the content of a file. It's often used to display the entire contents of a file.
+    - e.g. `cat ./filename` = This displays the contents of the file named "filename" which is located in the current directory
+- `less`: The `less` command is a pager that allows you to view files one page at a time. It provides navigation and search capabilities for larger files. To navigate in `less`, you can use the arrow keys, Page Up, Page Down, and the / or ? key to search.
+    - e.g. `less ../filename` = allows you to view the contents of the file named "filename" which is located in the parent directory (one level up) relative to your current directory
+- `more`: Similar to `less`, the `more` command also allows viewing files one page at a time. While it has fewer features than the `less` command, however, the `less` command isn't included with all Linux distributions. The `more` command is always available.
+    - e.g. `more filename`
+- `head`: The `head` command as mentioned earlier displays the beginning (or top) of a file. By default, it shows the first 10 lines of a file.
+    - e.g. `head filename`
+- `tail` : The tail command displays the end (or bottom) of a file. By default, it shows the last 10 lines of a file. However, you can specify a different number of lines to display using the -n option followed by the desired number of lines.
+    - e.g. `tail -n 2 /etc/syslog` = Shows the last two lines.
+    - `tail -n +20 /etc/syslog` = shows the lines from the 20th to the last.
 
 ## COMPARING FILES
 
@@ -267,4 +283,7 @@ Here are some common commands for navigation:
     lines in the latter file to make them similar.  </br>
     `diff -y /etc/ssh/sshd_config ./sshd_config` = The `-y` option juxtaposes the selected files and shows the contents side by side.
 
+## HISTORY
+
+The bash shell keeps track of command `history` for each user in a file, typically located at .bash_history. The number of commands stored in this file is controlled by the `HISTFILESIZE` (case sensitive) environment variable, while `HISTSIZE` (case sensitive) controls the number of commands stored in memory.
 
