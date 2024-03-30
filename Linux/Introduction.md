@@ -483,14 +483,17 @@ Globbing refers to the process of using wildcards or special characters, such as
 ### ASTERISK (*) CHARACTER
   
 The asterisk * character is used to represent zero or more of any character in a filename. For example, to display all of the files in the /etc directory that begin with the letter t:
+
 `ikechukwu@ubuntu:~$ echo /etc/t*`                              
 `/etc/terminfo /etc/timezone /etc/tmpfiles.d`
 
 The following matches any filename in the /etc directory that ends with .d:
+
 `ikechukwu@ubuntu:~$ echo /etc/*.d`                                 
 `/etc/apparmor.d /etc/binfmt.d /etc/cron.d` 
 
 All of the files in the /etc directory that begin with the letter r and end with .conf are displayed:
+
 `ikechukwu@ubuntu:~$ echo /etc/r*.conf`                             
 `/etc/resolv.conf /etc/rsyslog.conf`
 
@@ -503,6 +506,7 @@ Suppose you want to display all of the files in the /etc directory that begin 
 `/etc/terminfo /etc/timezone`
 
 The ? character can be used to match exactly 1 character in a file name. Execute the following command to display all of the files in the /etc directory that are exactly four characters long:
+
 `ikechukwu@ubuntu:~$ ls -d /etc/????`
 
 Glob characters can be used together to find even more complex patterns. The pattern /etc/*???????????????????? only matches files in the /etc directory with twenty or more characters in the filename:
