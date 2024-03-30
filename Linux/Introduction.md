@@ -415,7 +415,11 @@ With the double pipe, if the first command runs successfully, the second command
 - **Backticks** (\` \`): enable command substitution, allowing the output of a command to replace the backquoted expression in a line. Backticks are used for command substitution. Anything enclosed within backticks is treated as a command to be executed, and the output of that command is substituted in place.
 
 
-# MAN PAGES
+# GETTING HELP IN LINUX
+
+In Linux, getting help is essential for mastering the operating system and its various commands. Here are some common methods to get help:
+
+### MAN PAGES
 
 The Manual Pages (man pages) in Linux systems provide documentation for various commands, functions, system calls, and configurations. By default, there are nine sections in the man pages, each covering different aspects of the system:
 
@@ -435,14 +439,79 @@ The `whatis` command and `man -f` command are functionally equivalent, providing
 
 The `apropos` command and `man -k` command are functionally equivalent, searching for keywords in man page names and descriptions.
 
-To search for man pages by name:
+To search for man pages by name, use the `-f` option with the man command to display man pages matching a specific name and provide their section number and a brief description.
 
-Use the `-f` option with the man command to display man pages matching a specific name and provide their section number and a brief description.
+To search for the location of a command or its man pages, use the `whereis` command, which searches for commands, source files, and man pages in typical locations where these files are stored. 
 
-To search for the location of a command or its man pages, use the `whereis` command, which searches for commands, source files, and man pages in typical locations where these files are stored.
+NB: The man page is displayed with the less command
 
+##### SHORTCUTS:
+- h         => getting help
+- q         => quit
+- enter     => show next line
+- space     => show next screen
+- /string   => search forward for a string
+- ?string   => search backward for a string
+- n / N     => next/previous appearance
+
+### HELP
+
+When dealing with shell built-in commands in Linux, you can use the `help` command followed by the built-in command name to get information about its usage and options. For example:
+
+help command    => Ex: `help cd`
+command --help  => Ex: `rm --help`
 
 On most systems, there is a directory where additional documentation (such as documentation files stored by third-party software vendors) is found.
 ‌⁠
 These documentation files are often called readme files since the files typically have names such as README or readme.txt. The location of these files can vary depending on the distribution that you are using. Typical locations include `/usr/share/doc` and `/usr/doc`.
 Typically, this directory is where system administrators go to learn how to set up more complex software services. However, sometimes regular users also find this documentation to be useful.
+
+
+# DIRECTORY STRUCTURE
+
+On a Windows system, the top level of the directory structure is called My Computer. Physical devices, such as hard drives, USB drives, and network drives, show up under My Computer and are each assigned a drive letter, such as C: or D:
+
+Like Windows, the Linux directory structure, typically called a filesystem, also has a top level. However instead of My Computer, it is called the root directory, and it is symbolized by the slash(/) character. Additionally, there are no drives in Linux; each physical device is accessible under a directory, as opposed to a drive letter.
+
+Most of the hidden files are customization files, designed to customize how Linux, your shell, or programs work. For example, the .bashrc file in the home directory customizes features of the shell, such as creating or modifying variables and aliases.
+
+
+# GLOBBING
+
+Globbing refers to the process of using wildcards or special characters, such as '*' and '?', in a command-line interface to match files or directories based on patterns.
+
+### ASTERISK (*) CHARACTER
+  
+The asterisk * character is used to represent zero or more of any character in a filename. For example, to display all of the files in the /etc directory that begin with the letter t:
+`ikechukwu@ubuntu:~$ echo /etc/t*`                              
+`/etc/terminfo /etc/timezone /etc/tmpfiles.d`
+
+The following matches any filename in the /etc directory that ends with .d:
+`ikechukwu@ubuntu:~$ echo /etc/*.d`                                 
+`/etc/apparmor.d /etc/binfmt.d /etc/cron.d` 
+
+All of the files in the /etc directory that begin with the letter r and end with .conf are displayed:
+`ikechukwu@ubuntu:~$ echo /etc/r*.conf`                             
+`/etc/resolv.conf /etc/rsyslog.conf`
+
+### QUESTION MARK (?) CHARACTER
+  
+The question mark character represents any single character. Each question mark character matches exactly one character, no more and no less.
+Suppose you want to display all of the files in the /etc directory that begin with the letter t and have exactly 7 characters after the t character:
+
+`ikechukwu@ubuntu:~$ echo /etc/t???????`      
+`/etc/terminfo /etc/timezone`
+
+The ? character can be used to match exactly 1 character in a file name. Execute the following command to display all of the files in the /etc directory that are exactly four characters long:
+`ikechukwu@ubuntu:~$ ls -d /etc/????`
+
+Glob characters can be used together to find even more complex patterns. The pattern /etc/*???????????????????? only matches files in the /etc directory with twenty or more characters in the filename:
+
+`ikechukwu@ubuntu:~$ echo /etc/*????????????????????`            
+`/etc/bindresvport.blacklist /etc/ca-certificates.conf`
+
+The asterisk and question mark could also be used together to look for files with three-letter extensions by using the /etc/*.??? pattern:
+
+`ikechukwu@ubuntu:~$ echo /etc/*.???`              
+`/etc/issue.net /etc/locale.gen`
+
