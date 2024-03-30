@@ -34,7 +34,7 @@ In Linux, the ">" symbol is used for output redirection, allowing users to redir
 
 To redirect another command to the same file and not overwrite = `ls -l > ls.txt`
 
-> = overwrite
+> = overwrite </br>
 >> = append
 
 ## VIEWING FILES USING A PAGER
