@@ -134,6 +134,18 @@ You can archive without compressing, the main compressing options for the `tar` 
 `tar -cvf archive.tar source` = ARCHIVE ONLY </br>
 `tar -czvf archive.tar.gz source` = ARCHIVE AND COMPRESS
 
+To display the date the compressed file was created when listed. 
+
+`tar -czvf etc-$(date +%F).tar.gz /etc/`
+
+To add a file to an existing archive, use the -r option to the tar command. Execute the following commands to perform this action and verify the existence of the new file in the tar archive:
+
+`tar -rvf udev.tar /etc/hosts` = To add to an existing archived file.
+`tar –tvf udev.tar` = To list an existing archived file. 
+
+`tar -rzvf udev.tar /etc/hosts` = To add to an existing archived file. The z tells tar to compress the archive using gzip.
+`tar –tzvf udev.tar` = To list an existing archived file.  The z tells tar to compress the archive using gzip.
+
 It should be noted that tar requires the –f option to indicate a filename is being passed, while zip and unzip require a filename and therefore don’t need you to inform the command a filename is being passed.
 
 Here's how you would use each command:
