@@ -1,4 +1,4 @@
-# ORIGIN OF LINUX
+# ORIGIN OF LINUX 
 
 The journey of learning you are beginning today has no ending point. It can take you in a myriad of different directions, from cybersecurity to application and game development, system administration, networking, big data, and artificial intelligence; all of these fields are rooted in Linux.
 
