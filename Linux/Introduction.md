@@ -519,3 +519,25 @@ The asterisk and question mark could also be used together to look for files wit
 `ikechukwu@ubuntu:~$ echo /etc/*.???`              
 `/etc/issue.net /etc/locale.gen`
 
+
+# BRACKET [ ] CHARACTERS
+The bracket [ ] characters are used to match a single character by representing a range of characters that are possible match characters. For example, the `/etc/[gu]*` pattern matches any file that begins with either a "g" or "u" character and contains zero or more additional characters:
+
+`ikechukwu@ubuntu:~$ echo /etc/[gu]*`                            
+`/etc/gai.conf /etc/groff /etc/group /etc/group- /etc/gshadow /etc/gshadow- /etc/
+gss /etc/ucf.conf /etc/udev /etc/ufw /etc/update-motd.d /etc/updatedb.conf`           
+
+By using square brackets [ ] you can specify a single character to match from a set of characters. Execute the following command to display all of the files in the /etc directory that begin with the letters a, b, c, or d:
+
+`ikechukwu@ubuntu:~$ ls –d /etc/[abcd]*`
+
+Brackets can also be used to represent a range of characters. For example, the `/etc/[a-d]*` pattern matches all files that begin with any letter between and including a and d. 
+
+The `/etc/*[0-9]*` pattern displays any file that contains at least one number:
+
+Exclamation Point (!) Character
+The exclamation point character is used in conjunction with the square brackets to negate a range. For example, the pattern `/etc/[!DP]*` matches any file that does not begin with a D or P.
+
+`ikechukwu@ubuntu:~$ echo /etc/[!a-t]*`
+`/etc/X11 /etc/ucf.conf /etc/udev /etc/ufw /etc/update-motd.d /etc/updatedb.conf 
+/etc/vim /etc/vtrgb /etc/wgetrc /etc/xdg`
