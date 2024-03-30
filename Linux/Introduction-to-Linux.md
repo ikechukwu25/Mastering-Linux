@@ -321,9 +321,9 @@ The Bash shell also has other popular features, a few of which are listed below:
 
 Here are representations of command line prompts in a Unix/Linux environment. 
 
-* User Name: `ikechukwu`@ubuntu:~$ 
-* System Name: ikechukwu@`ubuntu`:~$
-* Current Directory: ikechukwu@ubuntu:`~`$
+* User Name: `ikechukwu`@ubuntu-22-04-3:~$ 
+* System Name: ikechukwu@`ubuntu-22-04-3`:~$
+* Current Directory: ikechukwu@ubuntu-22-04-3:`~`$
 
 ### VARIABLES
 
@@ -332,8 +332,8 @@ A variable is a feature that allows the user or the shell to store data. his da
 ### LOCAL VARIABLES
 Local or shell variables exist only in the current shell, and cannot affect other commands or applications. When the user closes a terminal window or shell, all of the variables are lost. 
 
-`ikechukwu@ubuntu:~$ variable1='Something'` </br>
-`ikechukwu@ubuntu:~$ echo $variable1`  </br>                            
+`ikechukwu@ubuntu-22-04-3:~$ variable1='Something'` </br>
+`ikechukwu@ubuntu-22-04-3:~$ echo $variable1`  </br>                            
 `Something`
 
 ### ENVIRONMENT VARIABLES
@@ -347,8 +347,8 @@ After executing this command, whenever you reference $MY_VARIABLE in your shell 
 
 To concatenate the value of two environment variables, use the assignment expression:
 
-`ikechukwu@ubuntu:~$ variable1=$variable1' '$variable2`              
-`ikechukwu@ubuntu:~$ echo $variable1`                                
+`ikechukwu@ubuntu-22-04-3:~$ variable1=$variable1' '$variable2`              
+`ikechukwu@ubuntu-22-04-3:~$ echo $variable1`                                
 `Something Else`
 
 So, if variable1 had the value "Something" and variable2 had the value "Else", after executing these commands, variable1 will have the value "Something Else".
@@ -374,16 +374,16 @@ function_name () </br>
 
 Single quotes prevent the shell from doing any interpreting of special characters, including globs, variables, command substitution, and other metacharacters that have not been discussed yet.
 
-`ikechukwu@ubuntu:~$ echo The car costs $100`                           
+`ikechukwu@ubuntu-22-04-3:~$ echo The car costs $100`                           
 `The car costs 00`                                                        
-`ikechukwu@ubuntu:~$ echo 'The car costs $100'`                        
+`ikechukwu@ubuntu-22-04-3:~$ echo 'The car costs $100'`                        
 `The car costs $100`
 
 ### BACKLASH CHARACTER:
 If you want to have $PATH treated as a variable and $1 not?
 In this case, use a backslash \ character in front of the dollar sign $ character to prevent the shell from interpreting it. The command below demonstrates using the \ character:
 
-`ikechukwu@ubuntu:~$ echo The service costs \$1 and the path is $PATH`
+`ikechukwu@ubuntu-22-04-3:~$ echo The service costs \$1 and the path is $PATH`
 `The service costs $1 and the path is /usr/bin/custom:/home/sysadmin/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games`
 
 ### BACKQUOTES:
@@ -484,17 +484,17 @@ Globbing refers to the process of using wildcards or special characters, such as
   
 The asterisk * character is used to represent zero or more of any character in a filename. For example, to display all of the files in the /etc directory that begin with the letter t:
 
-`ikechukwu@ubuntu:~$ echo /etc/t*`                              
+`ikechukwu@ubuntu-22-04-3:~$ echo /etc/t*`                              
 `/etc/terminfo /etc/timezone /etc/tmpfiles.d`
 
 The following matches any filename in the /etc directory that ends with .d:
 
-`ikechukwu@ubuntu:~$ echo /etc/*.d`                                 
+`ikechukwu@ubuntu-22-04-3:~$ echo /etc/*.d`                                 
 `/etc/apparmor.d /etc/binfmt.d /etc/cron.d` 
 
 All of the files in the /etc directory that begin with the letter r and end with .conf are displayed:
 
-`ikechukwu@ubuntu:~$ echo /etc/r*.conf`                             
+`ikechukwu@ubuntu-22-04-3:~$ echo /etc/r*.conf`                             
 `/etc/resolv.conf /etc/rsyslog.conf`
 
 ### QUESTION MARK (?) CHARACTER
@@ -502,28 +502,28 @@ All of the files in the /etc directory that begin with the letter r and end 
 The question mark character represents any single character. Each question mark character matches exactly one character, no more and no less.
 Suppose you want to display all of the files in the /etc directory that begin with the letter t and have exactly 7 characters after the t character:
 
-`ikechukwu@ubuntu:~$ echo /etc/t???????`      
+`ikechukwu@ubuntu-22-04-3:~$ echo /etc/t???????`      
 `/etc/terminfo /etc/timezone`
 
 The ? character can be used to match exactly 1 character in a file name. Execute the following command to display all of the files in the /etc directory that are exactly four characters long:
 
-`ikechukwu@ubuntu:~$ ls -d /etc/????`
+`ikechukwu@ubuntu-22-04-3:~$ ls -d /etc/????`
 
 Glob characters can be used together to find even more complex patterns. The pattern /etc/*???????????????????? only matches files in the /etc directory with twenty or more characters in the filename:
 
-`ikechukwu@ubuntu:~$ echo /etc/*????????????????????`            
+`ikechukwu@ubuntu-22-04-3:~$ echo /etc/*????????????????????`            
 `/etc/bindresvport.blacklist /etc/ca-certificates.conf`
 
 The asterisk and question mark could also be used together to look for files with three-letter extensions by using the /etc/*.??? pattern:
 
-`ikechukwu@ubuntu:~$ echo /etc/*.???`              
+`ikechukwu@ubuntu-22-04-3:~$ echo /etc/*.???`              
 `/etc/issue.net /etc/locale.gen`
 
 
 # BRACKET [ ] CHARACTERS
 The bracket [ ] characters are used to match a single character by representing a range of characters that are possible match characters. For example, the `/etc/[gu]*` pattern matches any file that begins with either a "g" or "u" character and contains zero or more additional characters:
 
-`ikechukwu@ubuntu:~$ echo /etc/[gu]*`                            
+`ikechukwu@ubuntu-22-04-3:~$ echo /etc/[gu]*`                            
 `/etc/gai.conf /etc/groff /etc/group /etc/group- /etc/gshadow /etc/gshadow- /etc/
 gss /etc/ucf.conf /etc/udev /etc/ufw /etc/update-motd.d /etc/updatedb.conf`           
 
@@ -538,7 +538,7 @@ The `/etc/*[0-9]*` pattern displays any file that contains at least one number
 Exclamation Point (!) Character
 The exclamation point character is used in conjunction with the square brackets to negate a range. For example, the pattern `/etc/[!DP]*` matches any file that does not begin with a D or P.
 
-`ikechukwu@ubuntu:~$ echo /etc/[!a-t]*`
+`ikechukwu@ubuntu-22-04-3:~$ echo /etc/[!a-t]*`
 `/etc/X11 /etc/ucf.conf /etc/udev /etc/ufw /etc/update-motd.d /etc/updatedb.conf 
 /etc/vim /etc/vtrgb /etc/wgetrc /etc/xdg`
 
