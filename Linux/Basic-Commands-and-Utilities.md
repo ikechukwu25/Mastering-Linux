@@ -123,10 +123,57 @@ Compressed files can be restored to their original form using either the gunzip
 `ikechukwu@ubuntu-22-04-3:~/Documents$ ls -l longfile*`</br>
 `-rw-r--r-- 1 ikechukwu ikechukwu 66540 Dec 20  2017 longfile.txt`</br>
 
-The tar command has three modes that are helpful to become familiar with:
+The `tar` command has three modes that are helpful to become familiar with:
+
 * Create: Make a new archive out of a series of files.
 * Extract: Pull one or more files out of an archive.
 * List: Show the contents of the archive without extracting.
 
+You can archive without compressing, the main compressing options for the `tar` command are -z and -j gz and bz2 respectively. 
+
+`tar -cvf archive.tar source` = ARCHIVE ONLY </br>
+`tar -czvf archive.tar.gz source` = ARCHIVE AND COMPRESS
+
 It should be noted that tar requires the –f option to indicate a filename is being passed, while zip and unzip require a filename and therefore don’t need you to inform the command a filename is being passed.
+
+Here's how you would use each command:
+
+For tar, you would typically use:
+
+`tar -cf archive.tar file1 file2`</br>
+where -c creates a new archive and -f specifies the filename.
+
+For zip, you would use:
+
+`zip archive.zip file1 file2` </br>
+where `archive.zip` is the filename of the archive being created.
+
+For unzip:
+
+`unzip archive.zip` </br>
+where `archive.zip` is the filename of the archive being extracted.
+
+Furthermore, the zip command will not recurse into subdirectories by default, which is a different behavior than the `tar` command. If you want tar-like behavior, you must use the `–r` option to indicate recursion is to be used. For example ;
+
+`zip -r archive.zip directory/` 
+
+When extracting files using the `unzip` command, it operates similarly to creating an archive, as its default behavior is to extract files. If the extraction process encounters files with the same names as existing files in the target directory, it provides several options to handle potential conflicts. 
+
+`ikechukwu@ubuntu-22-04-3:~/Documents$ unzip School.zip`  </br>
+`Archive:  School.zip`  </br>
+  `replace School/Engineering/hello.sh? [y]es, [n]o, [A]ll, [N]one, [r]ename: n`  </br>
+  `replace School/Art/linux.txt? [y]es, [n]o, [A]ll, [N]one, [r]ename: n`  </br>
+
+This can be avoided by copying the zip file into a new directory:
+
+`ikechukwu@ubuntu-22-04-3:~/Documents$ mkdir tmp` </br>
+`ikechukwu@ubuntu-22-04-3:~/Documents$ cp School.zip tmp/School.zip` </br>
+`ikechukwu@ubuntu-22-04-3:~/Documents$ cd tmp` </br>
+`ikechukwu@ubuntu-22-04-3:~/Documents/tmp$ unzip School.zip` </br>
+`Archive:  School.zip` </br>
+   `creating: School/` </br>
+   `creating: School/Engineering/` </br>
+  `inflating: School/Engineering/hello.sh`
+
+  
 
