@@ -216,7 +216,23 @@ Using bzip2 and bunzip2 to compress and uncompress a file is very similar to
 `gzip` and `gunzip` = are used to compress and extract a file or directory respectively. (.gz files) </br>
 `bzip2` and `bunzip2` = are used to compress and extract a file or directory respectively. (.bz2 files)
 
-## NAVIGATING THROUGH A LINUX SYSTEM
+## NAVIGATION COMMANDS
+
+Navigation in a Linux system primarily involves moving between directories and exploring the file system. It is important to note these paths in a Linux system; 
+
+- .  = the current working directory
+- .. = the parent directory
+- ~  = the user's home directory
+- /  = the root directory  
+
+Here are some common commands for navigation:
+
+- `cd`: (Change directory) Use this command followed by the name of the directory you want to navigate to. For example:
+    - `cd /home/ikechukwu` = This will change the current directory to the directory named "ikechukwu" within the "/home" directory
+    - `cd .` = change to the current directory.
+    - `cd ..` = change to the parent directory.
+    - `cd -` = changing the current directory to the last directory
+- `pwd`: Printing the current working directory
 
 ## COMPARING FILES
 
