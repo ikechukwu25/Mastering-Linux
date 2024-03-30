@@ -541,3 +541,35 @@ The exclamation point character is used in conjunction with the square brackets
 `ikechukwu@ubuntu:~$ echo /etc/[!a-t]*`
 `/etc/X11 /etc/ucf.conf /etc/udev /etc/ufw /etc/update-motd.d /etc/updatedb.conf 
 /etc/vim /etc/vtrgb /etc/wgetrc /etc/xdg`
+
+
+# KEYBOARD SHORTCUTS
+
+* TAB - autocompletes the command or the filename if it's unique
+
+* TAB TAB (press twice) - displays all commands or filenames that start with those letters
+
+* Clearing the terminal - CTRL + L
+
+* Closing the shell (exit) - CTRL + D
+
+* Cutting (removing) the current line  - CTRL + U
+
+* Moving the cursor to the start of the line - CTRL + A
+
+* Moving the cursor to the end of the line - Ctrl + E
+
+* Stopping the current command - CTRL + C
+
+* Sleeping a running program - CTRL + Z
+
+* Opening a terminal  - CTRL + ALT + T
+
+* Search for commands in history. - CTRL + R
+
+* Previous command in history - Ctrl + P
+
+* Leave the history search mode without running a command. - Ctrl + G
+
+* Leave the root environment - Ctrl + D
+
