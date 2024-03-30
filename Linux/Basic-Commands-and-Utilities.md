@@ -111,17 +111,17 @@ When talking about compression, there are two types:
 
 Linux provides several tools to compress files; the most common is gzip.
 
-`ikechukwu@ubuntu:~/Documents$ ls -l longfile*` </br>
+`ikechukwu@ubuntu-22-04-3:~/Documents$ ls -l longfile*` </br>
 `-rw-r--r-- 1 ikechukwu ikechukwu 66540 Dec 20  2017 longfile.txt` </br>
-`ikechukwu@ubuntu:~/Documents$ gzip longfile.txt` </br>
-`ikechukwu@ubuntu:~/Documents$ ls -l longfile*` </br>
+`ikechukwu@ubuntu-22-04-3:~/Documents$ gzip longfile.txt` </br>
+`ikechukwu@ubuntu-22-04-3:~/Documents$ ls -l longfile*` </br>
 `-rw-r--r-- 1 ikechukwu ikechukwu 341 Dec 20  2017 longfile.txt.gz`
 
 Compressed files can be restored to their original form using either the gunzip command or the gzip –d command. This process is called decompression.
 
-`ikechukwu@ubuntu:~/Documents$ gunzip longfile.txt.gz`
-`ikechukwu@ubuntu:~/Documents$ ls -l longfile*`
-`-rw-r--r-- 1 ikechukwu ikechukwu 66540 Dec 20  2017 longfile.txt`
+`ikechukwu@ubuntu-22-04-3:~/Documents$ gunzip longfile.txt.gz` </br>
+`ikechukwu@ubuntu-22-04-3:~/Documents$ ls -l longfile*`</br>
+`-rw-r--r-- 1 ikechukwu ikechukwu 66540 Dec 20  2017 longfile.txt`</br>
 
 The tar command has three modes that are helpful to become familiar with:
 * Create: Make a new archive out of a series of files.
