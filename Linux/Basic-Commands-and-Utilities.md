@@ -129,22 +129,42 @@ The `tar` command has three modes that are helpful to become familiar with:
 * Extract: Pull one or more files out of an archive.
 * List: Show the contents of the archive without extracting.
 
-You can archive without compressing, the main compressing options for the `tar` command are -z and -j gz and bz2 respectively. 
+The `tar` command has variety of functions depending on the option being utilized in a command. For example; 
+
+- You can archive without compressing, the main compressing options for the `tar` command are -z and -j gz and bz2 respectively. 
 
 `tar -cvf archive.tar source` = ARCHIVE ONLY </br>
 `tar -czvf archive.tar.gz source` = ARCHIVE AND COMPRESS
 
-To display the date the compressed file was created when listed. 
+The `tar` command is primarily used to archive files only. However, you can compress a file using the `-z` option. For example;
+
+`tar -czvf archive.tar.gz /etc/` = creates a file where the compressed directory -etc is located. 
+`-c` = create an archive
+`-z` = tells tar to compress the archive using gz (file has to be filename.tar.gz)
+`-v` = verbose
+`-f` = file. 
+
+While, 
+
+`tar -cjvf archive.tar.bz2 /etc/` 
+`-j` = tells tar to compress the archive using bz2 (file has to be `filename.tar.bz2`)
+
+- To exclude specific files using a suffix. This command will exclude the .txt and .config files from the archive. 
+
+`tar --exclude='*.txt' --exclude='*.config' -czf filename.tar.gz /etc/` 
+
+- To display the date the compressed file was created when listed. 
 
 `tar -czvf etc-$(date +%F).tar.gz /etc/`
 
-To add a file to an existing archive, use the -r option to the tar command. Execute the following commands to perform this action and verify the existence of the new file in the tar archive:
+- To add a file to an existing archive, use the -r option to the tar command. Execute the following commands to perform this action and verify the existence of the new file in the tar archive:
 
 `tar -rvf udev.tar /etc/hosts` = To add to an existing archived file.
 `tar –tvf udev.tar` = To list an existing archived file. 
 
 `tar -rzvf udev.tar /etc/hosts` = To add to an existing archived file. The z tells tar to compress the archive using gzip.
 `tar –tzvf udev.tar` = To list an existing archived file.  The z tells tar to compress the archive using gzip.
+
 
 It should be noted that tar requires the –f option to indicate a filename is being passed, while zip and unzip require a filename and therefore don’t need you to inform the command a filename is being passed.
 
