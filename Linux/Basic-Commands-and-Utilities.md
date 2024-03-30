@@ -216,14 +216,30 @@ Using bzip2 and bunzip2 to compress and uncompress a file is very similar to
 `gzip` and `gunzip` = are used to compress and extract a file or directory respectively. (.gz files) </br>
 `bzip2` and `bunzip2` = are used to compress and extract a file or directory respectively. (.bz2 files)
 
-## NAVIGATION COMMANDS
+## FILE PATHS
 
-Navigation in a Linux system primarily involves moving between directories and exploring the file system. It is important to note these paths in a Linux system; 
+Paths in the Linux file system are indeed divided into two categories: Absolute paths and Relative paths.
+
+- Absolute Path:
+An absolute path specifies the exact location of a file or directory in the file system hierarchy.
+It begins from the root directory (/) and includes all directories leading to the target file or directory.
+Example: `/var/log` is an absolute path that specifies the location of the log directory within the var directory.
+
+- Relative Path:
+A relative path specifies the location of a file or directory relative to the current working directory.
+It does not begin with the root directory (/).
+Example: If the current working directory is `/home/user`, then `./Documents/file.txt` is a relative path that specifies the location of the `file.txt` within the Documents directory relative to the current directory.
+
+Special Directory References: These symbols provide convenient ways to reference specific directories in relation to the current working directory or the user's home directory, particularly while using a relative path.
 
 - .  = the current working directory
 - .. = the parent directory
 - ~  = the user's home directory
-- /  = the root directory  
+- /  = the root directory 
+
+## NAVIGATION COMMANDS
+
+Navigation in a Linux system primarily involves moving between directories and exploring the file system. It is important to note these paths in a Linux system; 
 
 Here are some common commands for navigation:
 
@@ -232,7 +248,13 @@ Here are some common commands for navigation:
     - `cd .` = change to the current directory.
     - `cd ..` = change to the parent directory.
     - `cd -` = changing the current directory to the last directory
-- `pwd`: Printing the current working directory
+- `pwd`: Printing the current working directory. This command shows you the full path of the current directory you are in.
+- `ls`: List directory contents. This command lists the files and directories in the current directory. For example:
+    - `ls /home/ikechukwu` = lists the contents of the directory named "ikechukwu".
+    - `ls -l /home/ikechukwu` = lists the contents of the directory named "ikechukwu" in a long listing format.
+    - `ls -lhS /etc/` = Shows the content of the etc dir in a human-readable format (-h) and sorted by file size in descending order (-S).
+    - `ls -ld` = This command lists information about the current working directory without recursively listing its contents.
+  
 
 ## COMPARING FILES
 
