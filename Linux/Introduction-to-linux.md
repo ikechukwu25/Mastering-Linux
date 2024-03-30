@@ -374,22 +374,22 @@ function_name () </br>
 
 Single quotes prevent the shell from doing any interpreting of special characters, including globs, variables, command substitution, and other metacharacters that have not been discussed yet.
 
-`sysadmin@localhost:~$ echo The car costs $100`                           
+`ikechukwu@ubuntu:~$ echo The car costs $100`                           
 `The car costs 00`                                                        
-`sysadmin@localhost:~$ echo 'The car costs $100'`                        
+`ikechukwu@ubuntu:~$ echo 'The car costs $100'`                        
 `The car costs $100`
 
 ### BACKLASH CHARACTER:
 If you want to have $PATH treated as a variable and $1 not?
 In this case, use a backslash \ character in front of the dollar sign $ character to prevent the shell from interpreting it. The command below demonstrates using the \ character:
 
-`sysadmin@localhost:~$ echo The service costs \$1 and the path is $PATH`
+`ikechukwu@ubuntu:~$ echo The service costs \$1 and the path is $PATH`
 `The service costs $1 and the path is /usr/bin/custom:/home/sysadmin/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games`
 
 ### BACKQUOTES:
 Backquotes, or backticks, are used to specify a command within a command, a process called command **substitution**. This allows for powerful and sophisticated use of commands.
 
-`sysadmin@localhost:~$ echo Today is `\`date\`                       
+`ikechukwu@ubuntu:~$ echo Today is `\`date\`                       
 `Today is Mon Nov 4 03:40:04 UTC 2018`
 
 ### SEMICOLON
