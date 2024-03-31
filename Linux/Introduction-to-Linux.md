@@ -471,7 +471,7 @@ Typically, this directory is where system administrators go to learn how to set 
 
 On a Windows system, the top level of the directory structure is called My Computer. Physical devices, such as hard drives, USB drives, and network drives, show up under My Computer and are each assigned a drive letter, such as C: or D:
 
-Like Windows, the Linux directory structure, typically called a filesystem, also has a top level. However instead of My Computer, it is called the root directory, and it is symbolized by the slash(/) character. Additionally, there are no drives in Linux; each physical device is accessible under a directory, as opposed to a drive letter.
+Like Windows, the Linux directory structure, typically called a filesystem, also has a top level. However instead of My Computer, it is called the root directory, and it is symbolized by the slash (/) character. Additionally, there are no drives in Linux; each physical device is accessible under a directory, as opposed to a drive letter.
 
 Most of the hidden files are customization files, designed to customize how Linux, your shell, or programs work. For example, the .bashrc file in the home directory customizes features of the shell, such as creating or modifying variables and aliases.
 
@@ -520,7 +520,8 @@ The asterisk and question mark could also be used together to look for files wit
 `/etc/issue.net /etc/locale.gen`
 
 
-# BRACKET [ ] CHARACTERS
+### BRACKET [ ] CHARACTERS
+
 The bracket [ ] characters are used to match a single character by representing a range of characters that are possible match characters. For example, the `/etc/[gu]*` pattern matches any file that begins with either a "g" or "u" character and contains zero or more additional characters:
 
 `ikechukwu@ubuntu-22-04-3:~$ echo /etc/[gu]*`                            
@@ -572,4 +573,102 @@ The exclamation point character is used in conjunction with the square brackets
 * Leave the history search mode without running a command. - Ctrl + G
 
 * Leave the root environment - Ctrl + D
+
+
+# REGULAR EXPRESSIONS (REGEX)
+
+There are both Basic Regular Expressions (available to a wide variety of Linux commands) and Extended Regular Expressions (available to more advanced Linux commands). Basic Regular Expressions include the following:
+
+### BASIC REGULAR EXPRESSIONS
+
+Regular expressions, also referred to as regex, are a collection of normal and special characters that are used to find simple or complex patterns, respectively, in files. 
+
+| Character| Matches |
+|----------|----------|
+| . | Any single character | 
+| [ ] | A list or range of characters to match one character. If the first character within the brackets is the caret ^, it means any character not in the list |
+| * | The previous character repeated zero or more times | 
+| ^ | If the first character in the pattern, the pattern must be at the beginning of the line to match, otherwise just a literal ^ character | 
+| $ | If the last character in the pattern, the pattern must be at the end of the line to match, otherwise just a literal $ character | 
+
+The `grep` command is just one of the many commands that support regular expressions. Some other commands include the `more` and `less` commands.
+
+1. The Period . Character : 
+One of the most useful expressions is the period . character. It matches any character except for the new line character.
+The pattern r..f would find any line that contained the letter r followed by exactly two characters and then the letter f: </br>
+`ikechukwu@ubuntu-22-04-3:~/Documents$ grep 'r..f' red.txt`</br>
+`reef`</br>
+`roof`</br>
+`ikechukwu@ubuntu-22-04-3:~/Documents$ grep '....' red.txt`</br>
+`reef`</br>
+`reeed`
+
+2. The Bracket [ ] Characters : 
+The square brackets [ ] match a single character from the list or range of possible characters contained within the brackets. 
+Note that each possible character can be listed out [abcd] or provided as a range [a-d], as long as the range is in the correct order. </br>
+The range is specified by a standard called the ASCII table. This table is a collection of all printable characters in a specific order. You can see the ASCII table with the ascii command. E.g. </br></br>
+`ikechukwu@ubuntu-22-04-3:~/Documents$ grep '[0-9]' profile.txt`</br>
+`I am 37 years old.`</br>
+`3121991`</br>
+`I have 2 dogs.` </br></br>
+Character classes allow you to specify sets of characters that can match at a particular point in the pattern. For example, [aeiou] matches any vowel, [0-9] matches any digit, and [^a-z] matches any character that is not a lowercase letter. [^0-9] is a character class that matches any single character except for digits from 0 to 9.</br></br>
+Suppose you want to search for a pattern containing a sequence of three digits. You can use { } characters with a number to express that you want to repeat a pattern a specific number of times; for example: {3}. The use of the numeric qualifier requires the extended mode of grep. For example; </br>
+`grep -E '[0-9]{3}' passwd`
+
+3. The Asterisk * Character : 
+The asterisk * character is used to match zero or more occurrences of a character or pattern preceding it. E.g. </br></br>
+`ikechukwu@ubuntu-22-04-3:~/Documents$ grep 'e*' red.txt`</br>
+`red`</br>
+`reef`</br>
+`rot`</br></br>
+To make the asterisk character useful, it is necessary to create a pattern which includes more than just the one character preceding it. For example, the results above can be refined by adding another e to make the pattern ee* effectively matching every line which contains at least one E.g. </br></br>
+`ikechukwu@ubuntu-22-04-3:~/Documents$ grep 'ee*' red.txt`</br>
+`red`</br>
+`reef`</br>
+`reeed`
+
+4. Anchor Characters : 
+When performing a pattern match, the match could occur anywhere on the line. Anchor characters are one of the ways regular expressions can be used to narrow down search results. They specify whether the match occurs at the beginning of the line or the end of the line.</br></br>
+The caret (circumflex) ^ character is used to ensure that a pattern appears at the beginning of the line. Eg. </br></br>
+`ikechukwu@ubuntu-22-04-3:~/Documents$ grep '^root' /etc/passwd`</br>
+`root:x:0:0:root:/root:/bin/bash`</br></br>
+The second anchor character $ can be used to ensure a pattern appears at the end of the line, thereby effectively reducing the search results. Eg. </br></br>
+`ikechukwu@ubuntu-22-04-3:~/Documents$ grep 'r$' alpha-first.txt`</br>
+`B is for Bear`</br>
+`F is for Flower`
+
+5. The Backslash \ Character : 
+In some cases, you may want to match a character that happens to be a special regular expression character. E.g </br></br>
+`ikechukwu@ubuntu-22-04-3:~/Documents$ grep 're*' newhome.txt` </br>
+`Thanks for purchasing your new home!!` </br>
+`**Warning** it may be haunted.` </br>
+`There are three bathrooms.`</br></br>
+In the output of the grep command above, the search for re* matched every line which contained an r followed by zero or more of the letter e. To look for an actual asterisk * character, place a backslash \ character before the asterisk * character: </br></br>
+`ikechukwu@ubuntu-22-04-3:~/Documents$ grep 're\*' newhome.txt` </br>
+`**Beware** of the ghost in the bedroom.`
+
+### EXTENDED REGULAR EXPRESSIONS
+
+The use of extended regular expressions often requires a special option be provided to the command to recognize them. Historically, there is a command called `egrep`, which is similar to `grep`, but can understand extended regular expressions. Now, the `egrep` command is deprecated in favor of using grep with the -E option.
+
+| Character | Meaning |
+| ? | Matches previous character zero or one time, so it is an optional character |
+| + | Matches previous character repeated one or more times |
+| | | Alternation or like a logical "or" operator |
+
+1. To match color followed by zero or one u character followed by an r character: </br>
+`ikechukwu@ubuntu-22-04-3:~/Documents$ grep -E 'colou?r' spelling.txt`</br>
+`American English: Do you consider gray to be a color or a shade?`</br>
+`British English: Do you consider grey to be a colour or a shade?`
+
+2. To match one or more e characters:</br>
+`ikechukwu@ubuntu-22-04-3:~/Documents$ grep -E 'e+' red.txt` </br>
+`red`</br>
+`reef`</br>
+`reeed`
+
+3. To match either gray or grey:</br>
+`ikechukwu@ubuntu-22-04-3:~/Documents$ grep -E 'gray|grey' spelling.txt` </br>
+`American English: Do you consider gray to be a color or a shade?`</br>
+`British English: Do you consider grey to be a colour or a shade?`
 
