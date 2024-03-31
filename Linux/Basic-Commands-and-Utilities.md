@@ -355,12 +355,14 @@ Every file on a partition has a unique identification number called an inode nu
 Like users and groups, what defines a file is not its name, but rather the number it has been assigned.　For each file, there is also an entry that is stored in a directory's data area (data block) that links the file's name with its inode number. Eg
 
 | File Name | Inode Number |
+|----------|----------|
 | passwd | 123 |
 | group | 144 |
 
 Hard links are two file names that point to the same inode. For example, consider the following directory entries:
 
 | File Name | Inode Number |
+|----------|----------|
 | passwd | 123 |
 | mypasswd | 123 |
 | group | 144 |
@@ -387,11 +389,35 @@ To create a symbolic link, use the `-s` option with the `ln` command:
 
 `ln -s target link_name`
 
-`ikechukwu@ubuntu-22-04-3:~$  ln -s /etc/passwd mypasswd`
-`ikechukwu@ubuntu-22-04-3:~$  ls -l mypasswd`
+`ikechukwu@ubuntu-22-04-3:~$  ln -s /etc/passwd mypasswd`</br>
+`ikechukwu@ubuntu-22-04-3:~$  ls -l mypasswd`</br>
 `lrwxrwxrwx. 1 sysadmin sysadmin 11 Oct 31 13:17 mypasswd -> /etc/passwd`
 
 A symbolic link has an l as the file type lrwxrwxrwx, while a hard link doesn’t. 
 
+## SORT
 
+Sorting in Linux refers to arranging data in a specified order, typically alphabetically or numerically, using the `sort` command. This command is versatile and allows for various sorting options and configurations.
+
+`sort -k3 -t ”:” -r -n /etc/passwd`
+
+* -k3: Specifies that sorting should be based on the third field.
+* -t ":": Specifies : as the field delimiter.
+* -r: Specifies that sorting should be done in reverse order.
+* -n: Specifies that sorting should be done numerically.
+
+To sort first by the operating system (field #2) and then by year (field #1) and then by last name (field #3), use the following command:
+
+`ikechukwu@ubuntu-22-04-3:~/Documents$ sort -t, -k2 -k1n -k3 os.csv` </br>
+`1991,Linux,Torvalds`</br>
+`1987,Minix,Tanenbaum`</br>
+`1970,Unix,Richie`
+
+
+| Option | Function |
+|----------|----------|
+| -t |	Specifies the comma character as the field delimiter |
+| -k2 |	Sort by field #2 |
+| -k1n |	Numerically sort by field #1 |
+| -k3 |	Sort by field #3 |
 
