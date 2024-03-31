@@ -421,3 +421,50 @@ To sort first by the operating system (field #2) and then by year (field #1) and
 | -k1n |	Numerically sort by field #1 |
 | -k3 |	Sort by field #3 |
 
+## TEXT EDITORS
+
+Most Linux systems provide a choice of text editors which are commonly used at the console to edit configuration files. The two main applications are Vi (or the more modern Vim) and Emacs. Both Vi and Emacs are complex and have a steep learning curve, which is not helpful for simple editing of a small text file. Therefore, Pico and Nano are available on most systems and provide very basic text editing.
+
+The mode of operation in Vim can be categorized into Command mode, Insert mode, and Last Line mode.
+
+- Command Mode: Upon opening Vim, you're in Command mode. Here, characters are interpreted as commands. Common commands include: </br></br>
+  -  X: Deletes characters under the cursor.</br>
+  -  R: Replaces the character under the cursor.</br>
+  -  :: Moves the cursor to the Last Line mode.</br>
+  -  :w!: Saves the file without closing Vim.</br>
+  -  :q!: Closes Vim without saving.</br>
+  -  :wq! or Shift + zz: Saves the file and closes Vim.</br>
+  -  Pressing the Esc button takes you back to Command mode.
+
+- Insert Mode: Press i, I, a, A, o, or O to enter Insert mode. Common insert commands include:</br></br>
+  - i: Inserts text before the cursor.</br>
+  - I: Insert text at the beginning of the current line.</br>
+  - o: Insert text on a new line below the current line.</br>
+  - O: Inserts text on a new line above the current line.</br>
+  - a: Inserts text after the cursor.</br>
+  - A: Appends text at the end of the line.
+
+- Last Line Mode: Accessed by typing : in Command mode, Last Line mode is used for commands that apply to the entire file or for performing actions like searching and replacing. Common Last Line mode commands include:</br></br>
+  -  :%s/string/replacement/g: Search for a pattern and replace all occurrences.</br>
+  -  :e!: Undo everything done since the last save.</br>
+  -  u: Undo the last event.</br>
+  -  Ctrl + R: Redo.</br>
+  -  dd: Cut. </br>
+  -  p: Paste.</br>
+  -  10 + dd: Cut 10 lines from the cursor.</br>
+  -  V: Highlight text for copying.</br>
+  -  y: Copy.</br>
+  -  G: Moves to the bottom of the file.</br>
+  -  gg: Moves to the first line of the file.</br>
+  -  :set nu: Enables line numbering.</br>
+  -  :set nonu: Disables line numbering.</br>
+  -  :syntax off: Disables syntax coloring.</br>
+  -  :syntax on: Enables syntax coloring.</br>
+  -  :number: Jumps to a specific line number.
+
+Additionally, you can customize Vim settings by creating a .vimrc configuration file in your home directory.
+
+Different command line options can be used to open multiple files simultaneously or to display files in split windows for comparison, such as -o or -d for `vimdiff` mode.
+
+To practice Vim, you can run `vimtutor` in your terminal.
+
