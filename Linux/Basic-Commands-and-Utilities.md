@@ -375,3 +375,23 @@ When the ln command is used to create a hard link, the link count number incre
 `ikechukwu@ubuntu-22-04-3:~$ ls -li file.*`</br> 
 `278772 -rw-rw-r--. 2 sysadmin sysadmin 5 Oct 25 15:53 file.hard.1`</br> 
 `278772 -rw-rw-r--. 2 sysadmin sysadmin 5 Oct 25 15:53 file.original`
+
+To find the other linked files with the inode number, run the command;
+`find . -inum 3151382`
+
+##### Creating Symbolic Links
+
+A symbolic link, also called a soft link, is simply a file that points to another file.
+
+To create a symbolic link, use the `-s` option with the `ln` command:
+
+`ln -s target link_name`
+
+`ikechukwu@ubuntu-22-04-3:~$  ln -s /etc/passwd mypasswd`
+`ikechukwu@ubuntu-22-04-3:~$  ls -l mypasswd`
+`lrwxrwxrwx. 1 sysadmin sysadmin 11 Oct 31 13:17 mypasswd -> /etc/passwd`
+
+A symbolic link has an l as the file type lrwxrwxrwx, while a hard link doesn’t. 
+
+
+
