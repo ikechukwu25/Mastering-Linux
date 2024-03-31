@@ -285,5 +285,93 @@ cat, less, more, head, tail, vim, nano
 
 ## HISTORY
 
-The bash shell keeps track of command `history` for each user in a file, typically located at .bash_history. The number of commands stored in this file is controlled by the `HISTFILESIZE` (case sensitive) environment variable, while `HISTSIZE` (case sensitive) controls the number of commands stored in memory.
+The bash shell keeps track of the command history for each user in a file, typically located at .bash_history. The number of commands stored in this file is controlled by the `HISTFILESIZE` (case sensitive) environment variable, while `HISTSIZE` (case sensitive) controls the number of commands stored in memory.
 
+To manipulate history, various commands and techniques are available:
+
+`!ping`: selects the last occurrence of the ping command in the history list.
+`!10`: selects the 10th command in the history list.
+`!ping:p`: prints the last ping command without executing it.
+`history -d <line number>`: deletes a particular command from the history.
+`history -c`: clears the entire history.
+
+Additionally, the $HISTCONTROL environment variable allows control over history list behavior, with options like ignorespace, ignoredups, ignoreboth, and erasedup.
+
+* ignorespace: lines that begin with a space are not saved.
+* ignoredups: lines that match the previous line are not saved.
+* ignoreboth: shorthand for ignorespace and ignoredups.
+* erasedups: all previous lines matching the current line are removed from the history.
+
+`echo “HISTCONTROL=ignoreboth” >> .bashrc`: This command appends the command to the shell.
+
+## TIME STAMPS
+
+Every file on Linux has three timestamps:
+
+1. The access timestamp or `atime` is the last time the file was read (`Is -lu`)
+2. The modified timestamp or `mtime` is the last time the contents of the file was modified
+(`Is -1`, `ls -It`)
+3. The changed timestamp `ctime` is the last time when some metadata related to the file
+was changed (`Is -Ic`)
+
+The `stat` command shows the access, modification, and change information. 
+
+The `touch` command is used to alter some of the `stat` information. 
+
+`touch -m filename` = modifies the modification and the change time to the current system time. 
+`touch -t file name` = always followed by a date format which modifies the date for the specified date selection. 
+`touch -d “date format” file name` = This changes both the access and modification time to a specified date. 
+`touch -a` = change only access time
+`touch filename` = changes access time, modification time, change time. 
+
+The -d and -t options in commands like `touch` or `date` indeed allow for specifying different date/time formats: 
+
+-d = “year-month-day hour:minute:second” For example; </br> 
+`touch -d "2023-07-15 14:30:00" filename`
+-t = "yearmonthdayhourminute.second" For example; </br> 
+`touch -t 202307151430.00 filename`
+-r = to make two files share the same timestamps. For example; </br> 
+`touch -r file1.txt file2.txt`
+
+## LINKS
+
+Consider a scenario where there is a file deeply buried in the file system called:
+
+`/usr/share/doc/superbigsoftwarepackage/data/2013/october/tenth/valuable-information.txt`
+
+Another user routinely updates this file, and you need to access it regularly. The long file name is not an ideal choice for you to type, but the file must reside in this location. It is also updated frequently, so you can't simply make a copy of the file.
+In a situation like this, links come in handy. You can create a file that is linked to the one that is deeply buried. This new file could be placed in the home directory or any other convenient location. When you access the linked file, it accesses the contents of the valuable-information.txt file.
+Each linking method, hard and symbolic, results in the same overall access, but uses different techniques. There are pros and cons to each method, so knowing both techniques and when to use them is important.
+
+##### Creating Hard Links
+
+For every file created, there is a block of data on the file system that stores the metadata of the file. Metadata includes information about the file like the permissions, ownership, and timestamps. Metadata does not include the file name or the contents of the file, but it does include just about all other information about the file. This metadata is called the file's **inode table**.
+
+Every file on a partition has a unique identification number called an inode number. The ls -i command displays the inode number of a file.
+
+`ikechukwu@ubuntu-22-04-3:~$ ls -i /tmp/file.txt`                                    
+`215220874 /tmp/file.txt`  
+
+Like users and groups, what defines a file is not its name, but rather the number it has been assigned.　For each file, there is also an entry that is stored in a directory's data area (data block) that links the file's name with its inode number. Eg
+
+| File Name | Inode Number |
+| passwd | 123 |
+| group | 144 |
+
+Hard links are two file names that point to the same inode. For example, consider the following directory entries:
+
+| File Name | Inode Number |
+| passwd | 123 |
+| mypasswd | 123 |
+| group | 144 |
+
+Because both the passwd and mypasswd files have the same inode number, they essentially are the same file. You can access the file data using either file name.
+
+To create hard links, the ln command is used with two arguments. The first argument is an existing file name to link to, called a target, and the second argument is the new file name to link to the target.
+
+When the ln command is used to create a hard link, the link count number increases by one for each additional filename:
+
+`ikechukwu@ubuntu-22-04-3:~$ ln file.original file.hard.1`</br> 
+`ikechukwu@ubuntu-22-04-3:~$ ls -li file.*`</br> 
+`278772 -rw-rw-r--. 2 sysadmin sysadmin 5 Oct 25 15:53 file.hard.1`</br> 
+`278772 -rw-rw-r--. 2 sysadmin sysadmin 5 Oct 25 15:53 file.original`
