@@ -318,18 +318,18 @@ The `stat` command shows the access, modification, and change information.
 
 The `touch` command is used to alter some of the `stat` information. 
 
-`touch -m filename` = modifies the modification and the change time to the current system time. 
-`touch -t file name` = always followed by a date format which modifies the date for the specified date selection. 
-`touch -d “date format” file name` = This changes both the access and modification time to a specified date. 
-`touch -a` = change only access time
+`touch -m filename` = modifies the modification and the change time to the current system time.  </br>
+`touch -t file name` = always followed by a date format which modifies the date for the specified date selection. </br>
+`touch -d “date format” file name` = This changes both the access and modification time to a specified date. </br>
+`touch -a` = change only access time </br>
 `touch filename` = changes access time, modification time, change time. 
 
 The -d and -t options in commands like `touch` or `date` indeed allow for specifying different date/time formats: 
 
 -d = “year-month-day hour:minute:second” For example; </br> 
-`touch -d "2023-07-15 14:30:00" filename`
+`touch -d "2023-07-15 14:30:00" filename` </br>
 -t = "yearmonthdayhourminute.second" For example; </br> 
-`touch -t 202307151430.00 filename`
+`touch -t 202307151430.00 filename`</br>
 -r = to make two files share the same timestamps. For example; </br> 
 `touch -r file1.txt file2.txt`
 
