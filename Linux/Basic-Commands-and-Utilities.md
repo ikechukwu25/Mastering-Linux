@@ -343,7 +343,7 @@ Another user routinely updates this file, and you need to access it regularly. T
 In a situation like this, links come in handy. You can create a file that is linked to the one that is deeply buried. This new file could be placed in the home directory or any other convenient location. When you access the linked file, it accesses the contents of the valuable-information.txt file.
 Each linking method, hard and symbolic, results in the same overall access, but uses different techniques. There are pros and cons to each method, so knowing both techniques and when to use them is important.
 
-##### Creating Hard Links
+#### **CREATING HARD LINKS**
 
 For every file created, there is a block of data on the file system that stores the metadata of the file. Metadata includes information about the file like the permissions, ownership, and timestamps. Metadata does not include the file name or the contents of the file, but it does include just about all other information about the file. This metadata is called the file's **inode table**.
 
@@ -381,7 +381,7 @@ When the ln command is used to create a hard link, the link count number incre
 To find the other linked files with the inode number, run the command;
 `find . -inum 3151382`
 
-##### Creating Symbolic Links
+#### **CREATING SYMBOLIC LINKS**
 
 A symbolic link, also called a soft link, is simply a file that points to another file.
 
