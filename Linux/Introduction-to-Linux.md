@@ -583,7 +583,7 @@ There are both Basic Regular Expressions (available to a wide variety of Linux
 
 Regular expressions, also referred to as regex, are a collection of normal and special characters that are used to find simple or complex patterns, respectively, in files. 
 
-| Character| Matches |
+| Character | Matches |
 |----------|----------|
 | . | Any single character | 
 | [ ] | A list or range of characters to match one character. If the first character within the brackets is the caret ^, it means any character not in the list |
@@ -652,9 +652,10 @@ In the output of the grep command above, the search for re* matched every li
 The use of extended regular expressions often requires a special option be provided to the command to recognize them. Historically, there is a command called `egrep`, which is similar to `grep`, but can understand extended regular expressions. Now, the `egrep` command is deprecated in favor of using grep with the -E option.
 
 | Character | Meaning |
+|----------|----------|
 | ? | Matches previous character zero or one time, so it is an optional character |
 | + | Matches previous character repeated one or more times |
-| | | Alternation or like a logical "or" operator |
+| \| | Alternation or like a logical "or" operator |
 
 1. To match color followed by zero or one u character followed by an r character: </br>
 `ikechukwu@ubuntu-22-04-3:~/Documents$ grep -E 'colou?r' spelling.txt`</br>
