@@ -3,9 +3,353 @@
 Linux users prefer the terminal over GUI for its efficiency, flexibility, and power. Unlike other operating systems, Linux offers a vast array of command-line utilities for advanced system administration, scripting, and automation. Knowing these commands is essential for managing Linux systems effectively, enabling tasks such as remote access, resource-efficient operations, and a deeper understanding of the operating system's internals. The terminal fosters a culture of learning and understanding, encouraging users to interact directly with the system and develop proficiency in command-line operations. This preference reflects Linux's heritage as a system designed for experienced users and administrators who value control, customization, and the ability to work efficiently at the command line.
 
 
+# SHELL EXPLAINED
+
+Once a user has entered a command the terminal then accepts what the user has typed and passes it to a shell. The shell is the command line interpreter that translates commands entered by a user into actions to be performed by the operating system.
+
+The Bash shell also has other popular features, a few of which are listed below:
+* **Scripting**: The ability to place commands in a file and then interpret (effectively use Bash to execute the contents of) the file, resulting in all of the commands being executed. This feature also has some programming features, such as conditional statements and the ability to create functions (AKA subroutines).
+* **Aliases**: The ability to create short nicknames for longer commands.
+* **Variables**: Used to store information for the Bash shell and for the user. These variables can be used to modify how commands and features work as well as provide vital system information.
+
+Here are representations of command line prompts in a Unix/Linux environment. 
+
+* User Name: `ikechukwu`@ubuntu-22-04-3:~$ 
+* System Name: ikechukwu@`ubuntu-22-04-3`:~$
+* Current Directory: ikechukwu@ubuntu-22-04-3:`~`$
+
+### VARIABLES
+
+A variable is a feature that allows the user or the shell to store data. his data can be used to provide critical system information or to change the behavior of how the Bash shell (or other commands) works. Variables are given names and stored temporarily in memory. There are two types of variables used in the Bash shell: Local and Environment.
+
+##### LOCAL VARIABLES
+Local or shell variables exist only in the current shell, and cannot affect other commands or applications. When the user closes a terminal window or shell, all of the variables are lost. 
+
+`ikechukwu@ubuntu-22-04-3:~$ variable1='Something'` </br>
+`ikechukwu@ubuntu-22-04-3:~$ echo $variable1`  </br>                            
+`Something`
+
+##### ENVIRONMENT VARIABLES
+Environment variables, also called global variables, are available system-wide, in all shells used by Bash when interpreting commands and performing tasks.
+
+The **HISTSIZE** variable defines how many previous commands to store in the history list. When run without arguments, the `env` command outputs a list of the environment variables. The `export` command is used to turn a local variable into an environment variable.
+
+`export MY_VARIABLE="World"`
+
+After executing this command, whenever you reference $MY_VARIABLE in your shell session or in scripts, it will have the value "World" until you either change it again or unset it.
+
+To concatenate the value of two environment variables, use the assignment expression:
+
+`ikechukwu@ubuntu-22-04-3:~$ variable1="Something"`
+`ikechukwu@ubuntu-22-04-3:~$ variable2="Else"`
+`ikechukwu@ubuntu-22-04-3:~$ variable1=$"variable1 $variable2"`              
+`ikechukwu@ubuntu-22-04-3:~$ echo $variable1`                                
+`Something Else`
+
+So, if variable1 had the value "Something" and variable2 had the value "Else", after executing these commands, variable1 will have the value "Something Else".
+
+##### PATH VARIABLE
+One of the most important Bash shell variables to understand is the PATH variable. It contains a list that defines which directories the shell looks in to find commands. If a valid command is entered and the shell returns a "command not found" error, it is because the Bash shell was unable to locate a command by that name in any of the directories included in the path.
+
+### EXTERNAL COMMANDS
+External commands are binary executables stored in directories that are searched by the shell. If a user types the ls command, then the shell searches through the directories that are listed in the PATH variable to try to find a file named ls that it can execute.
+
+If a command does not behave as expected or if a command is not accessible that should be, it can be beneficial to know where the shell is finding the command or which version it is using. It would be tedious to have to manually look in each directory that is listed in the PATH variable. Instead, use the `which` command to display the full path to the command in question.
+
+### FUNCTIONS
+Functions can also be built using existing commands to either create new commands or to override commands built-in to the shell or commands stored in files.
+
+function_name () </br>
+{ </br>
+    commands </br>
+} </br>
+
+# FILE PATHS
+
+Paths in the Linux file system are indeed divided into two categories: Absolute paths and Relative paths.
+
+- **Absolute Path**:
+An absolute path specifies the exact location of a file or directory in the file system hierarchy.
+It begins from the root directory (/) and includes all directories leading to the target file or directory.
+Example: `/var/log` is an absolute path that specifies the location of the log directory within the var directory.
+
+- **Relative Path**:
+A relative path specifies the location of a file or directory relative to the current working directory.
+It does not begin with the root directory (/).
+Example: If the current working directory is `/home/user`, then `./Documents/file.txt` is a relative path that specifies the location of the `file.txt` within the Documents directory relative to the current directory.
+
+**Special Directory References**: These symbols provide convenient ways to reference specific directories in relation to the current working directory or the user's home directory, particularly while using a relative path.
+
+- .  = the current working directory
+- .. = the parent directory
+- ~  = the user's home directory
+- /  = the root directory
+
+**File Type Indicators**: These symbols are often referred to as file type indicators or file mode indicators. They provide information about the type of file or special file in a Unix-like operating system such as Linux.
+
+* -: Regular file.
+* d: Directory. Represented as /.
+* l: Symbolic link. Similar to a shortcut in Windows. Represented as @.
+* b: Block device.
+* c: Character device.
+* s: Socket. Used by processes to communicate. Represented as (symbol).
+* p: Named pipe. Used by processes to communicate through pipes. Represented as |.
+
+Understanding these symbols aids in navigating and comprehending the structure and content of the Linux file system.
+
+
+# GLOBBING
+
+Globbing refers to the process of using wildcards or special characters, such as '*' and '?', in a command-line interface to match files or directories based on patterns.
+
+### ASTERISK (*) CHARACTER
+  
+The asterisk * character is used to represent zero or more of any character in a filename. For example, to display all of the files in the /etc directory that begin with the letter t:
+
+`ikechukwu@ubuntu-22-04-3:~$ echo /etc/t*`                              
+`/etc/terminfo /etc/timezone /etc/tmpfiles.d`
+
+The following matches any filename in the /etc directory that ends with .d:
+
+`ikechukwu@ubuntu-22-04-3:~$ echo /etc/*.d`                                 
+`/etc/apparmor.d /etc/binfmt.d /etc/cron.d` 
+
+All of the files in the /etc directory that begin with the letter r and end with .conf are displayed:
+
+`ikechukwu@ubuntu-22-04-3:~$ echo /etc/r*.conf`                             
+`/etc/resolv.conf /etc/rsyslog.conf`
+
+### QUESTION MARK (?) CHARACTER
+  
+The question mark character represents any single character. Each question mark character matches exactly one character, no more and no less.
+Suppose you want to display all of the files in the /etc directory that begin with the letter t and have exactly 7 characters after the t character:
+
+`ikechukwu@ubuntu-22-04-3:~$ echo /etc/t???????`      
+`/etc/terminfo /etc/timezone`
+
+The ? character can be used to match exactly 1 character in a file name. Execute the following command to display all of the files in the /etc directory that are exactly four characters long:
+
+`ikechukwu@ubuntu-22-04-3:~$ ls -d /etc/????`
+
+Glob characters can be used together to find even more complex patterns. The pattern /etc/*???????????????????? only matches files in the /etc directory with twenty or more characters in the filename:
+
+`ikechukwu@ubuntu-22-04-3:~$ echo /etc/*????????????????????`            
+`/etc/bindresvport.blacklist /etc/ca-certificates.conf`
+
+The asterisk and question mark could also be used together to look for files with three-letter extensions by using the /etc/*.??? pattern:
+
+`ikechukwu@ubuntu-22-04-3:~$ echo /etc/*.???`              
+`/etc/issue.net /etc/locale.gen`
+
+
+### BRACKET [ ] CHARACTERS
+
+The bracket [ ] characters are used to match a single character by representing a range of characters that are possible match characters. For example, the `/etc/[gu]*` pattern matches any file that begins with either a "g" or "u" character and contains zero or more additional characters:
+
+`ikechukwu@ubuntu-22-04-3:~$ echo /etc/[gu]*`                            
+`/etc/gai.conf /etc/groff /etc/group /etc/group- /etc/gshadow /etc/gshadow- /etc/
+gss /etc/ucf.conf /etc/udev /etc/ufw /etc/update-motd.d /etc/updatedb.conf`           
+
+By using square brackets [ ] you can specify a single character to match from a set of characters. Execute the following command to display all of the files in the /etc directory that begin with the letters a, b, c, or d:
+
+`ikechukwu@ubuntu:~$ ls –d /etc/[abcd]*`
+
+Brackets can also be used to represent a range of characters. For example, the `/etc/[a-d]*` pattern matches all files that begin with any letter between and including a and d. 
+
+The `/etc/*[0-9]*` pattern displays any file that contains at least one number:
+
+Exclamation Point (!) Character
+The exclamation point character is used in conjunction with the square brackets to negate a range. For example, the pattern `/etc/[!DP]*` matches any file that does not begin with a D or P.
+
+`ikechukwu@ubuntu-22-04-3:~$ echo /etc/[!a-t]*`
+`/etc/X11 /etc/ucf.conf /etc/udev /etc/ufw /etc/update-motd.d /etc/updatedb.conf 
+/etc/vim /etc/vtrgb /etc/wgetrc /etc/xdg`
+
+
+# KEYBOARD SHORTCUTS
+
+* TAB - autocompletes the command or the filename if it's unique
+
+* TAB TAB (press twice) - displays all commands or filenames that start with those letters
+
+* Clearing the terminal - CTRL + L
+
+* Closing the shell (exit) - CTRL + D
+
+* Cutting (removing) the current line  - CTRL + U
+
+* Moving the cursor to the start of the line - CTRL + A
+
+* Moving the cursor to the end of the line - Ctrl + E
+
+* Stopping the current command - CTRL + C
+
+* Sleeping a running program - CTRL + Z
+
+* Opening a terminal  - CTRL + ALT + T
+
+* Search for commands in history. - CTRL + R
+
+* Previous command in history - Ctrl + P
+
+* Leave the history search mode without running a command. - Ctrl + G
+
+* Leave the root environment - Ctrl + D
+
+
+# REGULAR EXPRESSIONS (REGEX)
+
+Regular expressions are extensively employed in text processing, searching, and data extraction tasks across various programming languages and command-line utilities. There are both Basic Regular Expressions (available to a wide variety of Linux commands) and Extended Regular Expressions (available to more advanced Linux commands). Basic Regular Expressions include the following:
+
+### BASIC REGULAR EXPRESSIONS
+
+Regular expressions also referred to as regex, are a collection of normal and special characters that are used to find simple or complex patterns, respectively, in files. 
+
+| Character | Matches |
+|----------|----------|
+| . | Any single character | 
+| [ ] | A list or range of characters to match one character. If the first character within the brackets is the caret ^, it means any character not in the list |
+| * | The previous character repeated zero or more times | 
+| ^ | If the first character is in the pattern, the pattern must be at the beginning of the line to match, otherwise, it is just a literal ^ character | 
+| $ | If the last character in the pattern, the pattern must be at the end of the line to match, otherwise just a literal $ character | 
+
+The `grep` command is just one of the many commands that support regular expressions. Some other commands include the `more` and `less` commands.
+
+1. The Period (.) Character : 
+One of the most useful expressions is the period character. It matches any character except for the new line character.
+The pattern r..f would find any line that contained the letter r followed by exactly two characters and then the letter f: </br>
+`ikechukwu@ubuntu-22-04-3:~/Documents$ grep 'r..f' red.txt`</br>
+`reef`</br>
+`roof`</br>
+`ikechukwu@ubuntu-22-04-3:~/Documents$ grep '....' red.txt`</br>
+`reef`</br>
+`reeed`
+
+2. The Bracket [ ] Characters : 
+The square brackets [ ] match a single character from the list or range of possible characters contained within the brackets. 
+Note that each possible character can be listed out [abcd] or provided as a range [a-d], as long as the range is in the correct order. </br>
+The range is specified by a standard called the ASCII table. This table is a collection of all printable characters in a specific order. You can see the ASCII table with the ASCII command. E.g. </br></br>
+`ikechukwu@ubuntu-22-04-3:~/Documents$ grep '[0-9]' profile.txt`</br>
+`I am 37 years old.`</br>
+`3121991`</br>
+`I have 2 dogs.` </br></br>
+Character classes allow you to specify sets of characters that can match at a particular point in the pattern. For example, [aeiou] matches any vowel, [0-9] matches any digit, and [^a-z] matches any character that is not a lowercase letter. [^0-9] is a character class that matches any single character except for digits from 0 to 9.</br></br>
+Suppose you want to search for a pattern containing a sequence of three digits. You can use { } characters with a number to express that you want to repeat a pattern a specific number of times; for example: {3}. The use of the numeric qualifier requires the extended mode of grep. For example; </br>
+`grep -E '[0-9]{3}' passwd`
+
+3. The Asterisk (\*) Character : 
+The asterisk * character is used to match zero or more occurrences of a character or pattern preceding it. E.g. </br></br>
+`ikechukwu@ubuntu-22-04-3:~/Documents$ grep 'e*' red.txt`</br>
+`red`</br>
+`reef`</br>
+`rot`</br></br>
+To make the asterisk character useful, it is necessary to create a pattern that includes more than just the one character preceding it. For example, the results above can be refined by adding another "e" to make the pattern "ee*" effectively match every line that contains at least one E.g. </br></br>
+`ikechukwu@ubuntu-22-04-3:~/Documents$ grep 'ee*' red.txt`</br>
+`red`</br>
+`reef`</br>
+`reeed`
+
+4. Anchor (^) Characters : 
+When performing a pattern match, the match could occur anywhere on the line. Anchor characters are one of the ways regular expressions can be used to narrow down search results. They specify whether the match occurs at the beginning of the line or the end of the line.</br></br>
+The caret (circumflex) ^ character is used to ensure that a pattern appears at the beginning of the line. Eg. </br></br>
+`ikechukwu@ubuntu-22-04-3:~/Documents$ grep '^root' /etc/passwd`</br>
+`root:x:0:0:root:/root:/bin/bash`</br></br>
+The second anchor character $ can be used to ensure a pattern appears at the end of the line, thereby effectively reducing the search results. Eg. </br></br>
+`ikechukwu@ubuntu-22-04-3:~/Documents$ grep 'r$' alpha-first.txt`</br>
+`B is for Bear`</br>
+`F is for Flower`
+
+5. The Backslash (\\) Character : 
+In some cases, you may want to match a character that happens to be a special regular expression character. E.g </br></br>
+`ikechukwu@ubuntu-22-04-3:~/Documents$ grep 're*' newhome.txt` </br>
+`Thanks for purchasing your new home!!` </br>
+`**Warning** it may be haunted.` </br>
+`There are three bathrooms.`</br></br>
+In the output of the grep command above, the search for re* matched every line that contained an "r" followed by zero or more of the letter e. To look for an actual asterisk * character, place a backslash \ character before the asterisk * character: </br></br>
+`ikechukwu@ubuntu-22-04-3:~/Documents$ grep 're\*' newhome.txt` </br>
+`**Beware** of the ghost in the bedroom.`
+
+### EXTENDED REGULAR EXPRESSIONS
+
+The use of extended regular expressions often requires a special option be provided to the command to recognize them. Historically, there is a command called `egrep`, which is similar to `grep`, but can understand extended regular expressions. Now, the `egrep` command is deprecated in favor of using grep with the -E option.
+
+| Character | Meaning |
+|----------|----------|
+| ? | Matches previous character zero or one time, so it is an optional character |
+| + | Matches previous character repeated one or more times |
+| \| | Alternation or like a logical "or" operator |
+
+1. To match color followed by zero or one u character followed by an r character: </br>
+`ikechukwu@ubuntu-22-04-3:~/Documents$ grep -E 'colou?r' spelling.txt`</br>
+`American English: Do you consider gray to be a color or a shade?`</br>
+`British English: Do you consider grey to be a colour or a shade?`
+
+2. To match one or more e characters:</br>
+`ikechukwu@ubuntu-22-04-3:~/Documents$ grep -E 'e+' red.txt` </br>
+`red`</br>
+`reef`</br>
+`reeed`
+
+3. To match either gray or grey:</br>
+`ikechukwu@ubuntu-22-04-3:~/Documents$ grep -E 'gray|grey' spelling.txt` </br>
+`American English: Do you consider gray to be a color or a shade?`</br>
+`British English: Do you consider grey to be a colour or a shade?`
+
+
 # BASIC COMMANDS AND THEIR UTILITIES. 
 
-Basic commands in a terminal environment serve as fundamental tools for users to interact with their operating systems efficiently. From listing files with `ls` to navigating directories with `cd`, manipulating files with `cp` and `rm` and performing system tasks with `pwd` and `mkdir` these commands empower users to accomplish various tasks seamlessly. Understanding these commands and their utilities is fundamental for effective system administration and development workflows.
+Basic commands in a terminal environment serve as fundamental tools for users to interact with their operating systems efficiently. From listing files with `ls` to navigating directories with `cd`, manipulating files with `cp` and `rm`, and performing system tasks with `pwd` and `mkdir` these commands empower users to accomplish various tasks seamlessly. Understanding these commands and their utilities is fundamental for effective system administration and development workflows.
+
+## GETTING HELP IN LINUX
+
+In Linux, getting help is essential for mastering the operating system and its various commands. Here are some common methods to get help:
+
+##### MAN PAGES
+
+The Manual Pages (man pages) in Linux systems provide documentation for various commands, functions, system calls, and configurations. By default, there are nine sections in the man pages, each covering different aspects of the system:
+
+- General Commands (Section 1): Documentation for general user commands and utilities typically used on the command line.
+- System Calls (Section 2): Describes system calls, which are functions provided by the kernel for programmatic interaction with the operating system.
+- Library Calls (Section 3): Covers library functions provided by the C library and other libraries, often used by developers when writing programs in C.
+- Special Files (Section 4): Information about special files representing devices or interfaces in the system, found in the /dev directory.
+- File Formats and Conventions (Section 5): Documents file formats, conventions, and specific configuration files used by the system.
+- Games (Section 6): Documentation for games available on the system.
+- Miscellaneous (Section 7): Includes miscellaneous documentation on topics like macro packages and conventions.
+- System Administration Commands (Section 8): Documentation for commands primarily used by system administrators to manage and configure the system.
+- Kernel Routines (Section 9): Provides documentation for kernel routines, often of interest to kernel developers.
+
+On most Linux distributions:
+
+The `whatis` command and `man -f` command are functionally equivalent, providing a brief description of commands.
+
+The `apropos` command and `man -k` command are functionally equivalent, searching for keywords in man page names and descriptions.
+
+To search for man pages by name, use the `-f` option with the man command to display man pages matching a specific name and provide their section number and a brief description.
+
+To search for the location of a command or its man pages, use the `whereis` command, which searches for commands, source files, and man pages in typical locations where these files are stored. 
+
+NB: The man page is displayed with the less command
+
+##### SHORTCUTS:
+- h         => getting help
+- q         => quit
+- enter     => show next line
+- space     => show next screen
+- /string   => search forward for a string
+- ?string   => search backward for a string
+- n / N     => next/previous appearance
+
+##### HELP
+
+When dealing with shell built-in commands in Linux, you can use the `help` command followed by the built-in command name to get information about its usage and options. For example:
+
+help command    => Ex: `help cd` </br>
+command --help  => Ex: `rm --help`
+
+On most systems, there is a directory where additional documentation (such as documentation files stored by third-party software vendors) is found.
+‌⁠
+These documentation files are often called readme files since the files typically have names such as README or readme.txt. The location of these files can vary depending on the distribution that you are using. Typical locations include `/usr/share/doc` and `/usr/doc`.
+Typically, this directory is where system administrators go to learn how to set up more complex software services. However, sometimes regular users also find this documentation to be useful.
 
 ## COPYING FILES
 
@@ -18,7 +362,7 @@ Two options can be used to safeguard against accidental overwrites. With the `-
 
 NB: Also, users should use the `-i` option when deleting multiple files: eg: `rm -i /etc/ssh/ssdh_config`
 
-## MONITORING
+## REAL-TIME MONITORING WITH WATCH
 
 The `watch` command in Linux is used to execute a command periodically and display its output in real time. It continuously runs the specified command at regular intervals (usually every 2 seconds by default) and updates the terminal with the latest output. This is particularly useful for monitoring system changes, observing the progress of long-running processes, or keeping track of dynamic data. For example;
 
@@ -26,7 +370,7 @@ The `watch` command in Linux is used to execute a command periodically and displ
 
 `watch -n 1 -d ls`: is used to continuously monitor and display the output of the current directory with a 1-second refresh rate (-n 1) and with differences highlighted (-d)
 
-## REDIRECTION
+## OUTPUT REDIRECTION
 
 In Linux, the ">" symbol is used for output redirection, allowing users to redirect the output of a command to a file. This simple yet powerful feature enables efficient file creation and manipulation. For example;
 
@@ -84,14 +428,14 @@ The `which` command helps find the location of an executable command. For exampl
 - Find: 
 The find command in Linux is a powerful utility for searching files and directories based on various criteria within a directory hierarchy. It allows users to locate files by specifying conditions such as filenames, modification times, ownership, and more. For example; </br>
 
-  - `find . -name linux.txt` : This command searches for files named "linux.txt" starting from the current directory (.) and displays the path to each file found.
-  - `find -iname "*Pub*"` : This command searches for files with names containing "Pub" (ignoring case due to -i). The asterisks (*) are wildcards, allowing for matches with any characters before and after "Pub".
+  - `find . -name linux.txt`: This command searches for files named "linux.txt" starting from the current directory (.) and displays the path to each file found.
+  - `find -iname "*Pub*"`: This command searches for files with names containing "Pub" (ignoring case due to -i). The asterisks (*) are wildcards, allowing for matches with any characters before and after "Pub".
   - `find -name "*txt*"`: This command finds files with names containing the string "txt" (case-sensitive). Again, the asterisks act as wildcards, matching any characters before and after "txt".
   - Find and Exec : 
 When the `find` command is combined with the -exec option, it allows users to perform actions on the files or directories found. For example:</br>
   `sudo find /etc/ -type f -mtime 0 -exec cp {} /root/backup \;`: This copies the files that have been generated by the `find`
-  command which is being put in the curly brackets before being executed by the exec command to copy (cp) </br>
-  `sudo find /etc/ -type f -mtime 0 -ok cp {} /root/backup \;` : Similar to the previous command, this one also finds files modified within the last 24 hours in the /etc/ directory. However, instead of directly executing the cp command, the ok option prompts the user for confirmation before executing the cp command for each found file. </br>
+  command which is put in the curly brackets before being executed by the exec command to copy (cp) </br>
+  `sudo find /etc/ -type f -mtime 0 -ok cp {} /root/backup \;`: Similar to the previous command, this one also finds files modified within the last 24 hours in the /etc/ directory. However, instead of directly executing the cp command, the ok option prompts the user for confirmation before executing the cp command for each found file. </br>
   `find /etc/ -type f -no -user root` = shows all var files that are not under root. 
 
 ## ARCHIVING AND COMPRESSING
@@ -216,26 +560,6 @@ Using bzip2 and bunzip2 to compress and uncompress a file is very similar to
 `gzip` and `gunzip` = are used to compress and extract a file or directory respectively. (.gz files) </br>
 `bzip2` and `bunzip2` = are used to compress and extract a file or directory respectively. (.bz2 files)
 
-## FILE PATHS
-
-Paths in the Linux file system are indeed divided into two categories: Absolute paths and Relative paths.
-
-- Absolute Path:
-An absolute path specifies the exact location of a file or directory in the file system hierarchy.
-It begins from the root directory (/) and includes all directories leading to the target file or directory.
-Example: `/var/log` is an absolute path that specifies the location of the log directory within the var directory.
-
-- Relative Path:
-A relative path specifies the location of a file or directory relative to the current working directory.
-It does not begin with the root directory (/).
-Example: If the current working directory is `/home/user`, then `./Documents/file.txt` is a relative path that specifies the location of the `file.txt` within the Documents directory relative to the current directory.
-
-Special Directory References: These symbols provide convenient ways to reference specific directories in relation to the current working directory or the user's home directory, particularly while using a relative path.
-
-- .  = the current working directory
-- .. = the parent directory
-- ~  = the user's home directory
-- /  = the root directory 
 
 ## NAVIGATION COMMANDS
 
@@ -268,7 +592,7 @@ cat, less, more, head, tail, vim, nano
     - e.g. `more filename`
 - `head`: The `head` command as mentioned earlier displays the beginning (or top) of a file. By default, it shows the first 10 lines of a file.
     - e.g. `head filename`
-- `tail` : The tail command displays the end (or bottom) of a file. By default, it shows the last 10 lines of a file. However, you can specify a different number of lines to display using the -n option followed by the desired number of lines.
+- `tail`: The tail command displays the end (or bottom) of a file. By default, it shows the last 10 lines of a file. However, you can specify a different number of lines to display using the -n option followed by the desired number of lines.
     - e.g. `tail -n 2 /etc/syslog` = Shows the last two lines.
     - `tail -n +20 /etc/syslog` = shows the lines from the 20th to the last.
 
@@ -289,10 +613,10 @@ The bash shell keeps track of the command history for each user in a file, typic
 
 To manipulate history, various commands and techniques are available:
 
-`!ping`: selects the last occurrence of the ping command in the history list.
-`!10`: selects the 10th command in the history list.
-`!ping:p`: prints the last ping command without executing it.
-`history -d <line number>`: deletes a particular command from the history.
+`!ping`: selects the last occurrence of the ping command in the history list. </br>
+`!10`: selects the 10th command in the history list.</br>
+`!ping:p`: prints the last ping command without executing it.</br>
+`history -d <line number>`: deletes a particular command from the history.</br>
 `history -c`: clears the entire history.
 
 Additionally, the $HISTCONTROL environment variable allows control over history list behavior, with options like ignorespace, ignoredups, ignoreboth, and erasedup.
@@ -393,7 +717,15 @@ To create a symbolic link, use the `-s` option with the `ln` command:
 `ikechukwu@ubuntu-22-04-3:~$  ls -l mypasswd`</br>
 `lrwxrwxrwx. 1 sysadmin sysadmin 11 Oct 31 13:17 mypasswd -> /etc/passwd`
 
-A symbolic link has an l as the file type lrwxrwxrwx, while a hard link doesn’t. 
+N/B: A symbolic link has an l as the file type lrwxrwxrwx, while a hard link doesn’t. 
+These symbols are often referred to as file type indicators or file mode indicators. They provide information about the type of file or special file in a Unix-like operating system such as Linux.
+-: Regular file.
+d: Directory. Represented as /.
+l: Symbolic link. Similar to a shortcut in Windows. Represented as @.
+b: Block device.
+c: Character device.
+s: Socket. Used by processes to communicate. Represented as (symbol).
+p: Named pipe. Used by processes to communicate through pipes. Represented as |.
 
 ## SORT
 
@@ -402,7 +734,7 @@ Sorting in Linux refers to arranging data in a specified order, typically alphab
 `sort -k3 -t ”:” -r -n /etc/passwd`
 
 * -k3: Specifies that sorting should be based on the third field.
-* -t ":": Specifies : as the field delimiter.
+* -t ":": Specifies: as the field delimiter.
 * -r: Specifies that sorting should be done in reverse order.
 * -n: Specifies that sorting should be done numerically.
 
@@ -444,7 +776,7 @@ The mode of operation in Vim can be categorized into Command mode, Insert mode, 
   - a: Inserts text after the cursor.</br>
   - A: Appends text at the end of the line.
 
-- Last Line Mode: Accessed by typing : in Command mode, Last Line mode is used for commands that apply to the entire file or for performing actions like searching and replacing. Common Last Line mode commands include:</br></br>
+- Last Line Mode: Accessed by typing: in Command mode, Last Line mode is used for commands that apply to the entire file or for performing actions like searching and replacing. Common Last Line mode commands include:</br></br>
   -  :%s/string/replacement/g: Search for a pattern and replace all occurrences.</br>
   -  :e!: Undo everything done since the last save.</br>
   -  u: Undo the last event.</br>
