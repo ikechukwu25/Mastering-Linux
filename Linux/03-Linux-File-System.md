@@ -1,3 +1,5 @@
+# LINUX FILE SYSTEM
+
 The Linux file system is a hierarchical structure that organizes and stores data on a Linux-based operating system. It provides a unified way to manage files, directories, devices, and other resources.# Filesystem Hierarchy Standard
 
 The FHS standard categorizes each system directory in a couple of ways:
@@ -5,8 +7,8 @@ The FHS standard categorizes each system directory in a couple of ways:
 * A directory can be categorized as either shareable or not, referring to whether the directory can be shared on a network and used by multiple machines.
 * The directory is put into a category of having either static files (file contents won't change) or variable files (file contents can change).
 
-
 The FHS standard defines four hierarchies of directories used in organizing the files of the filesystem. The top-level or root hierarchy follows:
+
 | Directory	| Contents |
 |--------|--------|
 | /	| The base of the structure, or root of the filesystem, this directory unifies all directories regardless of whether they are local partitions, removable devices or network shares |
