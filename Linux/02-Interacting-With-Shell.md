@@ -614,7 +614,7 @@ Here are some common commands for navigating between directories:
 
 Listed below are the commands utilized for accessing a file:
 
-cat, less, more, head, tail, vim, nano
+`cat, less, more, head, tail, vim, nano`
 
 - `cat`: The `cat` command is a simple utility for viewing the content of a file. It's often used to display the entire contents of a file.
     - e.g. `cat ./filename` = This displays the contents of the file named "filename" which is located in the current directory
@@ -819,6 +819,29 @@ The mode of operation in Vim can be categorized into Command mode, Insert mode, 
   -  :syntax off: Disables syntax coloring.</br>
   -  :syntax on: Enables syntax coloring.</br>
   -  :number: Jumps to a specific line number.
+ 
+
+Press each of the following keys once or twice and observe how the cursor moves. Remember that you are in command mode:+wq!+
+
+ | Key | Function |
+ |-------|-------|
+| j |	Moves cursor down one line (same as down arrow) |
+| k |	Moves cursor up line (same as up arrow) |
+| l |	Moves cursor to the right one character (same as right arrow) |
+| h |	Moves the cursor to the left one character (same as a left arrow) |
+| w |	Moves cursor to the beginning of next word |
+| e |	Moves cursor to end of word |
+| b |	Moves cursor to the beginning of the previous word |
+
+
+| Keys | Function |
+|-------|-------|
+| $ |	Moves cursor to end of the current line (same as End key) |
+| 0 (zero) | Moves the cursor to the beginning of the current line (same as the Home key) |
+| 3G |	Jumps to the third line (nG jumps to the nth line) |
+| 1G |	Jumps to the first-line |
+| Shift+G |	Jumps to the last line |
+
 
 Additionally, you can customize Vim settings by creating a .vimrc configuration file in your home directory.
 
