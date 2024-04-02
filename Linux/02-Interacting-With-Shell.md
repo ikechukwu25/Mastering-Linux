@@ -36,7 +36,9 @@ Local or shell variables exist only in the current shell, and cannot affect o
 ##### ENVIRONMENT VARIABLES
 Environment variables, also called global variables, are available system-wide, in all shells used by Bash when interpreting commands and performing tasks.
 
-The **HISTSIZE** variable defines how many previous commands to store in the history list. When run without arguments, the `env` command outputs a list of the environment variables. The `export` command is used to turn a local variable into an environment variable.
+The **HISTSIZE** variable defines how many previous commands to store in the history list. 
+
+When run without arguments, the `env` command outputs a list of the environment variables. The `export` command is used to turn a local variable into an environment variable.
 
 `export MY_VARIABLE="World"`
 
@@ -54,6 +56,10 @@ So, if variable1 had the value "Something" and variable2 had the value "Else", a
 
 ##### PATH VARIABLE
 One of the most important Bash shell variables to understand is the PATH variable. It contains a list that defines which directories the shell looks in to find commands. If a valid command is entered and the shell returns a "command not found" error, it is because the Bash shell was unable to locate a command by that name in any of the directories included in the path.
+
+By default, the PATH variable often includes directories like /usr/bin, /bin, /usr/sbin, and /sbin, among others.
+
+For instance, if you type `ls` in the shell, it will search for the `ls` command in these directories specified in the PATH.
 
 ### EXTERNAL COMMANDS
 External commands are binary executables stored in directories that are searched by the shell. If a user types the ls command, then the shell searches through the directories that are listed in the PATH variable to try to find a file named ls that it can execute.
