@@ -74,45 +74,6 @@ function_name () </br>
     commands </br>
 } </br>
 
-# FILE PATHS
-
-Paths in the Linux file system are indeed divided into two categories: Absolute paths and Relative paths.
-
-- **Absolute Path**:
-An absolute path specifies the exact location of a file or directory in the file system hierarchy.
-It begins from the root directory (/) and includes all directories leading to the target file or directory.
-Example: `/var/log` is an absolute path that specifies the location of the log directory within the var directory.
-
-- **Relative Path**:
-A relative path specifies the location of a file or directory relative to the current working directory.
-It does not begin with the root directory (/).
-Example: If the current working directory is `/home/user`, then `./Documents/file.txt` is a relative path that specifies the location of the `file.txt` within the Documents directory relative to the current directory.
-
-**Special Directory References**: These symbols provide convenient ways to reference specific directories in relation to the current working directory or the user's home directory, particularly while using a relative path.
-
-- .  = the current working directory
-- .. = the parent directory
-- ~  = the user's home directory
-- /  = the root directory
-
-**File Type Indicators**: These symbols are often referred to as file type indicators or file mode indicators. They provide information about the type of file or special file in a Unix-like operating system such as Linux. 
-
-* -: Regular file.
-* d: Directory. Represented as /.
-* l: Symbolic link. Similar to a shortcut in Windows. Represented as @.
-* b: Block device.
-* c: Character device.
-* s: Socket. Used by processes to communicate. Represented as (symbol).
-* p: Named pipe. Used by processes to communicate through pipes. Represented as |.
-
-For example, if you execute the command ls -l in a directory, you may see output like: 
-
-`lrwxrwxrwx 1 user group   10 Jan 1 00:00 link -> targetfile` (symbolic link) </br>
-`drwxr-xr-x 2 user group 4096 Jan 1 00:00 directory/` (directory)</br>
-`-rw-r--r-- 1 user group 1024 Jan 1 00:00 example.txt` (regular file)
-
-These indicators are typically displayed in the leftmost column of the output and indicate the file type. Understanding these symbols aids in navigating and comprehending the structure and content of the Linux file system. 
-
 
 # GLOBBING
 
@@ -387,32 +348,6 @@ The `watch` command in Linux is used to execute a command periodically and displ
 
 `watch -n 1 -d ls`: is used to continuously monitor and display the output of the current directory with a 1-second refresh rate (-n 1) and with differences highlighted (-d)
 
-## OUTPUT REDIRECTION
-
-In Linux, the ">" symbol is used for output redirection, allowing users to redirect the output of a command to a file. This simple yet powerful feature enables efficient file creation and manipulation. For example;
-
-`ls -l > ls.txt` =  a new file is created and the `ls -l` command is now seen when the ls.txt file is opened. 
-
-To redirect another command to the same file and not overwrite = `ls -l > ls.txt`
-
-'>' = overwrite </br>
-'>>' = append
-
-## ADVANCED CONSTRUCTS FOR STREAM MANAGEMENT:
-
-Two constructs, `2>&1` and `|&`, provide advanced functionality for handling both the standard output (stdout) and standard error (stderr) streams.
-
-`2>&1`: Redirects stderr to stdout. It combines error messages with regular output, facilitating unified stream processing.
-
-Example 1: Redirect stderr to stdout and then to a file: `ls -l /nonexistent 2>&1 > error.log` </br>
-Example 2: Redirect stderr to stdout and display both on the terminal: `ls -l /nonexistent 2>&1` </br>
-
-`|&`: Combines stdout and stderr using a pipe. It's useful for the simultaneous processing of both streams.
-
-Example: Combine stdout and stderr and count the lines using wc: `ls -l /nonexistent |& wc -l`
-
-These constructs enhance command-line operations by enabling efficient management and processing of both stdout and stderr streams.
-
 ## VIEWING FILES USING A PAGER
 
 While viewing small files with the cat command poses no problems, it is not an ideal choice for large files. The cat command doesn't provide any easy ways to pause and restart the display, so the entire file contents are dumped onto the screen.
@@ -597,7 +532,6 @@ Using bzip2 and bunzip2 to compress and uncompress a file is very similar to
 `gzip` and `gunzip` = are used to compress and extract a file or directory respectively. (.gz files) </br>
 `bzip2` and `bunzip2` = are used to compress and extract a file or directory respectively. (.bz2 files)
 
-
 ## NAVIGATION COMMANDS
 
 Navigation in a Linux system primarily involves moving between directories and exploring the file system. It is important to note these paths in a Linux system; 
@@ -615,31 +549,6 @@ Here are some common commands for navigating between directories:
     - `ls -l /home/ikechukwu` = lists the contents of the directory named "ikechukwu" in a long listing format.
     - `ls -lhS /etc/` = Shows the content of the etc dir in a human-readable format (-h) and sorted by file size in descending order (-S).
     - `ls -ld` = This command lists information about the current working directory without recursively listing its contents.
-- `mkdir`: This command is used to create a directory.  
-    - `mkdir -p /ikechukwu/solidity` = It creates the directory Ikechukwu with a directory solidity. The `-p` option ensures that if the parent directories (ikechukwu) do not exist, they will be created recursively.
-    - `mkdir -v /ikechukwu/solidity` = The `-v` option is used to make the `mkdir` command operate in "verbose" mode, which means it will display a message for each directory it creates, showing the name of the directory.
-- `mv`: The mv command in Linux is used to move or rename files and directories.
-    - `mv ./Odoemenam/us.txt ./Ikechukwu` = This command moves the file us.txt from the directory Odoemenam to the directory Ikechukwu.
-    - `mv ./Odoemenam ./Ikechukwu` = This command renames the directory Odoemenam to Ikechukwu.
-    - `mv -i source destination` = The -i option activates interactive mode, prompting the user for confirmation before overwriting existing files or performing any other action.
-
-Listed below are the commands utilized for accessing a file:
-
-`cat, less, more, head, tail, vim, nano`
-
-- `cat`: The `cat` command is a simple utility for viewing the content of a file. It's often used to display the entire contents of a file.
-    - e.g. `cat ./filename` = This displays the contents of the file named "filename" which is located in the current directory
-- `less`: The `less` command is a pager that allows you to view files one page at a time. It provides navigation and search capabilities for larger files. To navigate in `less`, you can use the arrow keys, Page Up, Page Down, and the / or ? key to search.
-    - e.g. `less ../filename` = allows you to view the contents of the file named "filename" which is located in the parent directory (one level up) relative to your current directory
-- `more`: Similar to `less`, the `more` command also allows viewing files one page at a time. While it has fewer features than the `less` command, however, the `less` command isn't included with all Linux distributions. The `more` command is always available.
-    - e.g. `more filename`
-- `head`: The `head` command as mentioned earlier displays the beginning (or top) of a file. By default, it shows the first 10 lines of a file.
-    - e.g. `head filename`
-- `tail`: The tail command displays the end (or bottom) of a file. By default, it shows the last 10 lines of a file. However, you can specify a different number of lines to display using the -n option followed by the desired number of lines.
-    - e.g. `tail -n 2 /etc/syslog` = Shows the last two lines.
-    - `tail -n +20 /etc/syslog` = shows the lines from the 20th to the last.
-- `touch`: This command is used to create a file. If the file already exists, touch updates the file's access and modification timestamps to the current time.
-    - `touch file1.txt file2.txt file3.txt` = This command creates three new empty files named file1.txt, file2.txt, and file3.txt in the current directory.
 
 ## COMPARING FILES
 
@@ -675,97 +584,6 @@ Additionally, the `$HISTCONTROL` environment variable allows control over histor
 
 `echo “HISTCONTROL=ignoreboth” >> .bashrc`: This command appends the command to the shell instructing the shell to ignore duplicate commands and commands preceded by spaces when recording command history.
 
-## TIME STAMPS
-
-Every file on Linux has three timestamps:
-
-1. The access timestamp or `atime` is the last time the file was read (`Is -lu`)
-2. The modified timestamp or `mtime` is the last time the contents of the file was modified
-(`Is -1`, `ls -It`)
-3. The changed timestamp `ctime` is the last time when some metadata related to the file
-was changed (`Is -Ic`)
-
-The `stat` command shows the access, modification, and change information. 
-
-The `touch` command is used to alter some of the `stat` information. 
-
-`touch -m filename` = modifies the modification and the change time to the current system time.  </br>
-`touch -t file name` = always followed by a date format which modifies the date for the specified date selection. </br>
-`touch -d “date format” file name` = This changes both the access and modification time to a specified date. </br>
-`touch -a` = change only access time </br>
-`touch filename` = changes access time, modification time, change time. 
-
-The -d and -t options in commands like `touch` or `date` indeed allow for specifying different date/time formats: 
-
--d = “year-month-day hour:minute:second” For example; </br> 
-`touch -d "2023-07-15 14:30:00" filename` </br>
--t = "yearmonthdayhourminute.second" For example; </br> 
-`touch -t 202307151430.00 filename`</br>
--r = to make two files share the same timestamps. For example; </br> 
-`touch -r file1.txt file2.txt`
-
-## LINKS
-
-Consider a scenario where there is a file deeply buried in the file system called:
-
-`/usr/share/doc/superbigsoftwarepackage/data/2013/october/tenth/valuable-information.txt`
-
-Another user routinely updates this file, and you need to access it regularly. The long file name is not an ideal choice for you to type, but the file must reside in this location. It is also updated frequently, so you can't simply make a copy of the file.
-In a situation like this, links come in handy. You can create a file that is linked to the one that is deeply buried. This new file could be placed in the home directory or any other convenient location. When you access the linked file, it accesses the contents of the valuable-information.txt file.
-Each linking method, hard and symbolic, results in the same overall access, but uses different techniques. There are pros and cons to each method, so knowing both techniques and when to use them is important.
-
-#### **CREATING HARD LINKS**
-
-For every file created, there is a block of data on the file system that stores the metadata of the file. Metadata includes information about the file like the permissions, ownership, and timestamps. Metadata does not include the file name or the contents of the file, but it does include just about all other information about the file. This metadata is called the file's **inode table**.
-
-Every file on a partition has a unique identification number called an inode number. The ls -i command displays the inode number of a file.
-
-`ikechukwu@ubuntu-22-04-3:~$ ls -i /tmp/file.txt`                                    
-`215220874 /tmp/file.txt`  
-
-Like users and groups, what defines a file is not its name, but rather the number it has been assigned.　For each file, there is also an entry that is stored in a directory's data area (data block) that links the file's name with its inode number. Eg
-
-| File Name | Inode Number |
-|----------|----------|
-| passwd | 123 |
-| group | 144 |
-
-Hard links are two file names that point to the same inode. For example, consider the following directory entries:
-
-| File Name | Inode Number |
-|----------|----------|
-| passwd | 123 |
-| mypasswd | 123 |
-| group | 144 |
-
-Because both the passwd and mypasswd files have the same inode number, they essentially are the same file. You can access the file data using either file name.
-
-To create hard links, the ln command is used with two arguments. The first argument is an existing file name to link to, called a target, and the second argument is the new file name to link to the target.
-
-When the ln command is used to create a hard link, the link count number increases by one for each additional filename:
-
-`ikechukwu@ubuntu-22-04-3:~$ ln file.original file.hard.1`</br> 
-`ikechukwu@ubuntu-22-04-3:~$ ls -li file.*`</br> 
-`278772 -rw-rw-r--. 2 sysadmin sysadmin 5 Oct 25 15:53 file.hard.1`</br> 
-`278772 -rw-rw-r--. 2 sysadmin sysadmin 5 Oct 25 15:53 file.original`
-
-To find the other linked files with the inode number, run the command;
-`find . -inum 3151382`
-
-#### **CREATING SYMBOLIC LINKS**
-
-A symbolic link, also called a soft link, is simply a file that points to another file.
-
-To create a symbolic link, use the `-s` option with the `ln` command:
-
-`ln -s target link_name`
-
-`ikechukwu@ubuntu-22-04-3:~$  ln -s /etc/passwd mypasswd`</br>
-`ikechukwu@ubuntu-22-04-3:~$  ls -l mypasswd`</br>
-`lrwxrwxrwx. 1 sysadmin sysadmin 11 Oct 31 13:17 mypasswd -> /etc/passwd`
-
-N/B: A symbolic link has an l as the file type lrwxrwxrwx, while a hard link doesn’t. 
-
 ## SORT
 
 Sorting in Linux refers to arranging data in a specified order, typically alphabetically or numerically, using the `sort` command. This command is versatile and allows for various sorting options and configurations.
@@ -791,74 +609,4 @@ To sort first by the operating system (field #2) and then by year (field #1) and
 | -k2 |	Sort by field #2 |
 | -k1n |	Numerically sort by field #1 |
 | -k3 |	Sort by field #3 |
-
-## TEXT EDITORS
-
-Most Linux systems provide a choice of text editors which are commonly used at the console to edit configuration files. The two main applications are Vi (or the more modern Vim) and Emacs. Both Vi and Emacs are complex and have a steep learning curve, which is not helpful for simple editing of a small text file. Therefore, Pico and Nano are available on most systems and provide very basic text editing.
-
-The mode of operation in Vim can be categorized into Command mode, Insert mode, and Last Line mode.
-
-- Command Mode: Upon opening Vim, you're in Command mode. Here, characters are interpreted as commands. Common commands include: </br></br>
-  -  X: Deletes characters under the cursor.</br>
-  -  R: Replaces the character under the cursor.</br>
-  -  :: Moves the cursor to the Last Line mode.</br>
-  -  :w!: Saves the file without closing Vim.</br>
-  -  :q!: Closes Vim without saving.</br>
-  -  :wq! or Shift + zz: Saves the file and closes Vim.</br>
-  -  Pressing the Esc button takes you back to Command mode.
-
-- Insert Mode: Press i, I, a, A, o, or O to enter Insert mode. Common insert commands include:</br></br>
-  - i: Inserts text before the cursor.</br>
-  - I: Insert text at the beginning of the current line.</br>
-  - o: Insert text on a new line below the current line.</br>
-  - O: Inserts text on a new line above the current line.</br>
-  - a: Inserts text after the cursor.</br>
-  - A: Appends text at the end of the line.
-
-- Last Line Mode: Accessed by typing: in Command mode, Last Line mode is used for commands that apply to the entire file or for performing actions like searching and replacing. Common Last Line mode commands include:</br></br>
-  -  :%s/string/replacement/g: Search for a pattern and replace all occurrences.</br>
-  -  :e!: Undo everything done since the last save.</br>
-  -  u: Undo the last event.</br>
-  -  Ctrl + R: Redo.</br>
-  -  dd: Cut. </br>
-  -  p: Paste.</br>
-  -  10 + dd: Cut 10 lines from the cursor.</br>
-  -  V: Highlight text for copying.</br>
-  -  y: Copy.</br>
-  -  G: Moves to the bottom of the file.</br>
-  -  gg: Moves to the first line of the file.</br>
-  -  :set nu: Enables line numbering.</br>
-  -  :set nonu: Disables line numbering.</br>
-  -  :syntax off: Disables syntax coloring.</br>
-  -  :syntax on: Enables syntax coloring.</br>
-  -  :number: Jumps to a specific line number.
- 
-
-Press each of the following keys once or twice and observe how the cursor moves. Remember that you are in command mode:+wq!+
-
- | Key | Function |
- |-------|-------|
-| j |	Moves cursor down one line (same as down arrow) |
-| k |	Moves cursor up line (same as up arrow) |
-| l |	Moves cursor to the right one character (same as right arrow) |
-| h |	Moves the cursor to the left one character (same as a left arrow) |
-| w |	Moves cursor to the beginning of next word |
-| e |	Moves cursor to end of word |
-| b |	Moves cursor to the beginning of the previous word |
-
-
-| Keys | Function |
-|-------|-------|
-| $ |	Moves cursor to end of the current line (same as End key) |
-| 0 (zero) | Moves the cursor to the beginning of the current line (same as the Home key) |
-| 3G |	Jumps to the third line (nG jumps to the nth line) |
-| 1G |	Jumps to the first-line |
-| Shift+G |	Jumps to the last line |
-
-
-Additionally, you can customize Vim settings by creating a `.vimrc` configuration file in your home directory.
-
-Different command line options can be used to open multiple files simultaneously or to display files in split windows for comparison, such as -o or -d for `vimdiff` mode.
-
-To practice Vim, you can run `vimtutor` in your terminal.
 
