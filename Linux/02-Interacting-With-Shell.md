@@ -26,7 +26,7 @@ A variable is a feature that allows the user or the shell to store data. his da
 Local or shell variables exist only in the current shell, and cannot affect other commands or applications. When the user closes a terminal window or shell, all of the variables are lost. 
 
 `ikechukwu@ubuntu-22-04-3:~$ variable1='Something'` </br>
-`ikechukwu@ubuntu-22-04-3:~$ echo $variable1`  </br>                            
+`ikechukwu@ubuntu-22-04-3:~$ echo $variable1`</br>
 `Something`
 
 ##### ENVIRONMENT VARIABLES
@@ -40,10 +40,10 @@ After executing this command, whenever you reference $MY_VARIABLE in your shell 
 
 To concatenate the value of two environment variables, use the assignment expression:
 
-`ikechukwu@ubuntu-22-04-3:~$ variable1="Something"`
-`ikechukwu@ubuntu-22-04-3:~$ variable2="Else"`
-`ikechukwu@ubuntu-22-04-3:~$ variable1=$"variable1 $variable2"`              
-`ikechukwu@ubuntu-22-04-3:~$ echo $variable1`                                
+`ikechukwu@ubuntu-22-04-3:~$ variable1="Something"` </br>
+`ikechukwu@ubuntu-22-04-3:~$ variable2="Else"`</br>
+`ikechukwu@ubuntu-22-04-3:~$ variable1=$"variable1 $variable2"`</br>
+`ikechukwu@ubuntu-22-04-3:~$ echo $variable1`</br>
 `Something Else`
 
 So, if variable1 had the value "Something" and variable2 had the value "Else", after executing these commands, variable1 will have the value "Something Else".
@@ -85,7 +85,7 @@ Example: If the current working directory is `/home/user`, then `./Documents/fil
 - ~  = the user's home directory
 - /  = the root directory
 
-**File Type Indicators**: These symbols are often referred to as file type indicators or file mode indicators. They provide information about the type of file or special file in a Unix-like operating system such as Linux.
+**File Type Indicators**: These symbols are often referred to as file type indicators or file mode indicators. They provide information about the type of file or special file in a Unix-like operating system such as Linux. 
 
 * -: Regular file.
 * d: Directory. Represented as /.
@@ -95,7 +95,13 @@ Example: If the current working directory is `/home/user`, then `./Documents/fil
 * s: Socket. Used by processes to communicate. Represented as (symbol).
 * p: Named pipe. Used by processes to communicate through pipes. Represented as |.
 
-Understanding these symbols aids in navigating and comprehending the structure and content of the Linux file system.
+For example, if you execute the command ls -l in a directory, you may see output like: 
+
+`lrwxrwxrwx 1 user group   10 Jan 1 00:00 link -> targetfile` (symbolic link)
+`drwxr-xr-x 2 user group 4096 Jan 1 00:00 directory/` (directory)
+`-rw-r--r-- 1 user group 1024 Jan 1 00:00 example.txt` (regular file)
+
+These indicators are typically displayed in the leftmost column of the output and indicate the file type. Understanding these symbols aids in navigating and comprehending the structure and content of the Linux file system. 
 
 
 # GLOBBING
@@ -234,7 +240,7 @@ The range is specified by a standard called the ASCII table. This table is a col
 `3121991`</br>
 `I have 2 dogs.` </br></br>
 Character classes allow you to specify sets of characters that can match at a particular point in the pattern. For example, [aeiou] matches any vowel, [0-9] matches any digit, and [^a-z] matches any character that is not a lowercase letter. [^0-9] is a character class that matches any single character except for digits from 0 to 9.</br></br>
-Suppose you want to search for a pattern containing a sequence of three digits. You can use { } characters with a number to express that you want to repeat a pattern a specific number of times; for example: {3}. The use of the numeric qualifier requires the extended mode of grep. For example; </br>
+Suppose you want to search for a pattern containing a sequence of three digits. You can use { } characters with a number to express that you want to repeat a pattern a specific number of times; for example: {3}. The use of the numeric qualifier requires the extended mode of grep. For example; </br></br>
 `grep -E '[0-9]{3}' passwd`
 
 3. The Asterisk (\*) Character : 
@@ -403,27 +409,32 @@ However, the GNU version of the head command recognises -n -3 as showing al
 - Positive Value Option: 
 The GNU version of the tail command allows for a variation of how to specify the number of lines to be printed. If the `-n` option is used with a number prefixed by the plus sign, then the tail command recognizes this to mean to display the contents starting at the specified line and continuing all the way to the end.
 
-For example: 
-`ls /etc/ssh | nl | tail -5`
-* The `ls /etc/ssh` command lists the contents of the /etc/ssh directory.
+Examples: </br>
+`ls /etc/ssh | nl | head -5`</br>
+* The `ls /etc/ssh` command lists the contents of the `/etc/ssh` directory.
 * nl numbers the lines of the output.
-* tail -5 displays the last 5 lines of the numbered output.
-  
+* `head -5` displays the first 5 lines of the numbered output.
 
+
+`ls /etc/ssh | tail -5 | nl` </br>
+* The `ls /etc/ssh` command lists the contents of the `/etc/ssh` directory.
+* `tail -5` selects the last 5 lines of the output.
+* nl numbers the lines of the selected output.
+  
 Live file changes can be viewed by using the `-f` option to the tail command—useful when you want to see changes to a file as they are happening. 
 
 ## LOCATING FILES
 
 - Locate:
 To locate files efficiently, you can utilize the `locate` and `find` commands. Begin by installing `locate` if not already available on your system `sudo apt install locate`. "Locate" efficiently finds strings within absolute path names by searching its own database. Remember to update the database with `sudo updatedb` before searching for newly created files. For example
-  - `locate -b string` : searches for files with the strings in their name. 
-  - `locate -b "\string"` :  does not use the default *name* searches system but searches for the exact string. 
+  - `locate -b string`: searches for files with the strings in their name. 
+  - `locate -b "\string"`:  does not use the default *name* searches system but searches for the exact string. 
 
 - Which: 
 The `which` command helps find the location of an executable command. For example;
-  - `which ls` : will display the location of the ls command.
-  - `which cd` : won't display anything since cd is a shell built-in command, not an executable.
-  - `which -a locate` : will display all instances of the locate command found in the PATH.
+  - `which ls`: will display the location of the ls command.
+  - `which cd`: won't display anything since cd is a shell built-in command, not an executable.
+  - `which -a locate`: will display all instances of the locate command found in the PATH.
 
 - Find: 
 The find command in Linux is a powerful utility for searching files and directories based on various criteria within a directory hierarchy. It allows users to locate files by specifying conditions such as filenames, modification times, ownership, and more. For example; </br>
@@ -598,11 +609,11 @@ cat, less, more, head, tail, vim, nano
 
 ## COMPARING FILES
 
-- cmp: Compares the contents of two files byte by byte. If the files are identical, no output is displayed. For example;</br>
+- `cmp`: Compares the contents of two files byte by byte. If the files are identical, no output is displayed. For example;</br>
     `cmp /usr/bin/ls ./ls` = Compares the ls file in the bin directory with a file created names ls. When similar, does not give any output. 
-- sha256: Calculates the SHA-256 hash of each file and displays the difference if they are not identical. For example;</br>
+- `sha256`: Calculates the SHA-256 hash of each file and displays the difference if they are not identical. For example;</br>
     `sha256 /usr/bin/ls ./ls` = shows the difference in the hash
-- diff: Used primarily for comparing text files. It shows the actual differences between two files line by line. For example;</br>
+- `diff`: Used primarily for comparing text files. It shows the actual differences between two files line by line. For example;</br>
     `diff linux.txt ours.txt` = The output e.g. `1c1,17` means that the first line in the initial file should be replaced with the 1 - 17th
     lines in the latter file to make them similar.  </br>
     `diff -y /etc/ssh/sshd_config ./sshd_config` = The `-y` option juxtaposes the selected files and shows the contents side by side.
@@ -619,14 +630,14 @@ To manipulate history, various commands and techniques are available:
 `history -d <line number>`: deletes a particular command from the history.</br>
 `history -c`: clears the entire history.
 
-Additionally, the $HISTCONTROL environment variable allows control over history list behavior, with options like ignorespace, ignoredups, ignoreboth, and erasedup.
+Additionally, the `$HISTCONTROL` environment variable allows control over history list behavior, with options like ignorespace, ignoredups, ignoreboth, and erasedup.
 
 * ignorespace: lines that begin with a space are not saved.
 * ignoredups: lines that match the previous line are not saved.
 * ignoreboth: shorthand for ignorespace and ignoredups.
 * erasedups: all previous lines matching the current line are removed from the history.
 
-`echo “HISTCONTROL=ignoreboth” >> .bashrc`: This command appends the command to the shell.
+`echo “HISTCONTROL=ignoreboth” >> .bashrc`: This command appends the command to the shell instructing the shell to ignore duplicate commands and commands preceded by spaces when recording command history.
 
 ## TIME STAMPS
 
@@ -718,14 +729,6 @@ To create a symbolic link, use the `-s` option with the `ln` command:
 `lrwxrwxrwx. 1 sysadmin sysadmin 11 Oct 31 13:17 mypasswd -> /etc/passwd`
 
 N/B: A symbolic link has an l as the file type lrwxrwxrwx, while a hard link doesn’t. 
-These symbols are often referred to as file type indicators or file mode indicators. They provide information about the type of file or special file in a Unix-like operating system such as Linux.
--: Regular file.
-d: Directory. Represented as /.
-l: Symbolic link. Similar to a shortcut in Windows. Represented as @.
-b: Block device.
-c: Character device.
-s: Socket. Used by processes to communicate. Represented as (symbol).
-p: Named pipe. Used by processes to communicate through pipes. Represented as |.
 
 ## SORT
 
