@@ -97,8 +97,8 @@ Example: If the current working directory is `/home/user`, then `./Documents/fil
 
 For example, if you execute the command ls -l in a directory, you may see output like: 
 
-`lrwxrwxrwx 1 user group   10 Jan 1 00:00 link -> targetfile` (symbolic link)
-`drwxr-xr-x 2 user group 4096 Jan 1 00:00 directory/` (directory)
+`lrwxrwxrwx 1 user group   10 Jan 1 00:00 link -> targetfile` (symbolic link) </br>
+`drwxr-xr-x 2 user group 4096 Jan 1 00:00 directory/` (directory)</br>
 `-rw-r--r-- 1 user group 1024 Jan 1 00:00 example.txt` (regular file)
 
 These indicators are typically displayed in the leftmost column of the output and indicate the file type. Understanding these symbols aids in navigating and comprehending the structure and content of the Linux file system. 
