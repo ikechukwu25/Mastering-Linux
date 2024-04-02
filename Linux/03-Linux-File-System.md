@@ -286,4 +286,67 @@ To practice Vim, you can run `vimtutor` in your terminal. Here's an example of h
 
 Open the example.txt file in Vim by typing: `vim example.txt`
 
-You can use the foremmetioned insert commands to input text. 
+You can use the aforementioned insert commands to input text. 
+
+
+# LINKS
+
+Consider a scenario where there is a file deeply buried in the file system called:
+
+`/usr/share/doc/superbigsoftwarepackage/data/2013/october/tenth/valuable-information.txt`
+
+Another user routinely updates this file, and you need to access it regularly. The long file name is not an ideal choice for you to type, but the file must reside in this location. It is also updated frequently, so you can't simply make a copy of the file.
+In a situation like this, links come in handy. You can create a file that is linked to the one that is deeply buried. This new file could be placed in the home directory or any other convenient location. When you access the linked file, it accesses the contents of the valuable-information.txt file.
+Each linking method, hard and symbolic, results in the same overall access, but uses different techniques. There are pros and cons to each method, so knowing both techniques and when to use them is important.
+
+#### **CREATING HARD LINKS**
+
+For every file created, there is a block of data on the file system that stores the metadata of the file. Metadata includes information about the file like the permissions, ownership, and timestamps. Metadata does not include the file name or the contents of the file, but it does include just about all other information about the file. This metadata is called the file's **inode table**.
+
+Every file on a partition has a unique identification number called an inode number. The ls -i command displays the inode number of a file.
+
+`ikechukwu@ubuntu-22-04-3:~$ ls -i /tmp/file.txt`                                    
+`215220874 /tmp/file.txt`  
+
+Like users and groups, what defines a file is not its name, but rather the number it has been assigned.　For each file, there is also an entry that is stored in a directory's data area (data block) that links the file's name with its inode number. Eg
+
+| File Name | Inode Number |
+|----------|----------|
+| passwd | 123 |
+| group | 144 |
+
+Hard links are two file names that point to the same inode. For example, consider the following directory entries:
+
+| File Name | Inode Number |
+|----------|----------|
+| passwd | 123 |
+| mypasswd | 123 |
+| group | 144 |
+
+Because both the passwd and mypasswd files have the same inode number, they essentially are the same file. You can access the file data using either file name.
+
+To create hard links, the ln command is used with two arguments. The first argument is an existing file name to link to, called a target, and the second argument is the new file name to link to the target.
+
+When the ln command is used to create a hard link, the link count number increases by one for each additional filename:
+
+`ikechukwu@ubuntu-22-04-3:~$ ln file.original file.hard.1`</br> 
+`ikechukwu@ubuntu-22-04-3:~$ ls -li file.*`</br> 
+`278772 -rw-rw-r--. 2 sysadmin sysadmin 5 Oct 25 15:53 file.hard.1`</br> 
+`278772 -rw-rw-r--. 2 sysadmin sysadmin 5 Oct 25 15:53 file.original`
+
+To find the other linked files with the inode number, run the command;
+`find . -inum 3151382`
+
+#### **CREATING SYMBOLIC LINKS**
+
+A symbolic link, also called a soft link, is simply a file that points to another file.
+
+To create a symbolic link, use the `-s` option with the `ln` command:
+
+`ln -s target link_name`
+
+`ikechukwu@ubuntu-22-04-3:~$  ln -s /etc/passwd mypasswd`</br>
+`ikechukwu@ubuntu-22-04-3:~$  ls -l mypasswd`</br>
+`lrwxrwxrwx. 1 sysadmin sysadmin 11 Oct 31 13:17 mypasswd -> /etc/passwd`
+
+N/B: A symbolic link has an l as the file type lrwxrwxrwx, while a hard link doesn’t. 
