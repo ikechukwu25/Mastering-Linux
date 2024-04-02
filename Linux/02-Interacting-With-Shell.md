@@ -7,10 +7,14 @@ Linux users prefer the terminal over GUI for its efficiency, flexibility, and po
 
 Once a user has entered a command the terminal then accepts what the user has typed and passes it to a shell. The shell is the command line interpreter that translates commands entered by a user into actions to be performed by the operating system.
 
-The Bash shell also has other popular features, a few of which are listed below:
+In Bash, commands can generally be categorized into various types based on how they are executed and interpreted:
+
+* **Internal commands**: These commands are built into the shell itself and are interpreted directly by the shell without invoking external programs. A good example is the `cd` (change directory) command as it is part of the Bash shell. When a user types the `cd` command, the Bash shell is already executing and knows how to interpret it, requiring no additional programs to be started.
+* **External commands**: These are binary executables stored in directories that are searched by the shell. If a user types the `ls` command, the shell searches through the directories that are listed in the PATH variable to try to find a file named ls that it can execute. 
 * **Scripting**: The ability to place commands in a file and then interpret (effectively use Bash to execute the contents of) the file, resulting in all of the commands being executed. This feature also has some programming features, such as conditional statements and the ability to create functions (AKA subroutines).
-* **Aliases**: The ability to create short nicknames for longer commands.
-* **Variables**: Used to store information for the Bash shell and for the user. These variables can be used to modify how commands and features work as well as provide vital system information.
+* **Aliases**: Aliases are user-defined shortcuts or nicknames for longer commands or command sequences. They are used to simplify frequently used commands or customize the command-line experience. Aliases are typically defined in configuration files like `.bashrc`.
+* **Variables**: These are used to store information for the Bash shell and for the user. These variables can be used to modify how commands and features work as well as provide vital system information.
+* **Executable programs**: These are standalone programs installed on the system that can be executed directly from the command line. Examples include text editors like `vi` or `nano`, compilers like `gcc`, and utilities like `tar` or `curl`.
 
 Here are representations of command line prompts in a Unix/Linux environment. 
 
@@ -643,6 +647,8 @@ Listed below are the commands utilized for accessing a file:
 
 ## HISTORY
 
+To view a limited number of commands, the history command can take a number as a parameter to display exactly that many recent entries. 
+
 The bash shell keeps track of the command history for each user in a file, typically located at .bash_history. The number of commands stored in this file is controlled by the `HISTFILESIZE` (case sensitive) environment variable, while `HISTSIZE` (case sensitive) controls the number of commands stored in memory.
 
 To manipulate history, various commands and techniques are available:
@@ -843,7 +849,7 @@ Press each of the following keys once or twice and observe how the cursor moves.
 | Shift+G |	Jumps to the last line |
 
 
-Additionally, you can customize Vim settings by creating a .vimrc configuration file in your home directory.
+Additionally, you can customize Vim settings by creating a `.vimrc` configuration file in your home directory.
 
 Different command line options can be used to open multiple files simultaneously or to display files in split windows for comparison, such as -o or -d for `vimdiff` mode.
 
