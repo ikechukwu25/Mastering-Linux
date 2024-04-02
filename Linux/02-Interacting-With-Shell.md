@@ -234,7 +234,7 @@ The `grep` command is just one of the many commands that support regular expre
 1. The Period (.) Character : 
 One of the most useful expressions is the period character. It matches any character except for the new line character.
 The pattern r..f would find any line that contained the letter r followed by exactly two characters and then the letter f: </br>
-`ikechukwu@ubuntu-22-04-3:~/Documents$ grep 'r..f' red.txt`</br>
+`ikechukwu@ubuntu-22-04-3:~/Documents$ grep 'r..f' red.txt`</br></br>
 `reef`</br>
 `roof`</br>
 `ikechukwu@ubuntu-22-04-3:~/Documents$ grep '....' red.txt`</br>
@@ -266,7 +266,8 @@ To make the asterisk character useful, it is necessary to create a pattern that 
 `reeed`
 
 4. Anchor (^) Characters : 
-When performing a pattern match, the match could occur anywhere on the line. Anchor characters are one of the ways regular expressions can be used to narrow down search results. They specify whether the match occurs at the beginning of the line or the end of the line.</br></br>
+When performing a pattern match, the match could occur anywhere on the line. Anchor characters are one of the ways regular expressions can be used to narrow down search results. They specify whether the match occurs at the beginning of the line or the end of the line.
+
 The caret (circumflex) ^ character is used to ensure that a pattern appears at the beginning of the line. Eg. </br></br>
 `ikechukwu@ubuntu-22-04-3:~/Documents$ grep '^root' /etc/passwd`</br>
 `root:x:0:0:root:/root:/bin/bash`</br></br>
@@ -275,7 +276,7 @@ The second anchor character $ can be used to ensure a pattern appears at the e
 `B is for Bear`</br>
 `F is for Flower`
 
-5. The Backslash (\\) Character : 
+6. The Backslash (\\) Character : 
 In some cases, you may want to match a character that happens to be a special regular expression character. E.g </br></br>
 `ikechukwu@ubuntu-22-04-3:~/Documents$ grep 're*' newhome.txt` </br>
 `Thanks for purchasing your new home!!` </br>
@@ -295,18 +296,18 @@ The use of extended regular expressions often requires a special option be provi
 | + | Matches previous character repeated one or more times |
 | \| | Alternation or like a logical "or" operator |
 
-1. To match color followed by zero or one u character followed by an r character: </br>
+1. To match color followed by zero or one u character followed by an r character: </br></br>
 `ikechukwu@ubuntu-22-04-3:~/Documents$ grep -E 'colou?r' spelling.txt`</br>
 `American English: Do you consider gray to be a color or a shade?`</br>
 `British English: Do you consider grey to be a colour or a shade?`
 
-2. To match one or more e characters:</br>
+2. To match one or more e characters:</br></br>
 `ikechukwu@ubuntu-22-04-3:~/Documents$ grep -E 'e+' red.txt` </br>
 `red`</br>
 `reef`</br>
 `reeed`
 
-3. To match either gray or grey:</br>
+3. To match either gray or grey:</br></br>
 `ikechukwu@ubuntu-22-04-3:~/Documents$ grep -E 'gray|grey' spelling.txt` </br>
 `American English: Do you consider gray to be a color or a shade?`</br>
 `British English: Do you consider grey to be a colour or a shade?`
