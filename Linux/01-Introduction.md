@@ -283,8 +283,7 @@ There are currently two actual "BSD" licenses approved by OSI, a 2-Clause and a 
 
 FSF licenses, such as GPLv2, are also open-source licenses. However, many open source licenses such as BSD and MIT do not contain the copyleft provisions and are thus not acceptable to the FSF. These licenses are called permissive free software licenses because they are permissive in how you can redistribute the software. You can take BSD-licensed software and include it in a closed software product as long as you give proper attribution.
 
-**DIFFERENCES**
-"Open source" emphasizes the practical benefits of collaborative development and accessibility of source code, while "free software" underscores the ethical and freedom-focused aspects of software usage and distribution.
+The difference between both is that "Open source" emphasizes the practical benefits of collaborative development and accessibility of source code, while "free software" underscores the ethical and freedom-focused aspects of software usage and distribution.
 
 ### CREATIVE COMMONS 
 
