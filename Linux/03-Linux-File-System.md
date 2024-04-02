@@ -180,6 +180,36 @@ Creating files and directories is fundamental in managing a Linux system, allowi
     - `mv -i source destination` = The -i option activates interactive mode, prompting the user for confirmation before overwriting existing files or performing any other action.
  
 
+# FILE TIME STAMPS
+
+Every file on Linux has three timestamps:
+
+1. The access timestamp or `atime` is the last time the file was read (`Is -lu`)
+2. The modified timestamp or `mtime` is the last time the contents of the file were modified
+(`Is -1`, `ls -It`)
+3. The changed timestamp `ctime` is the last time when some metadata related to the file
+was changed (`Is -Ic`)
+
+The `stat` command shows the access, modification, and change information. 
+
+The `touch` command is used to alter some of the `stat` information. 
+
+`touch -m filename` = modifies the modification and the change time to the current system time.  </br>
+`touch -t file name` = always followed by a date format which modifies the date for the specified date selection. </br>
+`touch -d “date format” file name` = This changes both the access and modification time to a specified date. </br>
+`touch -a` = change only access time </br>
+`touch filename` = changes access time, modification time, change time. 
+
+The -d and -t options in commands like `touch` or `date` indeed allow for specifying different date/time formats: 
+
+-d = “year-month-day hour:minute:second” For example; </br> 
+`touch -d "2023-07-15 14:30:00" filename` </br>
+-t = "yearmonthdayhourminute.second" For example; </br> 
+`touch -t 202307151430.00 filename`</br>
+-r = to make two files share the same timestamps. For example; </br> 
+`touch -r file1.txt file2.txt`
+
+
 # OUTPUT REDIRECTION
 
 In Linux, the ">" symbol is used for output redirection, allowing users to redirect the output of a command to a file. This simple yet powerful feature enables efficient file creation and manipulation. For example;
@@ -350,3 +380,4 @@ To create a symbolic link, use the `-s` option with the `ln` command:
 `lrwxrwxrwx. 1 sysadmin sysadmin 11 Oct 31 13:17 mypasswd -> /etc/passwd`
 
 N/B: A symbolic link has an l as the file type lrwxrwxrwx, while a hard link doesn’t. 
+
