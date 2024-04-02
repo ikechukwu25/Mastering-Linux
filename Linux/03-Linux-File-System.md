@@ -2,7 +2,15 @@
 
 The Linux file system is a hierarchical structure that organizes and stores data on a Linux-based operating system. It provides a unified way to manage files, directories, devices, and other resources.
 
-### Filesystem Hierarchy Standard
+### DIRECTORY STRUCTURE
+
+On a Windows system, the top level of the directory structure is called My Computer. Physical devices, such as hard drives, USB drives, and network drives, show up under My Computer and are each assigned a drive letter, such as C: or D:
+
+Like Windows, the Linux directory structure, typically called a filesystem, also has a top level. However instead of My Computer, it is called the root directory, and it is symbolized by the slash (/) character. Additionally, there are no drives in Linux; each physical device is accessible under a directory, as opposed to a drive letter.
+
+Most of the hidden files are customization files, designed to customize how Linux, your shell, or programs work. For example, the .bashrc file in the home directory customizes features of the shell, such as creating or modifying variables and aliases.
+
+### FILESYSTEM HIERARCHY STANDARD
 
 The FHS standard categorizes each system directory in a couple of ways:
 
@@ -46,9 +54,9 @@ While the root filesystem and its contents are considered essential or necessary
 The /usr/local hierarchy is for installation of software that does not originate with the distribution. Often this directory is used for software that is compiled from the source code.
 
 
-Software Application Directories
+#### **Software Application Directories**
 
-Unlike the Windows operating system, where applications may have all of their files installed in a single subdirectory under the C:\Program Files directory, applications in Linux may have their files in multiple directories spread out throughout the Linux filesystem. For Debian-derived distributions, you can execute the dpkg -L packagename command to get the list of file locations. In Red Hat-derived distributions, you can run the rpm -ql packagename command for the list of the locations of the files that belong to that application.
+Unlike the Windows operating system, where applications may have all of their files installed in a single subdirectory under the C:\ Program Files directory, applications in Linux may have their files in multiple directories spread out throughout the Linux filesystem. For Debian-derived distributions, you can execute the `dpkg -L packagename` command to get the list of file locations. In Red Hat-derived distributions, you can run the `rpm -ql packagename` command for the list of the locations of the files that belong to that application.
 
 The executable program binary files may go in the /usr/bin directory if they are included with the operating system, or else they may go into the /usr/local/bin or /opt/application/bin directories if they came from a third party.
 
@@ -63,11 +71,219 @@ The file related to documentation may be stored in one of the following subdirec
 * /usr/share/info
 The global configuration files for an application are most likely to be stored in a subdirectory under the /etc directory, while the personalized configuration files (specific for a user) for the application are probably in a hidden subdirectory of the user's home directory.
 
-
-Library Directories
+#### **Library Directories**
 
 Libraries are files which contain code that is shared between multiple programs. Most library file names end in a file extension of .so, which means shared object.
+
 The libraries that support the essential binary programs found in the /bin and /sbin directories are typically located in either /lib or /lib64.
 
 To support the /usr/bin and /usr/sbin executables, the /usr/lib and /usr/lib64 library directories are typically used.
+
 For supporting applications that are not distributed with the operating system, the /usr/local/lib and /opt/application/lib library directories are frequently used.
+
+
+# FILE PATHS IN LINUX
+
+Paths in the Linux file system are indeed divided into two categories: Absolute paths and Relative paths.
+
+- **Absolute Path**:
+An absolute path specifies the exact location of a file or directory in the file system hierarchy.
+It begins from the root directory (/) and includes all directories leading to the target file or directory.
+Example: `/var/log` is an absolute path that specifies the location of the log directory within the var directory.
+
+- **Relative Path**:
+A relative path specifies the location of a file or directory relative to the current working directory.
+It does not begin with the root directory (/).
+Example: If the current working directory is `/home/user`, then `./Documents/file.txt` is a relative path that specifies the location of the `file.txt` within the Documents directory relative to the current directory.
+
+**Special Directory References**: These symbols provide convenient ways to reference specific directories in relation to the current working directory or the user's home directory, particularly while using a relative path.
+
+- .  = the current working directory
+- .. = the parent directory
+- ~  = the user's home directory
+- /  = the root directory
+
+**File Type Indicators**: These symbols are often referred to as file type indicators or file mode indicators. They provide information about the type of file or special file in a Unix-like operating system such as Linux. 
+
+* -: Regular file.
+* d: Directory. Represented as /.
+* l: Symbolic link. Similar to a shortcut in Windows. Represented as @.
+* b: Block device.
+* c: Character device.
+* s: Socket. Used by processes to communicate. Represented as (symbol).
+* p: Named pipe. Used by processes to communicate through pipes. Represented as |.
+
+For example, if you execute the command ls -l in a directory, you may see output like: 
+
+`lrwxrwxrwx 1 user group   10 Jan 1 00:00 link -> targetfile` (symbolic link) </br>
+`drwxr-xr-x 2 user group 4096 Jan 1 00:00 directory/` (directory)</br>
+`-rw-r--r-- 1 user group 1024 Jan 1 00:00 example.txt` (regular file)
+
+These indicators are typically displayed in the leftmost column of the output and indicate the file type. Understanding these symbols aids in navigating and comprehending the structure and content of the Linux file system. 
+
+
+# FILE TYPES IN LINUX
+
+Knowing the various file types in a Linux system is crucial for understanding their features and functions. Commands like `ls` and `file` are instrumental in providing detailed information about file types and attributes. They empower users and system administrators to efficiently manage and interact with the file system. Examples:
+
+`ls -lF /etc/`: This command lists the contents of the /etc/ directory with detailed information about each entry. </br>
+The `-l` option provides a long listing format, showing file permissions, ownership, size, modification time, and name.</br>
+The `-F` option appends special characters to entries to indicate their file types:</br>
+
+Directories are marked with a trailing slash (/).</br>
+Executable files are marked with an asterisk (*).</br>
+Symbolic links are marked with an at sign (@).</br>
+Socket files are marked with an equal sign (=).</br>
+Named pipes (FIFOs) are marked with a vertical bar (|).
+
+`file /etc/*`: This command displays information about the file types of all entries within the /etc/ directory.</br>
+The file command examines the contents of each file and attempts to determine its type based on magic numbers, file signatures, and other characteristics.</br>
+By specifying /etc/*, the command examines all files within the /etc/ directory.</br>
+The output includes descriptive information about each file's type, such as ASCII text, directory, symbolic link, shell script, etc.
+
+
+# VIEWING FILES
+
+Viewing files in Linux can be accomplished using various commands, these commands offer flexibility and convenience in viewing files of different sizes and formats, catering to the diverse needs of Linux users. Listed below are the primary commands utilized for accessing a file:
+
+`cat, less, more, head, tail, vim`
+
+- `cat`: The `cat` command is a simple utility for viewing the content of a file. It's often used to display the entire contents of a file.
+    - e.g. `cat ./filename` = This displays the contents of the file named "filename" which is located in the current directory
+- `less`: The `less` command is a pager that allows you to view files one page at a time. It provides navigation and search capabilities for larger files. To navigate in `less`, you can use the arrow keys, Page Up, Page Down, and the / or ? key to search.
+    - e.g. `less ../filename` = allows you to view the contents of the file named "filename" which is located in the parent directory (one level up) relative to your current directory
+- `more`: Similar to `less`, the `more` command also allows viewing files one page at a time. While it has fewer features than the `less` command, however, the `less` command isn't included with all Linux distributions. The `more` command is always available.
+    - e.g. `more filename`
+- `head`: The `head` command as mentioned earlier displays the beginning (or top) of a file. By default, it shows the first 10 lines of a file.
+    - e.g. `head filename`
+- `tail`: The tail command displays the end (or bottom) of a file. By default, it shows the last 10 lines of a file. However, you can specify a different number of lines to display using the -n option followed by the desired number of lines.
+    - e.g. `tail -n 2 /etc/syslog` = Shows the last two lines.
+    - `tail -n +20 /etc/syslog` = shows the lines from the 20th to the last.
+- `touch`: This command is used to create a file. If the file already exists, touch updates the file's access and modification timestamps to the current time.
+    - `touch file1.txt file2.txt file3.txt` = This command creates three new empty files named file1.txt, file2.txt, and file3.txt in the current directory.
+
+
+# FILE AND DIRECTORY MANAGEMENT COMMANDS
+
+Creating files and directories is fundamental in managing a Linux system, allowing users to organize data and store information efficiently. Here are some essential commands used for these tasks:
+
+- `touch`: This command is used to create a file. If the file already exists, touch updates the file's access and modification timestamps to the current time.
+    - `touch file1.txt file2.txt file3.txt` = This command creates three new empty files named file1.txt, file2.txt, and file3.txt in the current directory.
+
+- `mkdir`: This command is used to create a directory.  
+    - `mkdir -p /ikechukwu/solidity` = It creates the directory Ikechukwu with a directory solidity. The `-p` option ensures that if the parent directories (ikechukwu) do not exist, they will be created recursively.
+    - `mkdir -v /ikechukwu/solidity` = The `-v` option is used to make the `mkdir` command operate in "verbose" mode, which means it will display a message for each directory it creates, showing the name of the directory.
+
+- `mv`: The mv command in Linux is used to move or rename files and directories.
+    - `mv ./Odoemenam/us.txt ./Ikechukwu` = This command moves the file us.txt from the directory Odoemenam to the directory Ikechukwu.
+    - `mv ./Odoemenam ./Ikechukwu` = This command renames the directory Odoemenam to Ikechukwu.
+    - `mv -i source destination` = The -i option activates interactive mode, prompting the user for confirmation before overwriting existing files or performing any other action.
+ 
+
+# OUTPUT REDIRECTION
+
+In Linux, the ">" symbol is used for output redirection, allowing users to redirect the output of a command to a file. This simple yet powerful feature enables efficient file creation and manipulation. For example;
+
+`ls -l > ls.txt` =  a new file is created and the `ls -l` command is now seen when the ls.txt file is opened. 
+
+To redirect another command to the same file and not overwrite = `ls -l > ls.txt`
+
+'>' = overwrite </br>
+'>>' = append
+
+## ADVANCED CONSTRUCTS FOR STREAM MANAGEMENT:
+
+In Linux command-line operations, managing standard output (stdout) and standard error (stderr) streams is crucial for effective error handling and data processing. Two constructs, `2>&1` and `|&`, provide advanced functionality for handling both the standard output (stdout) and standard error (stderr) streams.
+
+`2>&1`: When the 2>&1 construct is used, it redirects the stderr stream to the stdout stream. This means that error messages generated on stderr are combined with regular output, allowing for unified stream processing.
+
+Example 1: `ls -l /nonexistent 2>&1 > error.log` </br>
+In this example, the `ls -l /nonexistent` command generates an error because the directory /nonexistent does not exist. The `2>&1` construct redirects the stderr output to stdout, and > error.log redirects the combined output (stdout and stderr) to a file named error.log.
+
+Example 2: Redirect stderr to stdout and display both on the terminal: `ls -l /nonexistent 2>&1` </br>
+
+`|&`: The `|&` construct is used to combine the stdout and stderr streams using a pipe (|). This enables simultaneous processing of both streams, which is particularly useful for operations where both types of output need to be analyzed or redirected together.
+
+Example: `ls -l /nonexistent |& wc -l`
+In this example, the ls -l /nonexistent command generates an error because the directory /nonexistent does not exist. The |& construct combines the stdout and stderr streams and passes them as input to wc -l, which counts the number of lines in the combined output.
+
+These advanced constructs enhance command-line operations by providing flexibility in managing and processing both stdout and stderr streams effectively. They are invaluable tools for error handling, debugging, and data analysis tasks in Linux environments.
+
+
+## EDITING TEXT FILES: UNDERSTANDING VIM
+
+Most Linux systems provide a choice of text editors which are commonly used at the console to edit configuration files. The two main applications are Vi (or the more modern Vim) and Emacs. Both Vi and Emacs are complex and have a steep learning curve, which is not helpful for simple editing of a small text file. Therefore, Pico and Nano are available on most systems and provide very basic text editing.
+
+However, Vim, or Vi Improved, is a preferred text editor for many users due to its ubiquity across Unix-like systems, efficiency in navigating and editing text with modal editing, high customizability, powerful features such as syntax highlighting and search functionality
+
+Here's an overview of Vim's modes and commands to aid navigation and editing:
+
+The mode of operation in Vim can be categorized into Command mode, Insert mode, and Last Line mode.
+
+- Command Mode: Upon opening Vim, you're in Command mode. Here, characters are interpreted as commands. Common commands include: </br></br>
+  -  X: Deletes characters under the cursor.</br>
+  -  R: Replaces the character under the cursor.</br>
+  -  :: Moves the cursor to the Last Line mode.</br>
+  -  :w!: Saves the file without closing Vim.</br>
+  -  :q!: Closes Vim without saving.</br>
+  -  :wq! or Shift + zz: Saves the file and closes Vim.</br>
+  -  Pressing the Esc button takes you back to Command mode.
+
+- Insert Mode: Press i, I, a, A, o, or O to enter Insert mode. Common insert commands include:</br></br>
+  - i: Inserts text before the cursor.</br>
+  - I: Insert text at the beginning of the current line.</br>
+  - o: Insert text on a new line below the current line.</br>
+  - O: Inserts text on a new line above the current line.</br>
+  - a: Inserts text after the cursor.</br>
+  - A: Appends text at the end of the line.
+
+- Last Line Mode: Accessed by typing: in Command mode, Last Line mode is used for commands that apply to the entire file or for performing actions like searching and replacing. Common Last Line mode commands include:</br></br>
+  -  :%s/string/replacement/g: Search for a pattern and replace all occurrences.</br>
+  -  :e!: Undo everything done since the last save.</br>
+  -  u: Undo the last event.</br>
+  -  Ctrl + R: Redo.</br>
+  -  dd: Cut. </br>
+  -  p: Paste.</br>
+  -  10 + dd: Cut 10 lines from the cursor.</br>
+  -  V: Highlight text for copying.</br>
+  -  y: Copy.</br>
+  -  G: Moves to the bottom of the file.</br>
+  -  gg: Moves to the first line of the file.</br>
+  -  :set nu: Enables line numbering.</br>
+  -  :set nonu: Disables line numbering.</br>
+  -  :syntax off: Disables syntax coloring.</br>
+  -  :syntax on: Enables syntax coloring.</br>
+  -  :number: Jumps to a specific line number.
+ 
+
+Press each of the following keys once or twice and observe how the cursor moves. Remember that you are in command mode:
+
+ | Key | Function |
+ |-------|-------|
+| j |	Moves cursor down one line (same as down arrow) |
+| k |	Moves cursor up line (same as up arrow) |
+| l |	Moves cursor to the right one character (same as right arrow) |
+| h |	Moves the cursor to the left one character (same as a left arrow) |
+| w |	Moves cursor to the beginning of next word |
+| e |	Moves cursor to end of word |
+| b |	Moves cursor to the beginning of the previous word |
+
+
+| Keys | Function |
+|-------|-------|
+| $ |	Moves cursor to end of the current line (same as End key) |
+| 0 (zero) | Moves the cursor to the beginning of the current line (same as the Home key) |
+| 3G |	Jumps to the third line (nG jumps to the nth line) |
+| 1G |	Jumps to the first-line |
+| Shift+G |	Jumps to the last line |
+
+
+Additionally, you can customize Vim settings by creating a `.vimrc` configuration file in your home directory.
+
+Different command line options can be used to open multiple files simultaneously or to display files in split windows for comparison, such as -o or -d for `vimdiff` mode.
+
+To practice Vim, you can run `vimtutor` in your terminal. Here's an example of how to use Vim; 
+
+Open the example.txt file in Vim by typing: `vim example.txt`
+
+You can use the foremmetioned insert commands to input text. 
