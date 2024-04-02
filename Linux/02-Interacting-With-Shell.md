@@ -310,7 +310,7 @@ Basic commands in a terminal environment serve as fundamental tools for users to
 
 In Linux, getting help is essential for mastering the operating system and its various commands. Here are some common methods to get help:
 
-##### MAN PAGES
+#### MAN PAGES
 
 The Manual Pages (man pages) in Linux systems provide documentation for various commands, functions, system calls, and configurations. By default, there are nine sections in the man pages, each covering different aspects of the system:
 
@@ -345,7 +345,7 @@ NB: The man page is displayed with the less command
 - ?string   => search backward for a string
 - n / N     => next/previous appearance
 
-##### HELP
+#### HELP
 
 When dealing with shell built-in commands in Linux, you can use the `help` command followed by the built-in command name to get information about its usage and options. For example:
 
@@ -386,6 +386,21 @@ To redirect another command to the same file and not overwrite = `ls -l > ls.txt
 
 '>' = overwrite </br>
 '>>' = append
+
+## ADVANCED CONSTRUCTS FOR STREAM MANAGEMENT:
+
+Two constructs, `2>&1` and `|&`, provide advanced functionality for handling both the standard output (stdout) and standard error (stderr) streams.
+
+`2>&1`: Redirects stderr to stdout. It combines error messages with regular output, facilitating unified stream processing.
+
+Example 1: Redirect stderr to stdout and then to a file: `ls -l /nonexistent 2>&1 > error.log` </br>
+Example 2: Redirect stderr to stdout and display both on the terminal: `ls -l /nonexistent 2>&1` </br>
+
+`|&`: Combines stdout and stderr using a pipe. It's useful for the simultaneous processing of both streams.
+
+Example: Combine stdout and stderr and count the lines using wc: `ls -l /nonexistent |& wc -l`
+
+These constructs enhance command-line operations by enabling efficient management and processing of both stdout and stderr streams.
 
 ## VIEWING FILES USING A PAGER
 
@@ -589,7 +604,13 @@ Here are some common commands for navigating between directories:
     - `ls -l /home/ikechukwu` = lists the contents of the directory named "ikechukwu" in a long listing format.
     - `ls -lhS /etc/` = Shows the content of the etc dir in a human-readable format (-h) and sorted by file size in descending order (-S).
     - `ls -ld` = This command lists information about the current working directory without recursively listing its contents.
-- `mkdir` : 
+- `mkdir`: This command is used to create a directory.  
+    - `mkdir -p /ikechukwu/solidity` = It creates the directory Ikechukwu with a directory solidity. The `-p` option ensures that if the parent directories (ikechukwu) do not exist, they will be created recursively.
+    - `mkdir -v /ikechukwu/solidity` = The `-v` option is used to make the `mkdir` command operate in "verbose" mode, which means it will display a message for each directory it creates, showing the name of the directory.
+- `mv`: The mv command in Linux is used to move or rename files and directories.
+    - `mv ./Odoemenam/us.txt ./Ikechukwu` = This command moves the file us.txt from the directory Odoemenam to the directory Ikechukwu.
+    - `mv ./Odoemenam ./Ikechukwu` = This command renames the directory Odoemenam to Ikechukwu.
+    - `mv -i source destination` = The -i option activates interactive mode, prompting the user for confirmation before overwriting existing files or performing any other action.
 
 Listed below are the commands utilized for accessing a file:
 
@@ -606,6 +627,8 @@ cat, less, more, head, tail, vim, nano
 - `tail`: The tail command displays the end (or bottom) of a file. By default, it shows the last 10 lines of a file. However, you can specify a different number of lines to display using the -n option followed by the desired number of lines.
     - e.g. `tail -n 2 /etc/syslog` = Shows the last two lines.
     - `tail -n +20 /etc/syslog` = shows the lines from the 20th to the last.
+- `touch`: This command is used to create a file. If the file already exists, touch updates the file's access and modification timestamps to the current time.
+    - `touch file1.txt file2.txt file3.txt` = This command creates three new empty files named file1.txt, file2.txt, and file3.txt in the current directory.
 
 ## COMPARING FILES
 
