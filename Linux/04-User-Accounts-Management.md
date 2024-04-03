@@ -62,35 +62,28 @@ We'll use the previous has in the shadow file as an example;
 
 The `/etc/shadow` file contains critical security information related to user passwords on Unix-like systems. Each entry in this file represents a user account and includes various fields about password management and security policies. Understanding and managing entries in /etc/shadow is essential for maintaining the integrity and security of user authentication on the system. 
 
-Below are the key details found in the `/etc/shadow` file:
+Here are the crucial parameters extracted from the /etc/shadow entry for the user "seun"  seun:`$y$j9T$aByJlLDW1APOvddbxH0oC1$aUSViRiZM.iy8qnvsJviLk78cfXh40p1YzGh5LTnyO8`:19733:5:99999:7:60:15050:
 
-- Password:</br>
-seun:`$y$j9T$aByJlLDW1APOvddbxH0oC1$aUSViRiZM.iy8qnvsJviLk78cfXh40p1YzGh5LTnyO8`:19733:5:99999:7:60:15050: </br>
+- Password: `$y$j9T$aByJlLDW1APOvddbxH0oC1$aUSViRiZM.iy8qnvsJviLk78cfXh40p1YzGh5LTnyO8`</br>
 The password field contains the encrypted password for the account. This very long string is a one-way encryption, meaning that it can't be "reversed" to determine the original password.
   
-- Last Change:</br>
-seun:$y$j9T$aByJlLDW1APOvddbxH0oC1$aUSViRiZM.iy8qnvsJviLk78cfXh40p1YzGh5LTnyO8:`19733`:5:99999:7:60:15050: </br>
+- Last Change: `19733` </br>
 This field contains a number that represents the last time the password was changed. The number 19733 is the number of days since January 1, 1970 (called the **Epoch**).
 
-- Minimum: </br>
-seun:$y$j9T$aByJlLDW1APOvddbxH0oC1$aUSViRiZM.iy8qnvsJviLk78cfXh40p1YzGh5LTnyO8:19733:`5`:99999:7:60:15050: </br>
+- Minimum: `5` </br>
 This field indicates the minimum number of days between password changes. It is one of the password aging fields; a non-zero value in this field indicates that after a user changes their password, the password can't be changed again for the specified number of days, 5 days in this example.
 
-- Maximum: </br>
-seun:$y$j9T$aByJlLDW1APOvddbxH0oC1$aUSViRiZM.iy8qnvsJviLk78cfXh40p1YzGh5LTnyO8:19733:5:`99999`:7:60:15050: </br>
+- Maximum: `99999` </br>
 This field indicates the maximum number of days the password is valid. It is used to force users to change their passwords on a regular basis. A value of 30 in this field means the user must change their password at least every 30 days to avoid having their account locked out.</br>
 Setting a maximum password age without a corresponding minimum password age could allow users to reset their password to the original value immediately after changing it, potentially undermining the security intention of regular password changes. Therefore, it's advisable to set both minimum and maximum password ages to enforce password rotation policies effectively.
 
-- Warn: </br>
-seun:$y$j9T$aByJlLDW1APOvddbxH0oC1$aUSViRiZM.iy8qnvsJviLk78cfXh40p1YzGh5LTnyO8:19733:5:99999:`7`:60:15050: </br>
+- Warn:  `7` </br>
 If the maximum field is set, the warning field indicates the number of days before password expiry that the system warns the user. 
 
-- Inactive: </br>
-seun:$y$j9T$aByJlLDW1APOvddbxH0oC1$aUSViRiZM.iy8qnvsJviLk78cfXh40p1YzGh5LTnyO8:19733:5:99999:7:`60`:15050: </br>
+- Inactive: `60` </br>
 If the user ignores the warnings and exceeds the password timeframe, their account will be locked out. In that case, the inactive field provides the user with a "grace" period in which their password can be changed, but only during the login process. If the inactive field is set to 60, the user has 60 days to change to a new password. If they fail to do so, then the administrator would be needed to reset the password for the user.
 
-- Expire: </br>
-seun:$y$j9T$aByJlLDW1APOvddbxH0oC1$aUSViRiZM.iy8qnvsJviLk78cfXh40p1YzGh5LTnyO8:19733:5:99999:7:60:`15050`: </br>
+- Expire: `15050` </br>
 This field indicates the day the account will expire, represented by the number of days from January 1, 1970. An expired account is locked, not deleted, meaning the administrator can reset the password to unlock the account
 
 N/B: In addition to the grep command, another technique for retrieving user information contained in the `/etc/passwd` and `/etc/shadow` files is to use the `getent` command. 
