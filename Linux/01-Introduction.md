@@ -304,13 +304,5 @@ These conditions are then combined to create the six main licenses offered by Cr
 * **Attribution-NonCommercial-ShareAlike (CC BY-NC-SA)** – Builds on the CC BY-NC license but requires that your changes be shared under the same license.
 * **Attribution-NonCommercial-NoDerivs (CC BY-NC-ND)** – You are sharing the content to be used for non-commercial purposes, but people may not change the content.
 * **No Rights Reserved (CC0)** – This is the Creative Commons version of the public domain.
-  
 
-# DIRECTORY STRUCTURE
-
-On a Windows system, the top level of the directory structure is called My Computer. Physical devices, such as hard drives, USB drives, and network drives, show up under My Computer and are each assigned a drive letter, such as C: or D:
-
-Like Windows, the Linux directory structure, typically called a filesystem, also has a top level. However instead of My Computer, it is called the root directory, and it is symbolized by the slash (/) character. Additionally, there are no drives in Linux; each physical device is accessible under a directory, as opposed to a drive letter.
-
-Most of the hidden files are customization files, designed to customize how Linux, your shell, or programs work. For example, the .bashrc file in the home directory customizes features of the shell, such as creating or modifying variables and aliases.
 
