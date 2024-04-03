@@ -52,9 +52,9 @@ Knowledge of hashing algorithms and salts aids in evaluating the security of pas
 We'll use the previous has in the shadow file as an example; 
 
 `$y$j9T$aByJlLDW1APOvddbxH0oC1$aUSViRiZM.iy8qnvsJviLk78cfXh40p1YzGh5LTnyO8`
-$type: `$y$` indicates bcrypt hashing.
-$salt: `j9T` is the salt value used.
-$hash: `aByJlLDW1APOvddbxH0oC1` is the resulting hash of the password concatenated with the salt.
-`iy8qnvsJviLk78cfXh40p1YzGh5LTnyO8`: This is the final hash value obtained after applying the bcrypt hashing algorithm, representing the hashed password. It is the output of the password hashing process and is stored in the system for authentication purposes.
+- $type: `$y$` indicates bcrypt hashing.
+- $salt: `j9T` is the salt value used.
+- $hash: `aByJlLDW1APOvddbxH0oC1` is the resulting hash of the password concatenated with the salt.
+- `iy8qnvsJviLk78cfXh40p1YzGh5LTnyO8`: This is the final hash value obtained after applying the bcrypt hashing algorithm, representing the hashed password. It is the output of the password hashing process and is stored in the system for authentication purposes.
 
 
