@@ -98,4 +98,41 @@ Regular user accounts typically have UID values greater than 500 (or 1,000 on so
 
 Accounts with User IDs (UIDs) ranging from 1 to 499 are known as system accounts. They are intended for services and system processes rather than user login.
 
-System accounts have some fields in the /etc/passwd and /etc/shadow files that are different than other accounts. For example, system accounts rarely have home directories as they typically are not used to create or store files. In the /etc/passwd file, system accounts have a non-login program in the shell field:
+System accounts have some fields in the `/etc/passwd` and `/etc/shadow` files that are different than other accounts. For example, system accounts rarely have home directories as they typically are not used to create or store files. In the `/etc/passwd` file, system accounts have a non-login program in the shell field. For example: </br>
+
+`sshd:x:103:65534::/var/run/sshd:/usr/sbin/nologin`
+
+### USER ACCOUNT INFORMATION
+
+| Username | Terminal | Login time | Display |
+|-----|-----|-----|-----|
+| root | tty2 | 2013-10-11 10:00 |   |
+| sysadmin | pts/0 | 2013-10-11 09:59 | (:0.0) |	
+
+This table indicates which terminal window the user is working in. If the terminal name starts with tty, then this is an indication of a local login, as this is a regular command line terminal. If the terminal name starts with pts, then this indicates the user is using a pseudo-terminal or running a process that acts as a terminal.
+
+### USER ACCOUNT MONITORING (whoami, who am i, who, id, w, uptime, last)
+
+- The `who` command in Unix-like operating systems is used to display information about users who are currently logged in to the system. It has several options for displaying system status information. For example, the `-b` option shows the last time the system started (booted), and the `-r` option shows the time the system reached the current run level:</br></br>
+`ikechukwu@ubuntu-22-04-3:~$ who -b -r`</br>
+         system boot  	2013-10-11 09:54</br>
+         run-level 5    2013-10-11 09:54
+
+- The first line of output from the `w` command is identical to that of the `uptime` command. It shows the current time, how long the system has been running, the total number of users currently logged on and the load on the system averaged over the last 1, 5, and 15-minute time periods. Load average is CPU utilization where, for a single-core system, a value of 1 would mean 100% CPU usage during that period of time. For a dual-core system, it would mean 50% CPU usage, and for a quad-core system, it would mean 25% CPU usage.
+
+The following describes the rest of the output of the `w` command:
+
+| Column | Example	| Description |
+|-----|-----|-----|
+| USER	| root	| The name of the user who is logged in. |
+| TTY	| tty2	| Which terminal window the user is working in. | 
+| FROM	| example.com	| Where the user logged in from. |
+| LOGIN@	| 10:00	| When the user logged in. |
+| IDLE	| 43:44	| How long the user has been idle since the last command was executed? |
+| JCPU	| 0.01s	| The total CPU time used by all processes run since login. |
+| PCPU	| 0.01s	| The total CPU time for the current process. |
+| WHAT	| -bash	| The current process that the user is running. |
+
+- The `last` command reads the entire login history from the `/var/log/wtmp` file and displays all logins and reboot records by default. An interesting detail of the reboot records is that it displays the version of the Linux kernel that was booted instead of the login location. The `/var/log/wtmp` file keeps a log of all users who have logged in and out of the system.</br></br>
+The `last` command is slightly different from the `who` and `w` commands. By default, it also shows the username, terminal, and login location, not just of the current login sessions, but previous sessions as well.</br></br>
+The `who` command reads from the `/var/run/utmp` file which logs current users, while the `last` command reads from the `/var/log/wtmp` file, which keeps a history of all user logins.
