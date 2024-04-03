@@ -13,7 +13,7 @@ Example: `backup:x:34:34:backup:/var/backups:/usr/sbin/nologin`
 - `34`: This is the numerical user ID (UID) of the user. It uniquely identifies the user within the system.
 - `34`: This is the numerical group ID (GID) of the user's primary group. It specifies which group the user belongs to.
 - `backup`: This is the user's full name or a description of the user account.
-- `/usr/sbin/nologin`: This is the user's shell. It specifies the command or program that will be executed when the user logs in. In this case, `/usr/sbin/nologin` indicates that the user cannot log in interactively, as it is a special shell that displays a message indicating that the account is not available for login.
+- `/usr/sbin/nologin`: This is the user's shell. It specifies the command or program that will be executed when the user logs in. In this case, `/usr/sbin/nologin` indicates that the user cannot log in interactively, as it is a special shell that displays a message indicating that the account is not available for login. These settings are typically used for system accounts or accounts that should not have interactive shell access for security or administrative reasons.
 
 `/etc/shadow`:
 
@@ -90,3 +90,12 @@ N/B: In addition to the grep command, another technique for retrieving user in
 
 `ikechukwu@ubuntu-22-04-3:~$ getent passwd seun`
 `seun:$y$j9T$aByJlLDW1APOvddbxH0oC1$aUSViRiZM.iy8qnvsJviLk78cfXh40p1YzGh5LTnyO8:19733:5:99999:7:60:15050:`
+
+
+# SYSTEM ACCOUNTS
+
+Regular user accounts typically have UID values greater than 500 (or 1,000 on some systems), while the root user, which has special access to the system, is assigned a UID of 0.
+
+Accounts with User IDs (UIDs) ranging from 1 to 499 are known as system accounts. They are intended for services and system processes rather than user login.
+
+System accounts have some fields in the /etc/passwd and /etc/shadow files that are different than other accounts. For example, system accounts rarely have home directories as they typically are not used to create or store files. In the /etc/passwd file, system accounts have a non-login program in the shell field:
