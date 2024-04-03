@@ -73,7 +73,7 @@ The global configuration files for an application are most likely to be stored i
 
 #### **Library Directories**
 
-Libraries are files which contain code that is shared between multiple programs. Most library file names end in a file extension of .so, which means shared object.
+Libraries are files that contain code that is shared between multiple programs. Most library file names end in a file extension of `.so`, which means "shared object".
 
 The libraries that support the essential binary programs found in the /bin and /sbin directories are typically located in either /lib or /lib64.
 
@@ -91,10 +91,16 @@ An absolute path specifies the exact location of a file or directory in the file
 It begins from the root directory (/) and includes all directories leading to the target file or directory.
 Example: `/var/log` is an absolute path that specifies the location of the log directory within the var directory.
 
+- Begins from the root directory (/).
+- Specifies the location of the syslog file within the log directory, which is within the var directory.
+
 - **Relative Path**:
 A relative path specifies the location of a file or directory relative to the current working directory.
 It does not begin with the root directory (/).
 Example: If the current working directory is `/home/user`, then `./Documents/file.txt` is a relative path that specifies the location of the `file.txt` within the Documents directory relative to the current directory.
+
+- Starts with ./, indicating the current working directory.
+- Specifies the location of the file.txt within the Documents directory relative to the current directory.
 
 **Special Directory References**: These symbols provide convenient ways to reference specific directories in relation to the current working directory or the user's home directory, particularly while using a relative path.
 
@@ -103,7 +109,12 @@ Example: If the current working directory is `/home/user`, then `./Documents/fil
 - ~  = the user's home directory
 - /  = the root directory
 
-**File Type Indicators**: These symbols are often referred to as file type indicators or file mode indicators. They provide information about the type of file or special file in a Unix-like operating system such as Linux. 
+
+# FILE TYPES IN LINUX
+
+In the Linux ecosystem, files serve as the building blocks of the operating system, storing data, configurations, programs, and more. Each file type has its own unique attributes and behaviors, crucial for understanding and effectively managing the system. Knowing the various file types in a Linux system is crucial for understanding their features and functions. 
+
+#### **File Type Indicators**: These symbols are often referred to as file type indicators or file mode indicators. They provide information about the type of file or special file in a Unix-like operating system such as Linux. 
 
 * -: Regular file.
 * d: Directory. Represented as /.
@@ -121,10 +132,7 @@ For example, if you execute the command ls -l in a directory, you may see output
 
 These indicators are typically displayed in the leftmost column of the output and indicate the file type. Understanding these symbols aids in navigating and comprehending the structure and content of the Linux file system. 
 
-
-# FILE TYPES IN LINUX
-
-Knowing the various file types in a Linux system is crucial for understanding their features and functions. Commands like `ls` and `file` are instrumental in providing detailed information about file types and attributes. They empower users and system administrators to efficiently manage and interact with the file system. Examples:
+#### **Useful Commands**: Commands like `ls` and `file` are instrumental in providing detailed information about file types and attributes. They empower users and system administrators to efficiently manage and interact with the file system. Examples:
 
 `ls -lF /etc/`: This command lists the contents of the /etc/ directory with detailed information about each entry. </br>
 The `-l` option provides a long listing format, showing file permissions, ownership, size, modification time, and name.</br>
