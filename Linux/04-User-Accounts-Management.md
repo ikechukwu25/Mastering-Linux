@@ -116,7 +116,7 @@ System accounts have some fields in the `/etc/passwd` and `/etc/shadow` file
 This table indicates which terminal window the user is working in. If the terminal name starts with tty, then this is an indication of a local login, as this is a regular command line terminal. If the terminal name starts with pts, then this indicates the user is using a pseudo-terminal or running a process that acts as a terminal.
 
 
-### USER ACCOUNT MONITORING (whoami, who am i, who, id, w, uptime, last)
+### USER ACCOUNT MONITORING 
 
 - The `who` command in Unix-like operating systems is used to display information about users who are currently logged in to the system. It has several options for displaying system status information. For example, the `-b` option shows the last time the system started (booted), and the `-r` option shows the time the system reached the current run level:</br></br>
   `ikechukwu@ubuntu-22-04-3:~$ who -b -r`</br>
@@ -142,10 +142,10 @@ The following describes the rest of the output of the `w` command:
 The `last` command is slightly different from the `who` and `w` commands. By default, it also shows the username, terminal, and login location, not just of the current login sessions, but previous sessions as well.</br></br>
 The `who` command reads from the `/var/run/utmp` file which logs current users, while the `last` command reads from the `/var/log/wtmp` file, which keeps a history of all user logins.
 
-- The `whoami` command provides a quick way to determine the username of the current user without any additional information. For example:
+- The `whoami` command provides a quick way to determine the username of the current user without any additional information. For example:</br>
   `ikechukwu@ubuntu-22-04-3:~$ whoami`</br>
   The output will display the username - `ikechukwu`
-- The `who am i` command provides more detailed information about the current user's session, including the username ("ikechukwu"), terminal ("pts/0"), login time, and IP address (if available). For example:
+- The `who am i` command provides more detailed information about the current user's session, including the username ("ikechukwu"), terminal ("pts/0"), login time, and IP address (if available). For example:</br>
   `ikechukwu    pts/0    2024-04-02 09:30 (192.168.1.100)`
 - The `id` command serves as a versatile tool for displaying essential information about users and groups on a Linux system. By executing `id` in the terminal followed by a username or group name (or without arguments to display information about the current user), users can obtain details such as the user ID (UID), group ID (GID), and supplementary group memberships associated with the specified user or group.
 
@@ -214,7 +214,8 @@ The `useradd` command provides options to view or modify default user configurat
 
 **Example User Creation**
 
-`sudo useradd -m -d /home/iyke -c "DevOps Engineer" -s /bin/bash -G sudo,adm,mail iyke` = This command effectively creates a new user account named "iyke" with the specified home directory, login shell, user comment, and supplementary groups.
+`sudo useradd -m -d /home/iyke -c "DevOps Engineer" -s /bin/bash -G sudo,adm,mail iyke`: </br>
+This command effectively creates a new user account named "iyke" with the specified home directory, login shell, user comment, and supplementary groups.
 
 The `-m` creates the user's home directory if it doesn't exist.
 The `-d` option specifies the new directory name or the specific location you would like to create it. 
@@ -232,7 +233,8 @@ The `-u` option allows specifying a custom UID for the user account. For compati
 
 `sudo useradd -e 2023-11-6 user2` = This command is used to create a temporary user, then you need to specify an expiration date for the account, using the -e option. 
 
-`root@ubuntu-22-04-3:~# useradd -u 1009 -g users -G sales,research -m -c 'Jane Doe' jane` = This command creates a user named "jane" with UID 1009, primary group users, and supplementary groups sales and research, along with a custom comment, can be achieved with the following command
+`root@ubuntu-22-04-3:~# useradd -u 1009 -g users -G sales,research -m -c 'Jane Doe' jane`: </br>
+This command creates a user named "jane" with UID 1009, primary group users, and supplementary groups sales and research, along with a custom comment, can be achieved with the following command
 
 By leveraging these options and configurations, administrators can efficiently manage user accounts while ensuring optimal security and usability within the Linux environment.
 
@@ -271,11 +273,17 @@ The default permissions for directories are usually 0777 (rwxrwxrwx), which mean
 
 The default permissions for files are typically 0666 (rw-rw-rw-), which means read and write permissions are granted to the owner, group, and others.
 
-However, these permissions are often modified by the umask value, which masks out certain permissions when new files and directories are created. The umask value is subtracted from the default permissions to determine the final permissions.
+However, these permissions are often modified by the umask value, which masks out certain permissions when new files and directories are created. The default permissions are determined when the umask value is subtracted from the maximum allowable default permissions.
 
 For example, if the umask is set to 0022, which is a common value, it will mask out the write permission for the group and others when new files are created, resulting in default permissions of 0644 (rw-r--r--). Similarly, for directories, the default permissions would be 0755 (rwxr-xr-x).
 
-To make the change permanent, it should appended in the bash using vim using the command - `vim .bashrc`
+The maximum default permissions are different for files and directories:
+||||
+|-----|-----|-----|
+| file	| 666	| rw-rw-rw- |
+| directories |	777	| rwxrwxrwx |
+
+Permanently changing a user's umask requires modifying the `.bashrc` file located in that user's home directory - `vim .bashrc`
 
 
 **Modifying Group Properties**
