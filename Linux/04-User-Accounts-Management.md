@@ -114,15 +114,14 @@ This table indicates which terminal window the user is working in. If the term
 ### USER ACCOUNT MONITORING (whoami, who am i, who, id, w, uptime, last)
 
 - The `who` command in Unix-like operating systems is used to display information about users who are currently logged in to the system. It has several options for displaying system status information. For example, the `-b` option shows the last time the system started (booted), and the `-r` option shows the time the system reached the current run level:</br></br>
-`ikechukwu@ubuntu-22-04-3:~$ who -b -r`</br>
+  `ikechukwu@ubuntu-22-04-3:~$ who -b -r`</br>
          system boot  	2013-10-11 09:54</br>
          run-level 5    2013-10-11 09:54
 
-- The first line of output from the `w` command is identical to that of the `uptime` command. It shows the current time, how long the system has been running, the total number of users currently logged on and the load on the system averaged over the last 1, 5, and 15-minute time periods. Load average is CPU utilization where, for a single-core system, a value of 1 would mean 100% CPU usage during that period of time. For a dual-core system, it would mean 50% CPU usage, and for a quad-core system, it would mean 25% CPU usage.
-
+- The first line of output from the `w` command is identical to that of the `uptime` command. It shows the current time, how long the system has been running, the total number of users currently logged on and the load on the system averaged over the last 1, 5, and 15-minute time periods. Load average is CPU utilization where, for a single-core system, a value of 1 would mean 100% CPU usage during that period of time. For a dual-core system, it would mean 50% CPU usage, and for a quad-core system, it would mean 25% CPU usage.</br></br>
 The following describes the rest of the output of the `w` command:
 
-| Column | Example	| Description |
+| Column | Terminal	| Description |
 |-----|-----|-----|
 | USER	| root	| The name of the user who is logged in. |
 | TTY	| tty2	| Which terminal window the user is working in. | 
@@ -133,6 +132,16 @@ The following describes the rest of the output of the `w` command:
 | PCPU	| 0.01s	| The total CPU time for the current process. |
 | WHAT	| -bash	| The current process that the user is running. |
 
+- The `uptime` command is a useful tool for system administrators and users alike, providing essential information about the current system's status. By running uptime in the terminal, users can quickly obtain key details such as how long the system has been running since the last reboot (uptime), the average system load over different time intervals, and the number of users currently logged in.</br></br>
 - The `last` command reads the entire login history from the `/var/log/wtmp` file and displays all logins and reboot records by default. An interesting detail of the reboot records is that it displays the version of the Linux kernel that was booted instead of the login location. The `/var/log/wtmp` file keeps a log of all users who have logged in and out of the system.</br></br>
 The `last` command is slightly different from the `who` and `w` commands. By default, it also shows the username, terminal, and login location, not just of the current login sessions, but previous sessions as well.</br></br>
 The `who` command reads from the `/var/run/utmp` file which logs current users, while the `last` command reads from the `/var/log/wtmp` file, which keeps a history of all user logins.
+
+- The `whoami` command provides a quick way to determine the username of the current user without any additional information. For example:
+  `ikechukwu@ubuntu-22-04-3:~$ whoami`</br>
+  The output will display the username - `ikechukwu`
+- The `who am i` command provides more detailed information about the current user's session, including the username ("ikechukwu"), terminal ("pts/0"), login time, and IP address (if available). For example:
+  `ikechukwu    pts/0    2024-04-02 09:30 (192.168.1.100)`
+- 
+
+
