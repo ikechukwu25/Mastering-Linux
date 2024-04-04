@@ -142,6 +142,48 @@ The `who` command reads from the `/var/run/utmp` file which logs current use
   The output will display the username - `ikechukwu`
 - The `who am i` command provides more detailed information about the current user's session, including the username ("ikechukwu"), terminal ("pts/0"), login time, and IP address (if available). For example:
   `ikechukwu    pts/0    2024-04-02 09:30 (192.168.1.100)`
-- 
+- The `id` command serves as a versatile tool for displaying essential information about users and groups on a Linux system. By executing `id` in the terminal followed by a username or group name (or without arguments to display information about the current user), users can obtain details such as the user ID (UID), group ID (GID), and supplementary group memberships associated with the specified user or group.
 
+
+# CREATING USERS AND GROUPS
+
+On some distributions, creating a new user account also automatically creates a group account for the user, called a User Private Group (UPG). On these systems, the group and username would be the same, and the only member of this new group would be the new user. For distributions that do not create a UPG, new users are typically given the users group as their primary group. 
+
+If you already have planned which users and groups you want, it is more efficient to create your groups first and create your users with their group memberships. Otherwise, if you create your users first, and then your groups, you'll need to take an extra step to modify your users to make them members of your groups.
+
+### GROUPS
+
+The most common reason to create a group is to provide a way for users to share files. For example, if several people work together on the same project and need to be able to collaborate on documents stored in files for the project. In this scenario, the administrator can make these people members of a common group, change the directory ownership to the new group, and set permissions on the directory that allows members of the group to access the files.
+
+After creating or modifying a group, you can verify the changes by viewing the group configuration information in the `/etc/group` file with the `grep` command. If working with network-based authentication services, then the `getent` command can show you both local and network-based groups.
+
+`grep pattern filename`
+`getent database record`
+
+`grep username /etc/passwd` = shows the user ID and the group ID
+
+The `groupadd` command can be executed by the root user to create a new group. The command requires only the name of the group to be created. The -g option can be used to specify a group ID for the new group:
+
+`root@ubuntu-22-04-3:~# groupadd -g 1005 research` </br>
+`root@ubuntu-22-04-3:~# grep research /etc/group`</br>
+`research:x:1005:`
+
+In some Linux distributions, particularly those based upon Red Hat, when a user ID (UID) is created, a user private group (UPG) is also created with that user as its only member. In these distributions, the UID and the ID of the UPG are supposed to match (be the same number).
+
+Therefore, you should avoid creating GIDs in the same numeric ranges where you expect to create UIDs, to avoid a conflict between a GID you create and a UPG number that is created to match a UID.
+
+There may be times at which you want to assign a lower GID value. To accomplish this, use the `-r` option which assigns the new group a GID that is less than the lowest standard GID.
+
+The `groupmod` command can be used to either change the name of a group with the `-n` option or change the GID for the group with the -g option.
+Because the system defines the group by the GID, not the group name.
+
+To search for all files that are owned by just a GID (not associated with a group name) use the `-nogroup` option of the find command:
+`root@ubuntu-22-04-3:~# find / -nogroup`
+`/root/index.html`
+
+If you decide to delete a group with the `groupdel` command, be aware that any files that are owned by that group will become orphaned.
+
+Only supplemental groups can be deleted, so if any group is the primary group for any user, it cannot be deleted. The administrator can modify which group is a user's primary group, so a group that was being used as a primary group can be made into a supplemental group and then can be deleted.
+
+The `groups` command shows all the groups the current user belongs. The first is the primary one.
 
