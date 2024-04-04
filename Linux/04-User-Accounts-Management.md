@@ -31,6 +31,7 @@ Example: `seun:$y$j9T$aByJlLDW1APOvddbxH0oC1$aUSViRiZM.iy8qnvsJviLk78cfXh40p1YzG
 - `60`: This field represents the number of days after the password expiration date that the account is disabled.
 - `15050`: This field represents the date when the account was last used, measured in days since the Unix epoch.
 
+
 ### HASH PASSWORD FORMAT EXPLAINED
 
 In Linux and many other systems, passwords are stored in a hashed format for security reasons. The format `$type$salt$hash` is commonly used to represent hashed passwords.
@@ -94,6 +95,8 @@ N/B: In addition to the grep command, another technique for retrieving user in
 
 # SYSTEM ACCOUNTS
 
+System accounts are typically used for running background services (daemons) and have UID values in the reserved range (1-999 or 1-499). Exceptions include accounts like nfsnobody with UID 65534.
+
 Regular user accounts typically have UID values greater than 500 (or 1,000 on some systems), while the root user, which has special access to the system, is assigned a UID of 0.
 
 Accounts with User IDs (UIDs) ranging from 1 to 499 are known as system accounts. They are intended for services and system processes rather than user login.
@@ -101,6 +104,7 @@ Accounts with User IDs (UIDs) ranging from 1 to 499 are known as system accounts
 System accounts have some fields in the `/etc/passwd` and `/etc/shadow` files that are different than other accounts. For example, system accounts rarely have home directories as they typically are not used to create or store files. In the `/etc/passwd` file, system accounts have a non-login program in the shell field. For example: </br>
 
 `sshd:x:103:65534::/var/run/sshd:/usr/sbin/nologin`
+
 
 ### USER ACCOUNT INFORMATION
 
@@ -110,6 +114,7 @@ System accounts have some fields in the `/etc/passwd` and `/etc/shadow` file
 | sysadmin | pts/0 | 2013-10-11 09:59 | (:0.0) |	
 
 This table indicates which terminal window the user is working in. If the terminal name starts with tty, then this is an indication of a local login, as this is a regular command line terminal. If the terminal name starts with pts, then this indicates the user is using a pseudo-terminal or running a process that acts as a terminal.
+
 
 ### USER ACCOUNT MONITORING (whoami, who am i, who, id, w, uptime, last)
 
@@ -145,22 +150,26 @@ The `who` command reads from the `/var/run/utmp` file which logs current use
 - The `id` command serves as a versatile tool for displaying essential information about users and groups on a Linux system. By executing `id` in the terminal followed by a username or group name (or without arguments to display information about the current user), users can obtain details such as the user ID (UID), group ID (GID), and supplementary group memberships associated with the specified user or group.
 
 
-# CREATING USERS AND GROUPS
+# MANAGING USERS AND GROUPS
 
 On some distributions, creating a new user account also automatically creates a group account for the user, called a User Private Group (UPG). On these systems, the group and username would be the same, and the only member of this new group would be the new user. For distributions that do not create a UPG, new users are typically given the users group as their primary group. 
 
 If you already have planned which users and groups you want, it is more efficient to create your groups first and create your users with their group memberships. Otherwise, if you create your users first, and then your groups, you'll need to take an extra step to modify your users to make them members of your groups.
 
+
 ### GROUPS
 
 The most common reason to create a group is to provide a way for users to share files. For example, if several people work together on the same project and need to be able to collaborate on documents stored in files for the project. In this scenario, the administrator can make these people members of a common group, change the directory ownership to the new group, and set permissions on the directory that allows members of the group to access the files.
 
-After creating or modifying a group, you can verify the changes by viewing the group configuration information in the `/etc/group` file with the `grep` command. If working with network-based authentication services, then the `getent` command can show you both local and network-based groups.
+After creating or modifying a group, you can verify the changes by viewing the group configuration information in the `/etc/group` file with the `grep` command. If working with network-based authentication services, then the `getent` command can show you both local and network-based groups. For example:
 
-`grep pattern filename`
-`getent database record`
+`grep pattern filename` </br>
+`getent database record`</br>
 
 `grep username /etc/passwd` = shows the user ID and the group ID
+
+
+**Creating a New Group**
 
 The `groupadd` command can be executed by the root user to create a new group. The command requires only the name of the group to be created. The -g option can be used to specify a group ID for the new group:
 
@@ -168,22 +177,128 @@ The `groupadd` command can be executed by the root user to create a new group.
 `root@ubuntu-22-04-3:~# grep research /etc/group`</br>
 `research:x:1005:`
 
+
+**User Private Groups (UPGs)**
+
 In some Linux distributions, particularly those based upon Red Hat, when a user ID (UID) is created, a user private group (UPG) is also created with that user as its only member. In these distributions, the UID and the ID of the UPG are supposed to match (be the same number).
 
 Therefore, you should avoid creating GIDs in the same numeric ranges where you expect to create UIDs, to avoid a conflict between a GID you create and a UPG number that is created to match a UID.
 
 There may be times at which you want to assign a lower GID value. To accomplish this, use the `-r` option which assigns the new group a GID that is less than the lowest standard GID.
 
+
+**Modifying Group Properties**
+
 The `groupmod` command can be used to either change the name of a group with the `-n` option or change the GID for the group with the -g option.
 Because the system defines the group by the GID, not the group name.
 
-To search for all files that are owned by just a GID (not associated with a group name) use the `-nogroup` option of the find command:
-`root@ubuntu-22-04-3:~# find / -nogroup`
+To search for all files that are owned by just a GID (not associated with a group name) use the `-nogroup` option of the find command: For example: </br>
+`root@ubuntu-22-04-3:~# find / -nogroup`</br>
 `/root/index.html`
 
 If you decide to delete a group with the `groupdel` command, be aware that any files that are owned by that group will become orphaned.
 
 Only supplemental groups can be deleted, so if any group is the primary group for any user, it cannot be deleted. The administrator can modify which group is a user's primary group, so a group that was being used as a primary group can be made into a supplemental group and then can be deleted.
 
-The `groups` command shows all the groups the current user belongs. The first is the primary one.
+The `groups` command displays all groups to which the current user belongs, with the primary group listed first. This provides users with insight into their group memberships.
+
+By following these guidelines, administrators can effectively manage groups to enhance collaboration and resource access for users in a Linux environment.
+
+Creating and configuring user accounts in Linux involves various options and settings to tailor user environments according to specific requirements. Here's an extensive overview:
+
+
+### CONFIGURING USER ACCOUNTS IN LINUX
+
+The `useradd` command provides options to view or modify default user configuration values. These settings, such as the default group, home directory, shell, expiration date, and inactive period, can be managed using the `-D` option or by editing the `/etc/default/useradd` file. 
+
+
+**Example User Creation**
+
+`sudo useradd -m -d /home/iyke -c "DevOps Engineer" -s /bin/bash -G sudo,adm,mail iyke` = This command effectively creates a new user account named "iyke" with the specified home directory, login shell, user comment, and supplementary groups.
+
+The `-m` creates the user's home directory if it doesn't exist.
+The `-d` option specifies the new directory name or the specific location you would like to create it. 
+The `-c` option sets a custom comment or user description.
+The `-s` option defines a custom login shell for the user.
+The `-G` option is used to select a secondary group. 
+
+Additional important options include; 
+
+The `-b` option specifies a base directory for the user's home directory.
+The `-e` option sets a different expiration date for the user account.
+The `-f` option adjusts the inactive period for the user.
+The `-g` option allows setting a different primary group for a new user account.
+The `-u` option allows specifying a custom UID for the user account. For compatibility, it's recommended to keep UID values below 60,000.
+
+`sudo useradd -e 2023-11-6 user2` = This command is used to create a temporary user, then you need to specify an expiration date for the account, using the -e option. 
+
+`root@ubuntu-22-04-3:~# useradd -u 1009 -g users -G sales,research -m -c 'Jane Doe' jane` = This command creates a user named "jane" with UID 1009, primary group users, and supplementary groups sales and research, along with a custom comment, can be achieved with the following command
+
+By leveraging these options and configurations, administrators can efficiently manage user accounts while ensuring optimal security and usability within the Linux environment.
+
+The `useradd` command serves as the backend utility for `adduser`, offering a more direct approach to user creation. While `useradd` requires precise parameterization, adduser provides a friendlier interface, abstracting away complexities. Both commands fulfill the same purpose which is adding new users to the system. Notably, useradd automatically generates the user's home directory upon creation.
+
+Similarly, `userdel` and deluser are counterparts in the user management realm, both facilitating the removal of users from the system.
+
+
+**Configuration Files**
+
+All information about a user is stored in the following files - `shadow`, `passwd`, `group`, `gshadow`, `login.defs` > all under /etc/ directory
+
+The `/etc/login.defs` file is a configuration file that defines default settings and policies for user account management and login behavior. Administrators use this file to specify parameters such as password expiration, password complexity requirements, and default user environment settings.
+
+The gshadow file is similar to the shadow file, gshadow stores encrypted passwords and security-related information for group accounts. It provides additional security measures for group administration.
+
+
+**Standardizing User Environments**
+
+The `SKEL` variable and the `-k` option in user management tools like `useradd` ensure consistency in configuring new user accounts.
+
+By setting the `SKEL` variable to a directory containing predefined configurations, known as the skeleton directory, administrators can standardize user environments. For instance, executing:
+
+`useradd -m -k /etc/skel_custom username` = This command creates a new user with customized settings from the specified skeleton directory.
+
+Moreover, the `-k` option allows administrators to override the default skeleton directory, tailoring user environments based on individual requirements or roles.
+
+In essence, utilizing the `SKEL` variable and the `-k` option streamlines user management, maintains uniformity in user setups, and facilitates tailored configurations to suit organizational needs.
+
+
+**User Mask (UMASK)**
+
+The UMASK value which stands for "user file creation mask", defines the default permissions that are subtracted from the maximum permissions when a new file or directory is created. The default format is 0002. 
+
+The default permissions for directories are usually 0777 (rwxrwxrwx), which means read, write, and execute permissions are granted to the owner, group, and others.
+
+The default permissions for files are typically 0666 (rw-rw-rw-), which means read and write permissions are granted to the owner, group, and others.
+
+However, these permissions are often modified by the umask value, which masks out certain permissions when new files and directories are created. The umask value is subtracted from the default permissions to determine the final permissions.
+
+For example, if the umask is set to 0022, which is a common value, it will mask out the write permission for the group and others when new files are created, resulting in default permissions of 0644 (rw-r--r--). Similarly, for directories, the default permissions would be 0755 (rwxr-xr-x).
+
+To make the change permanent, it should appended in the bash using vim using the command - `vim .bashrc`
+
+
+**Modifying Group Properties**
+
+The usermod command allows administrators to modify user account properties directly from the command line. It provides options to change the user's login shell (-s), home directory (-d), primary group (-g), supplementary groups (-G), and more.
+
+`root@ubuntu-22-04-3:~# usermod -aG development jane` = The command is used to add the user "jane" to the supplementary group "development" without removing the user from any of their current supplementary groups.
+
+The `usermod` command offers many options for modifying an existing user account. Many of these options are also available with the `useradd` command at the time the account is created. The following chart provides a summary of the `usermod` options:
+
+| Short Option |	Long Option	| Description |
+|-----|-----|-----|
+| -c	| COMMENT	| Sets the value of the GECOS or comment field to COMMENT. |
+| -d HOME_DIR	| --home HOME_DIR	| Sets HOME_DIR as a new home directory for the user. |
+| -e EXPIRE_DATE	| --expiredate EXPIRE_DATE	| Set account expiration date to EXPIRE_DATE. |
+| -f INACTIVE	| --inactive INACTIVE	| Set account to permit login for INACTIVE days after password expires. |
+| -g GROUP	| --gid GROUP	| Set GROUP as the primary group. |
+| -G GROUPS	| --groups GROUPS	| Set supplementary groups to a list specified in GROUPS. |
+| -a	| --append	| Append the user's supplemental groups with those specified by the `-G` option. |
+| -h	| --help	| Show the help for the `usermod` command. |
+| -l NEW_LOGIN	| --login NEW_LOGIN	| Change the user's login name. |
+| -L	| --lock | Lock the user account. |
+| -s SHELL	| --shell SHELL	| Specify the login shell for the account. |
+| -u NEW_UID	| --uid NEW_UID	| Specify the user's UID to be NEW_UID. |
+| -U	| --unlock	| Unlock the user account. |
 
