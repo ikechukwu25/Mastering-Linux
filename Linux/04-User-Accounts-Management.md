@@ -238,7 +238,7 @@ This command creates a user named "jane" with UID 1009, primary group users, and
 
 By leveraging these options and configurations, administrators can efficiently manage user accounts while ensuring optimal security and usability within the Linux environment.
 
-The `useradd` command serves as the backend utility for `adduser`, offering a more direct approach to user creation. While `useradd` requires precise parameterization, adduser provides a friendlier interface, abstracting away complexities. Both commands fulfill the same purpose which is adding new users to the system. Notably, useradd automatically generates the user's home directory upon creation.
+The `useradd` command serves as the backend utility for `adduser`, offering a more direct approach to user creation. While `useradd` requires precise parameterization, `adduser` provides a friendlier interface, abstracting away complexities. Both commands fulfill the same purpose which is adding new users to the system. Notably, useradd automatically generates the user's home directory upon creation.
 
 Similarly, `userdel` and deluser are counterparts in the user management realm, both facilitating the removal of users from the system.
 
@@ -278,10 +278,10 @@ However, these permissions are often modified by the umask value, which masks ou
 For example, if the umask is set to 0022, which is a common value, it will mask out the write permission for the group and others when new files are created, resulting in default permissions of 0644 (rw-r--r--). Similarly, for directories, the default permissions would be 0755 (rwxr-xr-x).
 
 The maximum default permissions are different for files and directories:
-||||
-|-----|-----|-----|
-| file	| 666	| rw-rw-rw- |
-| directories |	777	| rwxrwxrwx |
+| file | directories |
+|-----|-----|
+| 666	| 777 |
+|	rw-rw-rw-	| rwxrwxrwx |
 
 Permanently changing a user's umask requires modifying the `.bashrc` file located in that user's home directory - `vim .bashrc`
 
