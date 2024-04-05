@@ -259,13 +259,13 @@ Here's an overview of Vim's modes and commands to aid navigation and editing:
 The mode of operation in Vim can be categorized into Command mode, Insert mode, and Last Line mode.
 
 - Command Mode: Upon opening Vim, you're in Command mode. Here, characters are interpreted as commands. Common commands include: </br></br>
-  -  X: Deletes characters under the cursor.</br>
-  -  R: Replaces the character under the cursor.</br>
-  -  :: Moves the cursor to the Last Line mode.</br>
-  -  :w!: Saves the file without closing Vim.</br>
-  -  :q!: Closes Vim without saving.</br>
-  -  :wq! or Shift + zz: Saves the file and closes Vim.</br>
-  -  Pressing the Esc button takes you back to Command mode.
+  - X: Deletes characters under the cursor.</br>
+  - R: Replaces the character under the cursor.</br>
+  - :: Moves the cursor to the Last Line mode.</br>
+  - :w!: Saves the file without closing Vim.</br>
+  - :q!: Closes Vim without saving.</br>
+  - :wq! or Shift + zz: Saves the file and closes Vim.</br>
+  - Pressing the Esc button takes you back to Command mode.
 
 - Insert Mode: Press i, I, a, A, o, or O to enter Insert mode. Common insert commands include:</br></br>
   - i: Inserts text before the cursor.</br>
@@ -276,22 +276,22 @@ The mode of operation in Vim can be categorized into Command mode, Insert mode, 
   - A: Appends text at the end of the line.
 
 - Last Line Mode: Accessed by typing: in Command mode, Last Line mode is used for commands that apply to the entire file or for performing actions like searching and replacing. Common Last Line mode commands include:</br></br>
-  -  :%s/string/replacement/g: Search for a pattern and replace all occurrences.</br>
-  -  :e!: Undo everything done since the last save.</br>
-  -  u: Undo the last event.</br>
-  -  Ctrl + R: Redo.</br>
-  -  dd: Cut. </br>
-  -  p: Paste.</br>
-  -  10 + dd: Cut 10 lines from the cursor.</br>
-  -  V: Highlight text for copying.</br>
-  -  y: Copy.</br>
-  -  G: Moves to the bottom of the file.</br>
-  -  gg: Moves to the first line of the file.</br>
-  -  :set nu: Enables line numbering.</br>
-  -  :set nonu: Disables line numbering.</br>
-  -  :syntax off: Disables syntax coloring.</br>
-  -  :syntax on: Enables syntax coloring.</br>
-  -  :number: Jumps to a specific line number.
+  - :%s/string/replacement/g: Search for a pattern and replace all occurrences.</br>
+  - :e!: Undo everything done since the last save.</br>
+  - u: Undo the last event.</br>
+  - Ctrl + R: Redo.</br>
+  - dd: Cut. </br>
+  - p: Paste.</br>
+  - 10 + dd: Cut 10 lines from the cursor.</br>
+  - V: Highlight text for copying.</br>
+  - y: Copy.</br>
+  - G: Moves to the bottom of the file.</br>
+  - gg: Moves to the first line of the file.</br>
+  - :set nu: Enables line numbering.</br>
+  - :set nonu: Disables line numbering.</br>
+  - :syntax off: Disables syntax coloring.</br>
+  - :syntax on: Enables syntax coloring.</br>
+  - :number: Jumps to a specific line number.
  
 
 Press each of the following keys once or twice and observe how the cursor moves. Remember that you are in command mode:
@@ -369,8 +369,8 @@ When the ln command is used to create a hard link, the link count number incre
 
 `ikechukwu@ubuntu-22-04-3:~$ ln file.original file.hard.1`</br> 
 `ikechukwu@ubuntu-22-04-3:~$ ls -li file.*`</br> 
-`278772 -rw-rw-r--. 2 sysadmin sysadmin 5 Oct 25 15:53 file.hard.1`</br> 
-`278772 -rw-rw-r--. 2 sysadmin sysadmin 5 Oct 25 15:53 file.original`
+`278772 -rw-rw-r--. 2 ikechukwu ikechukwu 5 Oct 25 15:53 file.hard.1`</br> 
+`278772 -rw-rw-r--. 2 ikechukwu ikechukwu 5 Oct 25 15:53 file.original`
 
 To find the other linked files with the inode number, run the command;
 `find . -inum 3151382`
@@ -385,7 +385,24 @@ To create a symbolic link, use the `-s` option with the `ln` command:
 
 `ikechukwu@ubuntu-22-04-3:~$  ln -s /etc/passwd mypasswd`</br>
 `ikechukwu@ubuntu-22-04-3:~$  ls -l mypasswd`</br>
-`lrwxrwxrwx. 1 sysadmin sysadmin 11 Oct 31 13:17 mypasswd -> /etc/passwd`
+`lrwxrwxrwx. 1 ikechukwu ikechukwu 11 Oct 31 13:17 mypasswd -> /etc/passwd`
 
-N/B: A symbolic link has an l as the file type lrwxrwxrwx, while a hard link doesn’t. 
+N/B: A symbolic link has an l as the file type "lrwxrwxrwx", while a hard link doesn’t. 
 
+**DIFFERENCE**
+
+1. Using hard links offers the advantage that every file name pointing to the same file content is equal. If you have multiple files hard linked together, deleting any of them won't delete the actual file contents, as long as at least one hard link remains. This is because each hard link refers to the same unique inode number, ensuring the file data persists as long as at least one hard link exists. In symlink,  if the original file is deleted in a symbol Link is deleted as well. 
+
+2. Soft links are much more visual, not requiring any extra commands beyond the ls command to determine the link. If you encounter a regular file with a link count greater than one and need to find its hard links, you can use the find command with the -inum search criteria. First, you would use the `ls -i` command to find the inode number of the file in question. Then, you can use `find` to locate other files with the same inode number.
+   
+3. Hard links cannot be created between files that reside on different filesystems or partitions because each filesystem or partition has its own set of inodes. </br></br>
+`ikechukwu@ubuntu-22-04-3:~$ ln /boot/vmlinuz-2.6.32-358.6.1.el6.i686 Linux.Kernel` </br>
+`ln: creating hard link 'Linux.Kernel' => '/boot/vmlinuz-2.6.32-358.6.1.el6.i686': Invalid cross-device link` </br> </br>
+In the previous example, a hard link was attempted to be created between a file in the /boot file system and the / file system; it failed because each of these file systems has a unique set of inode numbers that can't be used outside of the filesystem.
+However, because a symbolic link points to another file using a pathname, you can create a soft link to a file in another filesystem.
+
+5. Another limitation of hard links is that they cannot be created on directories. The reason for this limitation is that the operating system itself uses hard links to define the hierarchy of the directory structure. While Linking to directories using a symbolic link is permitted: </br></br>
+`ikechukwu@ubuntu-22-04-3:~$ ln -s /bin binary`</br> 
+`ikechukwu@ubuntu-22-04-3:~$ ls -l binary`</br> 
+`lrwxrwxrwx. 1 ikechukwu ikechukwu 11 Oct 31 13:17 binary -> /bin`</br> </br>
+Symbolic links do not increase the link count of files with which they are linked. Symbolic link files have their own inode and type of file. Instead of linking and sharing an inode, they link to the file name. 
