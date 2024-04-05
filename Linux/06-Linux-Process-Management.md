@@ -67,9 +67,9 @@ In Linux, process management commands are essential for monitoring, analyzing, a
 
 The `ps` command in Linux is used to display information about active processes on the system. It allows users to view a snapshot of the currently running processes and their attributes which means that it provides a static view of the processes.
 
-`ps -e` = Lists all processes 
-`ps -f` = Displays detailed information about processes, including UID, PID, PPID, CPU utilization, start time, terminal type, CPU time, and command.
-`ps -ef` = Displays detailed information about all currently running processes. See output titles below;
+`ps -e` = Lists all processes </br>
+`ps -f` = Displays detailed information about processes, including UID, PID, PPID, CPU utilization, start time, terminal type, CPU time, and command.</br>
+`ps -ef` = Displays detailed information about all currently running processes. See output titles below;</br>
 * UID: The numeric User ID (UID) of the user who owns the process.
 * PID: Process ID, a unique identifier for each process.
 * PPID: Parent Process ID, the PID of the parent process that spawned this process.
@@ -79,7 +79,7 @@ The `ps` command in Linux is used to display information about active processes 
 * TIME: Cumulative CPU time used by the process.
 * CMD: The command or program that initiated the process.
 
-`ps aux` = is commonly used in Linux to display a detailed list of information about all currently running processes. See output titles below;
+`ps aux` = is commonly used in Linux to display a detailed list of information about all currently running processes. See output titles below;</br>
 * USER: The user who owns the process.
 * PID: Process ID, a unique identifier for each process.
 * %CPU: CPU usage as a percentage of total CPU time.
@@ -92,13 +92,13 @@ The `ps` command in Linux is used to display information about active processes 
 * TIME: Cumulative CPU time used by the process.
 * COMMAND: The command or program that initiated the process.
 
-`pgrep`: The `pgrep` command is used to search for processes by name and print their IDs. Examples:
-`pgrep sshd` OR `ps -ef | grep sshd` = pulls out the process information on sshd.
-`pgrep -l sshd` = This command shows the name and the PID of processes with the specified name.
+`pgrep` = The `pgrep` command is used to search for processes by name and print their IDs. Examples:</br>
+`pgrep sshd` OR `ps -ef | grep sshd` = pulls out the process information on sshd.</br>
+`pgrep -l sshd` = This command shows the name and the PID of processes with the specified name.</br>
 
-`pstree` = This command displays a hierarchical tie structure of the running processes. It visually represents the hierarchy and relationships between parent and child processes in a tree-like structure.
+`pstree` = This command displays a hierarchical tie structure of the running processes. It visually represents the hierarchy and relationships between parent and child processes in a tree-like structure.</br>
 
-`ps -axjf` = The command is used to display a hierarchical (tree) view of processes. 
+`ps -axjf` = The command is used to display a hierarchical (tree) view of processes. </br>
 * PPID: Parent Process ID, the PID of the parent process.
 * PID: Process ID, a unique identifier for each process.
 * PGID: Process Group ID, a unique identifier for each process group.
