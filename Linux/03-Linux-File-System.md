@@ -2,6 +2,7 @@
 
 The Linux file system is a hierarchical structure that organizes and stores data on a Linux-based operating system. It provides a unified way to manage files, directories, devices, and other resources.
 
+
 ### DIRECTORY STRUCTURE
 
 On a Windows system, the top level of the directory structure is called My Computer. Physical devices, such as hard drives, USB drives, and network drives, show up under My Computer and are each assigned a drive letter, such as C: or D:
@@ -9,6 +10,7 @@ On a Windows system, the top level of the directory structure is called My Co
 Like Windows, the Linux directory structure, typically called a filesystem, also has a top level. However instead of My Computer, it is called the root directory, and it is symbolized by the slash (/) character. Additionally, there are no drives in Linux; each physical device is accessible under a directory, as opposed to a drive letter.
 
 Most of the hidden files are customization files, designed to customize how Linux, your shell, or programs work. For example, the .bashrc file in the home directory customizes features of the shell, such as creating or modifying variables and aliases.
+
 
 ### FILESYSTEM HIERARCHY STANDARD
 
@@ -71,6 +73,7 @@ The file related to documentation may be stored in one of the following subdirec
 * /usr/share/info
 The global configuration files for an application are most likely to be stored in a subdirectory under the /etc directory, while the personalized configuration files (specific for a user) for the application are probably in a hidden subdirectory of the user's home directory.
 
+
 #### **Library Directories**
 
 Libraries are files that contain code that is shared between multiple programs. Most library file names end in a file extension of `.so`, which means "shared object".
@@ -131,6 +134,7 @@ For example, if you execute the command ls -l in a directory, you may see output
 `-rw-r--r-- 1 user group 1024 Jan 1 00:00 example.txt` (regular file)
 
 These indicators are typically displayed in the leftmost column of the output and indicate the file type. Understanding these symbols aids in navigating and comprehending the structure and content of the Linux file system. 
+
 
 #### **Useful Commands**: Commands like `ls` and `file` are instrumental in providing detailed information about file types and attributes. They empower users and system administrators to efficiently manage and interact with the file system. Examples:
 
@@ -229,6 +233,7 @@ To redirect another command to the same file and not overwrite = `ls -l > ls.txt
 '>' = overwrite </br>
 '>>' = append
 
+
 ## ADVANCED CONSTRUCTS FOR STREAM MANAGEMENT:
 
 In Linux command-line operations, managing standard output (stdout) and standard error (stderr) streams is crucial for effective error handling and data processing. Two constructs, `2>&1` and `|&`, provide advanced functionality for handling both the standard output (stdout) and standard error (stderr) streams.
@@ -293,7 +298,6 @@ The mode of operation in Vim can be categorized into Command mode, Insert mode, 
   - :syntax on: Enables syntax coloring.</br>
   - :number: Jumps to a specific line number.
  
-
 Press each of the following keys once or twice and observe how the cursor moves. Remember that you are in command mode:
 
  | Key | Function |
@@ -337,6 +341,7 @@ Another user routinely updates this file, and you need to access it regularly. T
 In a situation like this, links come in handy. You can create a file that is linked to the one that is deeply buried. This new file could be placed in the home directory or any other convenient location. When you access the linked file, it accesses the contents of the valuable-information.txt file.
 Each linking method, hard and symbolic, results in the same overall access, but uses different techniques. There are pros and cons to each method, so knowing both techniques and when to use them is important.
 
+
 #### **CREATING HARD LINKS**
 
 For every file created, there is a block of data on the file system that stores the metadata of the file. Metadata includes information about the file like the permissions, ownership, and timestamps. Metadata does not include the file name or the contents of the file, but it does include just about all other information about the file. This metadata is called the file's **inode table**.
@@ -374,6 +379,7 @@ When the ln command is used to create a hard link, the link count number incre
 
 To find the other linked files with the inode number, run the command;
 `find . -inum 3151382`
+
 
 #### **CREATING SYMBOLIC LINKS**
 
