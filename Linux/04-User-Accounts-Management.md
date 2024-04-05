@@ -169,7 +169,7 @@ After creating or modifying a group, you can verify the changes by viewing the g
 `grep username /etc/passwd` = shows the user ID and the group ID
 
 
-**Creating a New Group**
+**CREATING A NEW GROUP**
 
 The `groupadd` command can be executed by the root user to create a new group. The command requires only the name of the group to be created. The -g option can be used to specify a group ID for the new group:
 
@@ -178,7 +178,7 @@ The `groupadd` command can be executed by the root user to create a new group.
 `research:x:1005:`
 
 
-**User Private Groups (UPGs)**
+**USER PRIVATE GROUPS (UPGs)**
 
 In some Linux distributions, particularly those based upon Red Hat, when a user ID (UID) is created, a user private group (UPG) is also created with that user as its only member. In these distributions, the UID and the ID of the UPG are supposed to match (be the same number).
 
@@ -187,7 +187,7 @@ Therefore, you should avoid creating GIDs in the same numeric ranges where you e
 There may be times at which you want to assign a lower GID value. To accomplish this, use the `-r` option which assigns the new group a GID that is less than the lowest standard GID.
 
 
-**Modifying Group Properties**
+**MODIFYING GROUP PROPERTIES**
 
 The `groupmod` command can be used to either change the name of a group with the `-n` option or change the GID for the group with the -g option.
 Because the system defines the group by the GID, not the group name.
@@ -212,7 +212,7 @@ Creating and configuring user accounts in Linux involves various options and set
 The `useradd` command provides options to view or modify default user configuration values. These settings, such as the default group, home directory, shell, expiration date, and inactive period, can be managed using the `-D` option or by editing the `/etc/default/useradd` file. 
 
 
-**Example User Creation**
+**User Creation Examples**
 
 `sudo useradd -m -d /home/iyke -c "DevOps Engineer" -s /bin/bash -G sudo,adm,mail iyke`: </br>
 This command effectively creates a new user account named "iyke" with the specified home directory, login shell, user comment, and supplementary groups.
@@ -243,7 +243,7 @@ The `useradd` command serves as the backend utility for `adduser`, offering a mo
 Similarly, `userdel` and deluser are counterparts in the user management realm, both facilitating the removal of users from the system.
 
 
-**Configuration Files**
+**CONFIGURATION FILES**
 
 All information about a user is stored in the following files - `shadow`, `passwd`, `group`, `gshadow`, `login.defs` > all under /etc/ directory
 
@@ -252,7 +252,7 @@ The `/etc/login.defs` file is a configuration file that defines default settings
 The gshadow file is similar to the shadow file, gshadow stores encrypted passwords and security-related information for group accounts. It provides additional security measures for group administration.
 
 
-**Standardizing User Environments**
+**STANDARDIZING USER ENVIRONMENTS**
 
 The `SKEL` variable and the `-k` option in user management tools like `useradd` ensure consistency in configuring new user accounts.
 
@@ -265,7 +265,7 @@ Moreover, the `-k` option allows administrators to override the default skeleton
 In essence, utilizing the `SKEL` variable and the `-k` option streamlines user management, maintains uniformity in user setups, and facilitates tailored configurations to suit organizational needs.
 
 
-**User Mask (UMASK)**
+**USER MASK (UMASK)**
 
 The UMASK value which stands for "user file creation mask", defines the default permissions that are subtracted from the maximum permissions when a new file or directory is created. The default format is 0002. 
 
@@ -286,9 +286,9 @@ The maximum default permissions are different for files and directories:
 Permanently changing a user's umask requires modifying the `.bashrc` file located in that user's home directory - `vim .bashrc`
 
 
-**Modifying Group Properties**
+**MODIFYING USER PROPERTIES**
 
-The usermod command allows administrators to modify user account properties directly from the command line. It provides options to change the user's login shell (-s), home directory (-d), primary group (-g), supplementary groups (-G), and more.
+The `usermod` command allows administrators to modify user account properties directly from the command line. It provides options to change the user's login shell (-s), home directory (-d), primary group (-g), supplementary groups (-G), and more.
 
 `root@ubuntu-22-04-3:~# usermod -aG development jane` = The command is used to add the user "jane" to the supplementary group "development" without removing the user from any of their current supplementary groups.
 
