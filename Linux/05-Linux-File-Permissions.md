@@ -209,7 +209,7 @@ If the administrator sets the setgid permission to the /home/team directory, t
 
 As a result, sue and tim would have access to the file through the group owner permissions (r--).
 
-**STICKY BIT**
+### STICKY BIT
 
 The sticky bit permission is used to prevent other users from deleting files that they do not own in a shared directory. Recall that any user with write permission on a directory can create files in that directory, as well as delete any file in the directory, even if they do not own the file!
 
@@ -227,7 +227,7 @@ To set the sticky bit permission numerically, add 1000 to the directory's existi
 
 `chmod 1777 /directory_name/`
 
-**UNDERSTANDING FILES ATTRIBUTES**
+### UNDERSTANDING FILES ATTRIBUTES
 
 File attributes, often managed through commands like lsattr and chattr in Linux systems, provide additional control over how files behave and interact with the file system. For examples: 
 
