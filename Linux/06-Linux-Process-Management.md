@@ -220,13 +220,13 @@ The `pkill` and `killall` commands provide alternative methods of sending signal
 
 Job control refers to the management and manipulation of processes in a Unix-like operating system. The jobs command is used to display a list of jobs that are running in the background or suspended in the current shell session. Jobs are processes that are started from the current shell session and can be either running in the background or suspended (stopped). 
 
-`fg% job ID` = This command is used to bring a background process to the foreground. By specifying the job ID, you can specify which background job to bring to the foreground.
+`fg %job ID` = This command is used to bring a background process to the foreground. By specifying the job ID, you can specify which background job to bring to the foreground.
 
 Ctrl + Z: Pressing Ctrl + Z suspends a process running in the foreground, pausing its execution and placing it in a suspended state.
 
 `jobs`: The jobs command lists the current jobs along with their job IDs. It provides information about both background and suspended processes.
 
-`bg % job ID` : The bg command is used to resume a suspended foreground process and move it to the background, allowing it to continue executing without user interaction.
+`bg %job ID` : The bg command is used to resume a suspended foreground process and move it to the background, allowing it to continue executing without user interaction.
 
 `nohup`: The nohup command stands for "no hang up" and is used to run a command in a way that it ignores the hangup (HUP) signal. This ensures that the command persists even if the terminal session from which it was started is closed. For example, running `nohup sleep 344 &` will keep the sleep command running even after closing the terminal.
 
