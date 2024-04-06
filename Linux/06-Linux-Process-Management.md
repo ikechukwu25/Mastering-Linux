@@ -156,3 +156,8 @@ Examples:
 -n 3: Specifies that top will run for 3 iterations and then exit. In other words, it will collect information for 3 snapshots.</br>
 -b: Runs top in batch mode. In batch mode, top outputs the result to standard output rather than to the terminal. This is useful when you want to capture the output in a file or process it further.</br>
 \> processes.txt: Redirects the output of the top command to a file named processes.txt. This allows you to save the information for later analysis or review.
+
+**`htop` command**
+
+htop is indeed a more advanced and visually appealing version of the top command. It provides a dynamic, real-time view of system processes and resource usage, similar to top, but with additional features and improved usability. 
+
