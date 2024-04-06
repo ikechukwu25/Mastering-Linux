@@ -138,7 +138,6 @@ Examples: Let's say we have a  and we want to  We would use the following comman
 
 It's important to note that adjusting process priorities with renice typically requires appropriate permissions. Modifying the priority of processes owned by other users usually requires root privileges. Additionally, changing process priorities can impact system performance and should be done carefully.
 
-
 The `top` command provides a dynamic real-time view of the running system, displaying summary information and a list of processes or threads managed by the Linux kernel.
 
 Commonly Used Options includes:
@@ -166,6 +165,18 @@ Examples:
 -n 3: Specifies that top will run for 3 iterations and then exit. In other words, it will collect information for 3 snapshots.</br>
 -b: Runs top in batch mode. In batch mode, top outputs the result to standard output rather than to the terminal. This is useful when you want to capture the output in a file or process it further.</br>
 \> processes.txt: Redirects the output of the top command to a file named processes.txt. This allows you to save the information for later analysis or review.
+
+The load averages shown in the first line of output from the `top` command indicate how busy the system has been during the last one, five and fifteen minutes. This information can also be viewed by executing the uptime command or directly by displaying the contents of the /proc/loadavg file:
+
+load average: 0.11, 0.15, 0.17
+
+`ikechukwu@ubuntu-22-04-3:~$ cat /proc/loadavg`
+`0.12 0.46 0.25 1/254 3052`
+
+Load average reported is proportional to the number of CPU cores available to execute processes. Here's a breakdown of the explanation:
+
+* Single-Core CPU: On a single-core CPU system, a load average of 1 means that the system's CPU is fully utilized. This means that there is one process waiting in the run queue to be executed by the CPU at any given moment. If the load average exceeds 1, it indicates that there are more processes waiting to be executed than the CPU can handle immediately.
+* Multi-Core CPU: On a system with multiple CPU cores (e.g., a four-core CPU), the load average is distributed across all the available CPU cores. For example, if the load average is 1 on a four-core CPU, it means that, on average, each CPU core is handling 1/4 or 25% of the total load. Similarly, a load average of 4 on a four-core CPU would mean that each CPU core is fully utilized, indicating that the system is running at its full capacity.
 
 2. **`htop` command**
 
@@ -203,6 +214,7 @@ The `pkill` and `killall` commands provide alternative methods of sending signal
 
 `killall -r "firefox.*"` = This command terminates all processes whose command line matches the regular expression "firefox.*". It allows for more flexible process targeting using regular expressions.
 
+`kill -SIGKILL PID` = When an admin sends the SIGKILL signal (signal number 9) to a process using the `kill` command, it is an immediate and forceful termination signal. Unlike other signals, such as the default SIGTERM (signal number 15), which allows processes to perform cleanup operations before terminating, SIGKILL cannot be ignored or caught by the process.
 
 4. **`jobs` command**
 
@@ -219,3 +231,5 @@ Ctrl + Z: Pressing Ctrl + Z suspends a process running in the foreground, pausin
 `nohup`: The nohup command stands for "no hang up" and is used to run a command in a way that it ignores the hangup (HUP) signal. This ensures that the command persists even if the terminal session from which it was started is closed. For example, running `nohup sleep 344 &` will keep the sleep command running even after closing the terminal.
 
 Job control provides users with flexibility and control over running processes, allowing for efficient management of tasks and resources in Unix-like systems.
+
+
