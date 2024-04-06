@@ -2,7 +2,17 @@
 
 A process is an executing instance of a program. When you run a program, the operating system creates a process for that program to execute. Each process has its own memory space, system resources, and state. In simple terms, a program in execution is considered a "process" while the elements of activity inside a process are called "threads". Threads are lightweight, independently scheduled processes that share the same resources, such as memory space, file descriptors, and other process-related attributes. Multiple threads can exist within the same process. Threads within the same process can run concurrently, providing a way to perform multiple tasks simultaneously.
 
-A running instance of a program is called a process and it runs in its own memory space. Each time you execute a command, a new process starts. Each instance of a running command is a process, but not all commands create a process. 
+A running instance of a program is called a process and it runs in its own memory space. Each time you execute a command, a new process starts. Each instance of a running command is a process, but not all commands create a process. Each background process has two IDs the Job ID and the Process ID.
+
+
+In Unix-like operating systems, processes can be categorized into foreground, which interact directly with the user through the terminal, and background, which operate independently of the terminal.
+
+- Foreground = These processes run in the foreground and interact with the user through the terminal. They may require user input and typically hold the terminal until they complete. Example:
+  - `sleep 10` = This command executes a process that waits for 10 seconds before completing its task, effectively holding the terminal for that duration in a foreground process.
+
+- Background = Background processes run independently of the terminal and do not require user interaction. They can be started from the command line with an ampersand (&) at the end of the command to run in the background. Example:
+    - `sleep 10&` = This command initiates the "sleep" command as a background process, allowing other commands to be executed in the foreground without waiting for it to finish.
+    - `ping -c 1 www.google.com > /dev/null 2>&1 &` =  runs the "ping" command in the background, sending one ICMP echo request to www.google.com and discarding both the output and errors, thus allowing the terminal to remain available for other tasks. /dev/null is a special file that serves as a bit-bucket or a null device.
 
 
 ## PROCESSES AND PSEUDO FILESYSTEMS
@@ -159,5 +169,23 @@ Examples:
 
 **`htop` command**
 
-htop is indeed a more advanced and visually appealing version of the top command. It provides a dynamic, real-time view of system processes and resource usage, similar to top, but with additional features and improved usability. 
+`htop` is indeed a more advanced and visually appealing version of the top command. It provides a dynamic, real-time view of system processes and resource usage, similar to top, but with additional features and improved usability. 
+
+**`kill` command **
+
+In Unix-like operating systems, process termination and signal management are crucial aspects of system administration. The `kill` command is a fundamental tool for terminating processes and managing their behavior through signal delivery. 
+
+The primary function of the kill command is to terminate processes. It sends signals to processes, instructing them to terminate gracefully or immediately, depending on the signal sent. The `kill` command allows users to send various signals to processes. Each signal has a specific purpose, such as requesting termination (SIGTERM), forcing termination (SIGKILL), or initiating a reload of configuration files (SIGHUP).
+
+`kill -l` = By running this command, it provides a list of signal names and their corresponding numbers, enabling users to choose appropriate signals for terminating or manipulating processes.
+
+`pidof firefox` = This command allows users to retrieve the Process IDs (PIDs) associated with Firefox, facilitating targeted signal delivery.
+
+All the three commands below achieve the same result of sending the SIGINT signal to the specified processes, resulting in their termination. It's essential to note that the signal number 2 corresponds to the SIGINT signal, making these commands functionally equivalent.
+
+`kill -2 $(pidof firefox)` = This command retrieves the PID of the Firefox process using pidof and sends the SIGINT signal (interrupt) to terminate it.
+
+`kill -INT PIDs` = This command explicitly specifies the signal SIGINT by its name (INT) and terminates the processes with the given PIDs.
+
+`kill -2 PIDs` = Similarly, this command sends the SIGINT signal to the processes specified by their PIDs, effectively terminating them.
 
