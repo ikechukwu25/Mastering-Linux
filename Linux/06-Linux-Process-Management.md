@@ -170,7 +170,7 @@ The load averages shown in the first line of output from the `top` command i
 
 load average: 0.11, 0.15, 0.17
 
-`ikechukwu@ubuntu-22-04-3:~$ cat /proc/loadavg`
+`ikechukwu@ubuntu-22-04-3:~$ cat /proc/loadavg` </br>
 `0.12 0.46 0.25 1/254 3052`
 
 Load average reported is proportional to the number of CPU cores available to execute processes. Here's a breakdown of the explanation:
@@ -231,5 +231,3 @@ Ctrl + Z: Pressing Ctrl + Z suspends a process running in the foreground, pausin
 `nohup`: The nohup command stands for "no hang up" and is used to run a command in a way that it ignores the hangup (HUP) signal. This ensures that the command persists even if the terminal session from which it was started is closed. For example, running `nohup sleep 344 &` will keep the sleep command running even after closing the terminal.
 
 Job control provides users with flexibility and control over running processes, allowing for efficient management of tasks and resources in Unix-like systems.
-
-
