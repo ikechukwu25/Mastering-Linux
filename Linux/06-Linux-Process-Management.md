@@ -62,11 +62,11 @@ The fork() system call generates a child process identical to the parent process
 
 **Types of processes.**
 
-Parent - "This is a program that uses the fork() system call to create a child process. It can create one or more child processes depending on how many times fork() is called within the program. 
-Child - This is the process created after the fork system call from the parent. 
-Daemon - Daemons are background processes that provide specific system services. They often start at boot time and run continuously. They are not interactive Eg: sshd (OpenSSH server), httpd (Apache web server).
-Zombie (defunct) - A terminated process whose data has not been collected. They don’t use any of the system resources. A process that has completed execution but has not been cleaned up by its parent.
-Orphan - Opposite of the zombie process. Orphan processes are those whose parent processes have terminated or no longer exist. They are adopted by the init process (PID 1).
+- Parent - "This is a program that uses the fork() system call to create a child process. It can create one or more child processes depending on how many times fork() is called within the program. </br>
+- Child - This is the process created after the fork system call from the parent. 
+- Daemon - Daemons are background processes that provide specific system services. They often start at boot time and run continuously. They are not interactive Eg: sshd (OpenSSH server), httpd (Apache web server).
+- Zombie (defunct) - A terminated process whose data has not been collected. They don’t use any of the system resources. A process that has completed execution but has not been cleaned up by its parent.
+- Orphan - Opposite of the zombie process. Orphan processes are those whose parent processes have terminated or no longer exist. They are adopted by the init process (PID 1).
 
 
 ## LINUX PROCESS MANAGEMENT COMMANDS
@@ -121,7 +121,7 @@ The `ps` command in Linux is used to display information about active processes 
 * COMMAND: The command or program that initiated the process.
 
 
-**`top` command**
+1. **`top` command**
 
 The renice command allows users to adjust the priority of running processes by modifying their niceness values. The R key in the `top` command provides a convenient interface for users to interactively adjust process priorities based on their needs and system requirements. However, it's important to note the limitations and permissions associated with adjusting process priorities, especially with respect to root privileges.
 
@@ -167,11 +167,11 @@ Examples:
 -b: Runs top in batch mode. In batch mode, top outputs the result to standard output rather than to the terminal. This is useful when you want to capture the output in a file or process it further.</br>
 \> processes.txt: Redirects the output of the top command to a file named processes.txt. This allows you to save the information for later analysis or review.
 
-**`htop` command**
+2. **`htop` command**
 
 `htop` is indeed a more advanced and visually appealing version of the top command. It provides a dynamic, real-time view of system processes and resource usage, similar to top, but with additional features and improved usability. 
 
-**`kill` command **
+3. **`kill` command**
 
 In Unix-like operating systems, process termination and signal management are crucial aspects of system administration. The `kill` command is a fundamental tool for terminating processes and managing their behavior through signal delivery. 
 
@@ -181,7 +181,7 @@ The primary function of the kill command is to terminate processes. It sends sig
 
 `pidof firefox` = This command allows users to retrieve the Process IDs (PIDs) associated with Firefox, facilitating targeted signal delivery.
 
-All the three commands below achieve the same result of sending the SIGINT signal to the specified processes, resulting in their termination. It's essential to note that the signal number 2 corresponds to the SIGINT signal, making these commands functionally equivalent.
+Various forms of the kill command, such as `kill -2 $(pidof firefox)`, `kill -INT PIDs`, or `kill -2 PIDs`, effectively terminate processes by sending the SIGINT signal (interrupt).
 
 `kill -2 $(pidof firefox)` = This command retrieves the PID of the Firefox process using pidof and sends the SIGINT signal (interrupt) to terminate it.
 
@@ -189,3 +189,33 @@ All the three commands below achieve the same result of sending the SIGINT signa
 
 `kill -2 PIDs` = Similarly, this command sends the SIGINT signal to the processes specified by their PIDs, effectively terminating them.
 
+All the three commands below achieve the same result of sending the SIGINT signal to the specified processes, resulting in their termination. It's essential to note that the signal number 2 corresponds to the SIGINT signal, making these commands functionally equivalent.
+
+`kill -1` OR `kill -HUP` = These commands are equivalent and both send the SIGHUP (hangup) signal to the specified process. This signal is commonly used to instruct a process to reload its configuration files or to restart gracefully.
+
+The /var/run directory serves as a repository for temporary runtime files, including PID files and other pertinent information related to active processes.
+
+The `pkill` and `killall` commands provide alternative methods of sending signals to processes. `killall` terminates all processes with a specific name, while `pkill` offers partial name matching for more flexible process targeting.
+
+`pkill firefox` = This command terminates all processes with the name "firefox". It matches the process name exactly.
+
+`killall firefox` = This command terminates all processes with the name "firefox". It matches the process name exactly and does not accept partial names.
+
+`killall -r "firefox.*"` = This command terminates all processes whose command line matches the regular expression "firefox.*". It allows for more flexible process targeting using regular expressions.
+
+
+4. **`jobs` command**
+
+Job control refers to the management and manipulation of processes in a Unix-like operating system. The jobs command is used to display a list of jobs that are running in the background or suspended in the current shell session. Jobs are processes that are started from the current shell session and can be either running in the background or suspended (stopped). 
+
+`fg% job ID` = This command is used to bring a background process to the foreground. By specifying the job ID, you can specify which background job to bring to the foreground.
+
+Ctrl + Z: Pressing Ctrl + Z suspends a process running in the foreground, pausing its execution and placing it in a suspended state.
+
+`jobs`: The jobs command lists the current jobs along with their job IDs. It provides information about both background and suspended processes.
+
+`bg % job ID` : The bg command is used to resume a suspended foreground process and move it to the background, allowing it to continue executing without user interaction.
+
+`nohup`: The nohup command stands for "no hang up" and is used to run a command in a way that it ignores the hangup (HUP) signal. This ensures that the command persists even if the terminal session from which it was started is closed. For example, running `nohup sleep 344 &` will keep the sleep command running even after closing the terminal.
+
+Job control provides users with flexibility and control over running processes, allowing for efficient management of tasks and resources in Unix-like systems.
