@@ -152,6 +152,14 @@ To add the setuid permission symbolically, run:
 
 `find /usr/bin/ -perm -4000 -ls` : This command not only finds files with the SUID permission but also lists detailed information about each file using the -ls option. This includes permissions, number of hard links, owner, group, size, modification date, and file name.
 
+**SCENARIO**
+
+When a user runs the `passwd` command, which is owned by root and has the setuid bit (4755 permissions), the process that is created will run with the effective user ID (EUID) of the owner of the executable, in this case, root.
+
+The setuid bit (4 in the leftmost position of the permission bits) allows a user to execute a program with the permissions of its owner rather than the permissions of the user who runs the program. In this scenario, since the passwd command has the setuid bit set and is owned by root, any user who runs it will effectively have their process run with root privileges for the duration of the command's execution.
+
+Therefore, the owner of the process that is created when a user runs the passwd command will be root. This allows the passwd command to modify the /etc/passwd and related files, which typically require elevated privileges. The setuid bit is a security feature that enables specific programs to perform privileged operations on behalf of users without granting them overall root access.
+
 
 ### SETGID
 
@@ -182,7 +190,7 @@ To add the setgid permission numerically, add 2000 to the file's existing permis
 
 `chmod 2770 /directory/`: This command sets both the setuid (SUID) bit and the setgid (SGID) bit for the specified directory /directory/. The "2" in the first position of the mode (2770) represents the SGID bit.
 
-**WHY USE SGID**
+**SCENARIO**
 
 Why would an administrator want to set up a setgid directory? First, consider the following user accounts:
 * The user bob is a member of the payroll group.
