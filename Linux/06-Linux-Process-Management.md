@@ -110,9 +110,49 @@ The `ps` command in Linux is used to display information about active processes 
 * TIME: Cumulative CPU time used by the process.
 * COMMAND: The command or program that initiated the process.
 
+
 **`top` command**
 
+The renice command allows users to adjust the priority of running processes by modifying their niceness values. The R key in the `top` command provides a convenient interface for users to interactively adjust process priorities based on their needs and system requirements. However, it's important to note the limitations and permissions associated with adjusting process priorities, especially with respect to root privileges.
+
+When you're running the `top` or `htop` command, you can see the niceness value of processes listed in the process list. The niceness value is usually displayed in one of the columns, often labeled as "NI" or "Nice".
+
+* Niceness Values: Niceness values range from -20 to 19 in Unix-like operating systems. A lower niceness value indicates a higher priority for the process, while a higher niceness value indicates a lower priority. The default niceness value for most processes is 0.
+* Adjusting Process Priority with renice: The renice command is used to change the priority (niceness value) of running processes. It requires the PID (Process ID) of the process and the desired niceness value.
+
+Examples: Let's say we have a  and we want to  We would use the following command:
+
+`renice -10 1234` = This command increases the priority of process with PID 1234 by setting its niceness value to -10.
+
+`renice -n -5 -p 1234` = This would decrease the niceness value (increase the priority) of the process with PID 1234 by 5.
+
+It's important to note that adjusting process priorities with renice typically requires appropriate permissions. Modifying the priority of processes owned by other users usually requires root privileges. Additionally, changing process priorities can impact system performance and should be done carefully.
 
 
+The `top` command provides a dynamic real-time view of the running system, displaying summary information and a list of processes or threads managed by the Linux kernel.
 
+Commonly Used Options includes:
 
+- -h: See help summary.
+- -q: Exit the top screen.
+- -1: View individual statistics for each CPU.
+- -t: Change the CPU display to simple graphs and show the percentage of use for each CPU.
+- -m: Change the memory and swap lines to different display options.
+- -d: Change the delay value of the output refreshing time.
+- Space key: Manually refresh the display.
+- -e: Change the measurement units.
+- -P: Sort processes by processor.
+- -M: Sort processes by memory.
+- -u: View process info for a particular user.
+- -F: Customize which columns are displayed in the process list.
+- -x and y: Toggle highlighting of the current sort column and running tasks.
+- -W: Save changes made to settings.
+
+Examples:
+
+`top -d 1 -n 3 -b > filename.txt`: This command runs top in batch mode, refreshing every second for 3 iterations, and outputs the result to a file named filename.txt. This is useful for capturing the output for later analysis or processing.
+
+-d 1: Sets the update interval of top to 1 second. This means that top will refresh its display every second. </br>
+-n 3: Specifies that top will run for 3 iterations and then exit. In other words, it will collect information for 3 snapshots.</br>
+-b: Runs top in batch mode. In batch mode, top outputs the result to standard output rather than to the terminal. This is useful when you want to capture the output in a file or process it further.</br>
+\> processes.txt: Redirects the output of the top command to a file named processes.txt. This allows you to save the information for later analysis or review.
