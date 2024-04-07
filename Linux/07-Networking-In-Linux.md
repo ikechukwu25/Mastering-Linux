@@ -159,10 +159,10 @@ DNS, or Domain Name System, is a hierarchical and distributed naming system for 
 * The authoritative DNS server for the domain provides the IP address associated with the requested domain name.
 * The DNS resolver caches the IP address for future use, and your device uses this address to connect to the desired server.
   - DNS Resolver:
-  * * Resides on your device or on your ISP's server.
-  * * Responsible for initiating and handling DNS queries.
+    * Resides on your device or on your ISP's server.
+    * Responsible for initiating and handling DNS queries.
   - DNS Caching:
-* DNS resolvers cache IP addresses to reduce the time and resources needed for subsequent queries.
+    * DNS resolvers cache IP addresses to reduce the time and resources needed for subsequent queries.
   
 **DHCP (Dynamic Host Configuration Protocol):**
 * DHCP is a network protocol used to dynamically assign IP addresses and other network configuration parameters to devices on a network.
