@@ -214,7 +214,7 @@ nameserver 10.0.2.4</br></br>
 The DNS resolution system will use the first name server for an attempted lookup of the name. If that is unavailable, or a timeout period is reached, the second server will then be queried for the name resolution. If a match is found, it is returned to the system and used for initiating a connection and is also placed in the DNS cache for a configurable time period. 
 
 
-##### SETTING UP STATIC IP ON UBUNTU (netplan)
+### SETTING UP STATIC IP ON UBUNTU (netplan)
 
 Laptops and Desktops have their IP addresses dynamically assigned by the DHCP server which in most cases is the router. However, a server requires a static configuration to avoid the single point of failure problem of using a DHCP server. 
 
@@ -266,3 +266,49 @@ You can use a YAML validator such as [yamllint](https://www.yamllint.com/) to en
 7. Run `ifconfig` to verify the changes has taken place on the IP and run route -n to confirm the changes has taken effect on the default gateway. 
 
 
+### TESTING AND TROUBLESHOOTING NETWORK CONNECTIVITY
+
+Ping is a network utility tool that is commonly used to test the reachability of a host on an Internet Protocol (IP) network and to measure the round-trip time for messages sent from the originating host to a destination computer. 
+
+ICMP (Internet Control Message Protocol): Ping uses ICMP Echo Request and Echo Reply messages to check if a remote host is reachable and measure the round-trip time. ICMP is a network layer protocol and is part of the Internet Protocol suite.
+
+
+When you use the `ping` command, it can perform a reverse DNS lookup on the IP addresses of the hosts it is trying to reach. This means that, in addition to sending ICMP Echo Request messages to check the reachability of a host, ping can also try to determine the domain name associated with the IP address.
+
+To prevent this, use the `-n` option. 
+
+64 bytes from website-content-cache-1.ps5.canonical.com (185.125.190.20): icmp_seq=7 ttl=48 time=242 ms 
+
+* 64 bytes from website-content-cache-1.ps5.canonical.com (185.125.190.20):
+    * This part indicates that the response is received from the IP address 185.125.190.20.
+    * website-content-cache-1.ps5.canonical.com is the domain name associated with the IP address, determined through a reverse DNS lookup.
+* icmp_seq=7 This shows the sequence number of the ICMP Echo Request and Echo Reply pair. In this case, it's the 7th sequence.
+* ttl=48 This is the number of routers between the source and the destination. The TTL value of an IP packet represents the maximum number of IP routers that the packet can go through before being thrown away. It is decremented by each router the packet passes through. The TTL here is 48.
+* time=242 ms This is the round-trip time for the ICMP Echo Request and Echo Reply, measured in milliseconds. It represents the time taken for the packet to travel from the source to the destination and back. In this case, it's 242 milliseconds.
+
+`ping -i new interval time` = to change interval for output. Only admin can change it below 0.2
+
+`ping -t 5` = shows the 5th router towards the destination.
+
+To Trouble shoot,
+        1. ping the default gateway of the LAN - route -n or ip route show to get the default gateway, ping it. If it doesn’t work, either you’re not authenticated, or you don’t have the correct IP or the route is not correctly configured. 
+        2. ping the public IP address on the internet like google DNS -8.8.8.8. If it doesn’t work, means there is a internet connectivity issue.
+        3. Ping an internet DNS like google.com. if it’s not working you have a DNS issue. 
+
+
+ ### USING SSH
+
+SSH is a network protocol used by sys admins to securely configure a remote system over an insecure network connection. SSH provides a secure channel over an unsecured network by encrypting the communication between the client and the server.
+
+To install SSH (OpenSSH server and client) on your system, you can use the following commands:
+
+`sudo apt update && sudo apt install openssh-server openssh-client`: </br>
+`sudo apt update` = Update the package list</br>
+`sudo apt install openssh-server openssh-client` = Install the OpenSSH server and client packages
+
+SSH Server:
+    * The SSH server is the program or daemon running on a remote machine that listens for incoming SSH connections.
+    * It allows remote users to connect securely, execute commands, and transfer files. 
+SSH Client:
+    * The SSH client is the program or tool used by a user to connect to a remote system securely.
+    * It allows users to log in to a remote machine, execute commands on the remote system, and transfer files securely.
