@@ -66,8 +66,7 @@ Network configuration in Linux involves setting up and managing network interfac
 
 ##### IP ADDRESSES
 
-
-IP addresses are numerical labels assigned to devices connected to a network to facilitate communication and identification. There are, in fact, two different types of IP addresses: IPv4 and IPv6
+An IP address, or Internet Protocol address, is a numerical label assigned to each device participating in a computer network that uses the Internet Protocol for communication. IP addresses serve two primary purposes: host or network interface identification and location addressing. There are, in fact, two different types of IP addresses: IPv4 and IPv6
 
 In an IPv4 address, a total of four 8-bit numbers are used to define the address. These numbers range from 0 to 255 and are separated by dots. Each of these numbers is called an octet.
 
@@ -142,12 +141,36 @@ To change the MAC address, the first step is to disable the network interface in
 
 ##### SETTING UP STATIC IP ON UBUNTU (netplan)
 
-Laptops and Desktops have their IP addresses dynamically assigned by the DHCP server which  in most cases is the router. However, a server required a static configuration to avoid the single point of failure problem of using a DHCP server. 
+Laptops and Desktops have their IP addresses dynamically assigned by the DHCP server which in most cases is the router. However, a server requires a static configuration to avoid the single point of failure problem of using a DHCP server. 
 
 Netplan is a utility for configuring networking on Linux systems. It has become the default network configuration tool for many Linux distributions that use the systemd init system.
+
 Netplan configurations are written in YAML (Yet Another Markup Language), which aims to be human-readable and easy to understand located in /etc/netplan
 Netplan renders backend service to control network interfaces on ubuntu based systems. 
 
-An IP address, or Internet Protocol address, is a numerical label assigned to each device participating in a computer network that uses the Internet Protocol for communication. IP addresses serve two primary purposes: host or network interface identification and location addressing.
+##### DNS 
 
 DNS, or Domain Name System, is a hierarchical and distributed naming system for computers, services, or other resources connected to the Internet or a private network. DNS translates human-readable domain names into IP addresses, which are used to locate and identify devices on a network. This process is essential for internet communication, as it allows users to access websites, send emails, and perform various online activities using memorable domain names instead of numerical IP addresses.
+
+**DNS Resolution:**
+* When you enter a domain name in your web browser, your device sends a DNS query to a DNS resolver.
+* The DNS resolver checks its cache to see if it already knows the corresponding IP address for the requested domain. If not, it forwards the request to higher-level DNS servers.
+* The DNS query goes through a series of DNS servers, typically starting with the local resolver, then to the authoritative DNS server for the top-level domain (TLD), and finally to the authoritative DNS server for the specific domain.
+* The authoritative DNS server for the domain provides the IP address associated with the requested domain name.
+* The DNS resolver caches the IP address for future use, and your device uses this address to connect to the desired server.
+  
+**DHCP (Dynamic Host Configuration Protocol):**
+* DHCP is a network protocol used to dynamically assign IP addresses and other network configuration parameters to devices on a network.
+* When a device joins a network, it typically sends out a DHCP request broadcast message.
+* A DHCP server on the network responds to this request and provides the device with an IP address, subnet mask, default gateway, DNS server addresses, and other network configuration information.
+
+**Integration of DNS and DHCP:**
+* When a device receives network configuration information from a DHCP server, it often includes the IP address(es) of one or more DNS servers.
+    * These DNS servers are the ones the device will use to perform DNS resolution for domain names.
+* By providing DNS server information during the DHCP process, devices on the network can immediately start resolving domain names into IP addresses without any additional configuration.
+
+**Nameserver Setting:**
+* The nameserver setting is typically configured in the /etc/resolv.conf file on Linux systems.
+* This setting specifies the IP address(es) of the DNS server(s) that the system should use for DNS resolution.
+* For example, a line like nameserver 192.168.1.2 in the /etc/resolv.conf file indicates that the system should use the DNS server at IP address 192.168.1.2 for DNS resolution.
+
