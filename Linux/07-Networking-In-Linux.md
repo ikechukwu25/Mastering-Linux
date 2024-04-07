@@ -64,7 +64,7 @@ Network configuration in Linux involves setting up and managing network interfac
 * TCP is a protocol used by hosts (computers or devices) to establish connections and exchange data reliably over a network.
 * Routers, on the other hand, are networking devices that facilitate the routing of data packets between different networks.
 
-**IP ADDRESSES**
+##### IP ADDRESSES
 
 
 IP addresses are numerical labels assigned to devices connected to a network to facilitate communication and identification. There are, in fact, two different types of IP addresses: IPv4 and IPv6
@@ -96,7 +96,7 @@ To make changes to a network interface, the widely accepted method involves taki
 
 Alternatively, a less specific method involves restarting the system’s networking entirely with a command like `systemctl network restart`. However, this action takes down all interfaces, re-reads all related configuration files, and then restarts the networking for the entire system. It's important to note that restarting the network service can disrupt more than just the single interface being modified, so it's advisable to use the most limited and specific commands to restart the interface whenever possible.
 
-**CHANGING IP ADDRESS**
+##### CHANGING IP ADDRESS
 
 Changing the IP address of a network interface in Linux involves deactivating the interface, configuring the new IP address, and then activating the interface again. Keep in mind that you might need administrative privileges to execute these commands which means they must be run under the root access. Examples: 
 
@@ -110,7 +110,7 @@ Changing the IP address of a network interface in Linux involves deactivating th
 
 `ip address add 192.168.0.112/24 dev enp0s1` =  This command is used to add an additional IP address to the network interface enp0s1 on a Linux system. The specified IP address is 192.168.0.112 with a subnet mask of 255.255.255.0 (or /24 in CIDR notation). 
 
-**CHANGING THE DEFAULT GATEWAY**
+##### CHANGING THE DEFAULT GATEWAY
 
 Changing the default gateway in Linux involves modifying the routing table to specify a new gateway IP address. Examples:
 
@@ -126,7 +126,7 @@ The above route commands will change the default route gateway IP using the `ifc
 
 `ip route add default via 192.168.0.2 dev enp0s1`: This command adds a new default route to the routing table, specifying 192.168.0.2 as the gateway and enp0s1 as the network interface through which packets will be sent.
 
-**CHANGING MAC ADDRESS**
+##### CHANGING MAC ADDRESS
 
 Changing the MAC (Media Access Control) address of a network interface is a useful technique in networking for various reasons, including security and privacy. 
 
@@ -140,7 +140,7 @@ To change the MAC address, the first step is to disable the network interface in
 
 `ifconfig enp0s1 up` = This command is used to activate or enable a network interface named enp0s1 in a Linux system.
 
-**SETTING UP STATIC IP ON UBUNTU (netplan)**
+##### SETTING UP STATIC IP ON UBUNTU (netplan)
 
 Laptops and Desktops have their IP addresses dynamically assigned by the DHCP server which  in most cases is the router. However, a server required a static configuration to avoid the single point of failure problem of using a DHCP server. 
 
