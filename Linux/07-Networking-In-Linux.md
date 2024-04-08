@@ -286,29 +286,237 @@ To prevent this, use the `-n` option.
 * ttl=48 This is the number of routers between the source and the destination. The TTL value of an IP packet represents the maximum number of IP routers that the packet can go through before being thrown away. It is decremented by each router the packet passes through. The TTL here is 48.
 * time=242 ms This is the round-trip time for the ICMP Echo Request and Echo Reply, measured in milliseconds. It represents the time taken for the packet to travel from the source to the destination and back. In this case, it's 242 milliseconds.
 
-`ping -i new interval time` = to change interval for output. Only admin can change it below 0.2
+`ping -i new interval time` = to change interval for output. Only the admin can change it below 0.2
 
 `ping -t 5` = shows the 5th router towards the destination.
 
-To Trouble shoot,
-        1. ping the default gateway of the LAN - route -n or ip route show to get the default gateway, ping it. If it doesn’t work, either you’re not authenticated, or you don’t have the correct IP or the route is not correctly configured. 
-        2. ping the public IP address on the internet like google DNS -8.8.8.8. If it doesn’t work, means there is a internet connectivity issue.
-        3. Ping an internet DNS like google.com. if it’s not working you have a DNS issue. 
+To Troubleshoot,
+1. Ping the default gateway of the LAN - `route -n` or `ip route show` to get the default gateway, ping it. If it doesn’t work, either you’re not authenticated, or you don’t have the correct IP, or the route is not correctly configured. 
+2. Ping the public IP address on the internet like Google DNS -8.8.8.8. If it doesn’t work, means there is an internet connectivity issue.
+3. Ping an internet DNS like google.com. if it’s not working you have a DNS issue. 
 
 
  ### USING SSH
 
-SSH is a network protocol used by sys admins to securely configure a remote system over an insecure network connection. SSH provides a secure channel over an unsecured network by encrypting the communication between the client and the server.
+SSH is a network protocol used by sysadmins to securely configure a remote system over an insecure network connection. SSH provides a secure channel over an unsecured network by encrypting the communication between the client and the server.
 
 To install SSH (OpenSSH server and client) on your system, you can use the following commands:
 
-`sudo apt update && sudo apt install openssh-server openssh-client`: </br>
-`sudo apt update` = Update the package list</br>
-`sudo apt install openssh-server openssh-client` = Install the OpenSSH server and client packages
+`sudo apt update && sudo apt install openssh-server openssh-client`: </br></br>
+`sudo apt update` = This part of the command updates the package list</br>
+`sudo apt install openssh-server openssh-client` = This command will install the OpenSSH server and client packages. 
 
-SSH Server:
-    * The SSH server is the program or daemon running on a remote machine that listens for incoming SSH connections.
-    * It allows remote users to connect securely, execute commands, and transfer files. 
-SSH Client:
-    * The SSH client is the program or tool used by a user to connect to a remote system securely.
+SSH Server:</br>
+    * The SSH server is the program or daemon running on a remote machine that listens for incoming SSH connections.</br>
+    * It allows remote users to connect securely, execute commands, and transfer files. </br>
+SSH Client:</br>
+    * The SSH client is the program or tool used by a user to connect to a remote system securely.</br>
     * It allows users to log in to a remote machine, execute commands on the remote system, and transfer files securely.
+
+`ssh username@IP address` OR `ssh -l username IP address` = This command is used to ssh into another machine.
+`ssh -p username IP` = This command will change the port number. 
+
+
+### TROUBLESHOOTING SSH
+
+If you cannot connect to the remote server, 
+- The first thing is to check that the ssh daemon is running on the machine by running - `systemctl status ssh`
+- Try restarting the service by running - `systemctl restart ssh`
+- If on the client part you get the below error response when trying to connect the authenticator, you should double-check to confirm you’re connecting to the right server. Also, you can access the host keys via `cat .ssh/known_hosts` file and remove the server’s key `vi .ssh/known_hosts`. When connecting to the server, the new messages about the correct server will be displayed. 
+
+￼<img width="862" alt="Add correct host key in homeandrei sshknown hosts to get rid of this message" src="https://github.com/ikechukwu25/Mastering-Linux/assets/64879420/1667126f-4436-4669-ac0c-0fd0991a993d">
+
+- If the ssh connection is still not working check if the port 22 on which the server license is opened. From the client, scan port 22 using a command like `telnet` or `nmap` (install telnet first - `sudo apt install telnet`). Afterwards, run `telnet IP port number` (22) to connect to the server. Or install `nmap` and run `nmap -p 22 IP`
+- Check if there is a firewall that is dropping the packets by running sudo `iptables -vnL`. If there is a firewall issue, then Ubuntu could have "ufw". To configure the ufw file to allow incoming ssh connections, use `sudo ufw allow ssh`
+- Run `ssh -v username@IP address` = This is helpful with debugging authentication and configuration problems. Multiple `-v` options are used to increase the verbosity. 
+- If the problem still persists, check the server log file - /var/log/auth.log.
+
+
+### FIREWALL RULES IN LINUX
+
+A Linux firewall is your computer's security guard, deciding what information can come in and go out. It protects your computer from unwanted visitors and ensures a safe and controlled flow of data.
+
+Firewall rules in a Linux system define how incoming and outgoing network traffic should be handled. They act as a set of instructions that the system's firewall follows to determine whether to allow or deny specific packets based on predefined criteria. In Linux, the firewall rules are typically managed using tools like `iptables`, `nftables`, or user-friendly frontends like Uncomplicated Firewall (UFW).
+
+`ufw` (Uncomplicated Firewall) and `iptables` are both tools used for managing firewall rules on Linux systems. `ufw` is designed to simplify the process of configuring `iptables` and is often considered more user-friendly, especially for users who are not familiar with the complexities of `iptables`.
+
+`iptables` is a command-line utility for configuring the IP packet filter rules of the Linux kernel firewall.
+`ufw` is a user-friendly command-line interface for managing `iptables`. It is designed to make firewall configuration more accessible.
+
+- `ufw status verbose` = to see status of ufw
+- `sudo ufw app list` = List all application profiles available.
+
+The .ssh/known_hosts file is a file used by SSH (Secure Shell) to store information about host keys of remote servers. When you connect to a remote server for the first time, its public key is added to the known_hosts file on your local machine. This file helps to verify the authenticity of the remote server during subsequent connections.
+
+In Linux, SSH (Secure Shell) servers use specific ports for communication. The default port for SSH is 22. However, there might be scenarios where you want to change the default SSH port for security reasons.
+
+To permit ssh access only from two IP addresses or networks, the following iptables rules are required;
+
+`iptables -A INPUT -p tcp --dport 22 -s 192.168.64.1 -j ACCEPT` = Allow SSH connections from the IP address 192.168.64.1.
+`iptables -A INPUT -p tcp --dport 22 -s 192.168.64.1 -j ACCEPT` = Allow SSH connections from another IP address or network.
+`iptables -A INPUT -p tcp --dport 22 -j DROP` = Drop (block) all other SSH connections.
+
+Only SSH connections coming from these two IP addresses will be permitted. 
+If you want to allow an entire network, use the network address instead of the IP address
+
+
+### SECURING THE OPENSSH SERVER (sshd)
+
+The server configuration file is located in /etc/ssh/sshd_config. To change anything about the server, you have to edit the file and restart the server. 
+The client configuration file is located in /etc/ssh/ssh_config.
+Open `man sshd_config` and search for each option from the sshd_config file.
+
+Recommendations on securing the SSH
+
+- By default, the ssh daemon is listening for incoming connections on port 22. You can change the port and don’t forget to make the required changes to the firewall rules.  
+- Prohibit direct root login via SSH to minimize the risk of unauthorized access. - Change PermitRootLogin to no
+- Disable password authentication entirely and enable only public key authentication. If you need to allow password authentication, enforce strong password policies.
+- Limit the user ssh access as by default all users can login - AllowUsers username username username 
+- Filter SSH access at the firewall level - To filter SSH access at the firewall level, you can use a firewall management tool like ufw (Uncomplicated Firewall) on Ubuntu.
+	- `sudo apt update && sudo apt install ufw` = Install ufw if it's not already installed.
+	- `sudo ufw allow ssh` = Allow SSH connections.
+	- `sudo ufw default deny incoming` = Deny incoming connections on other ports (if needed).
+	- `sudo ufw enable` = Enable the firewall.
+	- `sudo ufw status` = Verify the firewall status.
+- Use ssh protocol version 2: To see the version, run `ssh -v username@hostname`.  On the server side, you can often configure the accepted SSH protocol versions in the SSH server configuration file (e.g., /etc/ssh/sshd_config). Look for a line like Protocol 2 which specifies the protocol version. If it's set to 2, it indicates SSH-2. You can change it to 1 to allow SSH-1 or 2 to allow both SSH-1 and SSH-2 (though SSH-1 is strongly discouraged for security reasons).
+- Configure an idle timeout interval - Automatically disconnect idle sessions after a certain period. - ClientAliveInterval - The ClientAliveInterval option in the SSH server configuration (sshd_config file) specifies the time (in seconds) that the server will wait before sending a "null packet" to the client to keep the connection alive. This is useful to prevent network devices from closing idle SSH connections due to inactivity. If set at 300 seconds, once elapsed, the user will be automatically logged out.
+
+
+### COPYING FILES OVER THE NETWORK (scp)
+
+`scp` (Secure Copy Protocol) is a command-line utility used for securely copying files between hosts on a network. Can be used in 3 ways - Copy from a remote server to the computer, from the computer to a remote server, or from one remote server to another tremor server.
+
+- Copying a local file to a remote destination.
+	- `scp a.txt john@80.0.0.1:~`= The command will copy the file a.txt from the current directory on your local machine to the home directory (~) of the user john on the remote server with the IP address 80.0.0.1.
+	- `scp -P 2288 a.txt john@80.0.0.1:~` = The command will copy the file a.txt from your local machine to the home directory (~) of the user john on the remote server with the IP address 80.0.0.1, using port 2288.
+	- `scp -P 22 ip.txt ikechukwu@192.168.64.2:~/ip_conf.txt` = The command will copy the file named ip.txt from the current directory on your local machine to the home directory (~/) of the user ikechukwu on the remote server with the IP address 192.168.64.2, using the default SSH port 22.
+	- `scp -rp -P 22 mydir1 ikechukwu@192.168.64.2:~` (-r = recursive, -p = preserves the modification and access time)  #used to copy a directory 
+- Copying a file from the remote server to the local client.
+	- `scp ikechukwu@192.168.64.2:/etc/passwd  /home/ikechukwu/Desktop` = This command copies the /etc/passwd file from the remote server located at 192.168.64.2 under the user ikechukwu to the local directory /home/ikechukwu/Desktop. 
+	- `scp -r ikechukwu@192.168.64.2:~/Desktop  /home/ikechukwu/Desktop` = This command recursively copies the contents of the Desktop directory from the remote server located at 192.168.64.2 under the user ikechukwu to the local directory. It is used to copy a directory 
+- `scp user1@IP1:/path_to_the_source_file user2@IP2:path_to_the_destination_directory` = This command copies a file from a source location on one remote server to a destination directory on another remote server. 
+
+
+## SFTP
+
+SFTP, or Secure File Transfer Protocol, is a secure and encrypted file transfer protocol that is part of the SSH (Secure Shell) suite of network protocols. SFTP provides a secure way to transfer files between computers over a network. It has a GUI eg. FileZilla
+
+
+### SYNCHRONIZING FILES AND DIRECTORIES USING (rsync)
+
+`rsync` is a powerful command-line utility for synchronizing files and directories between two locations on a Unix-like operating system. It is widely used for efficient and incremental file transfers, making it a popular choice for backups, mirroring, and remote file synchronization.
+
+N/B: The user that runs the rsync command must have read permission on the source location and write permission on the destination directory location. 
+
+`rsync -av /etc/ ./etc-backup`: The source directory with a trailing slash copies the entire source directory (/etc), including its contents, to the destination directory (./etc-backup)
+`rsync -av /etc ./etc-backup`: The source directory without a trailing slash copies the contents of the source directory (/etc) to the destination directory (./etc-backup). The directory structure inside ./etc-backup will mirror the structure of /etc, but the source directory itself (/etc) is not copied.
+
+To sync deleted files too include the --delete option = rsync -av --delete /etc/ ./etc-backup
+
+To exclude files when synchronising, run the following commands as described;
+- Create a new file containing the names of the files and directories you wish to exclude. `vim exclude_files.txt`
+- To synchronize the files from source_directory to destination_directory while excluding excluded_file.txt, you would run the following rsync command:
+	- `rsync -av --exclude-from="/home/user/exclude_files.txt" /home/user/source_directory/ /home/user/destination_directory/` 
+- To exclude a particular type of file = `rsync -av --exclude="*.txt" sourcedir destinationdir`
+
+
+### USING RSYNC OVER THE NETWORK
+
+When you want to backup or mirror your server configurations over the network. These commands illustrate how `rsync` can be used to backup or mirror server configurations over the network:
+
+- `sudo rsync -av -e ssh /etc/ ikechukwu@192.168.64.2:~/etc-backup/` = This command synchronizes the contents of the /etc/ directory to the etc-backup directory on the remote server using SSH for secure communication.
+- `sudo rsync -av —delete -e ssh /etc/ ikechukwu@192.168.64.2:~/etc-backup/` = This command is used to synch deleted items. Adding the `--delete` option ensures that any files or directories on the destination that do not exist in the source (/etc/ directory) are deleted.
+- `sudo rsync -av —delete -e #ssh -p 22" /etc/ ikechukwu@192.168.64.2:~/etc-backup/` = By specifying the `-p` 22 option, the command instructs SSH to use port 22 for communication instead of the default port.
+- `sudo rsync -av —delete -e ssh ikechukwu@192.168.64.2:~/etc/ ./etc-linux/` = This command synchronizes the contents of the /etc directory on the remote server to the etc-linux directory on the local machine.
+
+
+### USING wget 
+
+The wget command is a powerful tool for downloading files from the internet. Here are some common options and usage scenarios:
+
+`wget -P dir/ URL` = This command is used to download a file to a particular directory
+`wget --limit-rate=100k -P dir/ URL` = This option limits the download speed to 100 kilobytes per second (100k).
+`wget -c -P dir/ URL` = The -c option is used to resume a download.  
+
+To download multiple files (-i)
+- `vi images.txt`
+- Input links to the file = image.txt 
+- `wget -i images.txt`
+  
+To download large files in the background:
+- `wget -b URL &`
+- `tail -f logname`
+- `pkill wget`
+
+`nohup wget -b -i URL` = When you use `nohup` with a command like `wget`, it allows the command to continue running even after you log out or close the terminal. 
+
+`wget -mkEpnp URL` = The wget command with the options -mkEpnp is commonly used for recursive downloading of a website, including converting links for offline viewing. Let's break down the options:
+* `-m`: Enables mirroring. This option turns on recursion and time-stamping, sets infinite recursion depth, and removes the size limitations on downloaded files.
+* `-k`: Converts the links in the downloaded documents to make them suitable for offline viewing. This includes converting links to local copies, so you can browse the downloaded site without an internet connection.
+* `-E`: Appends the .html extension to HTML files without it. This is useful for making the downloaded pages easier to open in a browser.
+* `-p`: Downloads all necessary files for displaying any HTML page. This includes images, stylesheets, and other resources linked from the HTML files.
+* `-n`: Turns on timestamping, allowing wget to download only newer files if the local version is outdated.
+* `-P`: Specifies the directory prefix where all files and directories are saved. If not specified, files are saved in the current directory.
+
+
+CHECKING FOR LISTENING PORTS 
+
+Checking for listening ports on a system is crucial for network administration and security monitoring. Here are several methods and tools commonly used for this purpose:
+
+### NETSTAT (now “ss”)
+
+The `netstat` command is a powerful tool that provides a large amount of network information. It can be used to display information about network connections as well as display the routing table similar to the `route` command. To display statistics regarding network traffic, use the `-i` option to the `netstat` command.
+
+`root@localhost:~# netstat -i`</br>                                                 
+`Kernel Interface table`</br>                                                        
+`Iface   MTU Met   RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR Flg`</br>
+`eth0       1500 0       137      0      4 0        12      0      0      0 BMRU`</br>
+`lo        65536 0        18      0      0 0        18      0      0      0 LRU`
+
+The most important statistics from the output above are the TX-OK and TX-ERR. A high percentage of TX-ERR may indicate a problem on the network, such as too much network traffic.
+
+To use the `netstat` command to display routing information, use the `-r` option:
+
+The `netstat` command is also commonly used to display open ports. A port is a unique number that is associated with a service provided by a host. If the port is open, then the service is available for other hosts.
+
+To see a list of all currently open ports, use the following command:
+
+`root@localhost:~# netstat -tln`</br>
+`Active Internet connections (only servers)`</br>
+`Proto Recv-Q Send-Q Local Address           Foreign Address         State` </br>
+`tcp        0      0 192.168.1.2:53          0.0.0.0:*               LISTEN`</br>
+`tcp        0      0 127.0.0.1:53            0.0.0.0:*               LISTEN`</br>
+`tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN`</br>
+`tcp        0      0 127.0.0.1:953           0.0.0.0:*               LISTEN`</br>
+`tcp6       0      0 :::53                   :::*                    LISTEN`</br>
+`tcp6       0      0 :::22                  :::*                    LISTEN`</br>
+`tcp6       0      0 ::1:953                 :::*                    LISTEN`
+
+In the previous example, `-t` stands for TCP, `-l` stands for listening (which ports are listening) and `-n` stands for show numbers, not names.
+
+Sometimes showing the names can be more useful. This can be achieved by dropping the `-n` option
+
+This program is obsolete. Replacement for `netstat` is `ss`.</br> 
+Replacement for `netstat -r` is `ip route`. </br>
+Replacement for `netstat -i` is `ip -s link`. </br>
+Replacement for `netstat -g` is `ip maddr`.
+
+**The `ss` Command**
+
+The `ss` command is designed to show socket statistics and supports all the major packet and socket types. Meant to be a replacement for and to be similar in function to
+the `netstat` command, it also shows a lot more information and has more features.
+
+When you run `ss`, the output is very similar to the output of the `netstat` command with no options. The columns above are:
+
+| Field | Description |
+|-----|-----|
+| Netid	| The socket type and transport protocol |
+| State	| Connected or Unconnected, depending on protocol |
+| Recv-Q	| Amount of data queued up for being processed having been received |
+| Send-Q	| Amount of data queued up for being sent to another host |
+| Local Address	| The address and port of the local host’s portion of the connection |
+| Peer Address	| The address and port of the remote host’s portion of the connection |
+
+The format of the output of the `ss` command can change dramatically, given the options specified, such as the use of the `-s` option, which displays mostly the types of sockets, statistics about their existence, and numbers of actual packets sent and received via each socket type.
+
+
