@@ -18,12 +18,12 @@ Note: `ifconfig` is part of the net-tools package, which may need to be installe
 
 Both `ifconfig` and `ip address show` provide similar output, typically listing interfaces such as enp0s3 (Ethernet interface) and lo (Loopback interface).
 
-To obtain specific information about a particular interface, you can use commands like ifconfig <interface-name> or ip address show dev <interface-name>.
+To obtain specific information about a particular interface, you can use commands like `ifconfig <interface-name>` or `ip address show dev <interface-name>`.
 For example, `ifconfig enp0s3` or `ip address show dev enp0s3`
 
 `route`
 
-The route command is primarily used to display and manipulate the IP routing table on Linux systems, which includes information about network routes and gateways. It provides details about how network packets should be forwarded to their destinations.
+The `route` command is primarily used to display and manipulate the IP routing table on Linux systems, which includes information about network routes and gateways. It provides details about how network packets should be forwarded to their destinations.
 
 To ensure proper communication on the internet, a system requires a default gateway, which serves as the exit point for traffic leaving the local network. The default gateway is typically configured as part of the network settings and is crucial for routing packets to destinations outside the local subnet.
 
@@ -103,7 +103,7 @@ Changing the IP address of a network interface in Linux involves deactivating th
 
 `sudo ip link set enp0s1 down`  = This command is also used to deactivate or shut down a network interface named enp0s1 in a Linux system.
 
-`ifconfig enp0s1 192.168.0.111/24 up`: The command is used to manually configure the network interface enp0s1 with the IPv4 address 192.168.0.111 and a subnet mask of 255.255.255.0 (or /24). Additionally, the up keyword is used to activate or enable the network interface.
+`ifconfig enp0s1 192.168.0.111/24 up` = The command is used to manually configure the network interface enp0s1 with the IPv4 address 192.168.0.111 and a subnet mask of 255.255.255.0 (or /24). Additionally, the up keyword is used to activate or enable the network interface.
 
 `ip address del 192.168.0.111/24 dev enp0s1` = This command is used to remove the current IP address.
 
@@ -123,7 +123,8 @@ The above route commands will change the default route gateway IP using the `ifc
 
 `ip route del default` = This command deletes the existing default route from the routing table.
 
-`ip route add default via 192.168.0.2 dev enp0s1`: This command adds a new default route to the routing table, specifying 192.168.0.2 as the gateway and enp0s1 as the network interface through which packets will be sent.
+`ip route add default via 192.168.0.2 dev enp0s1` = This command adds a new default route to the routing table, specifying 192.168.0.2 as the gateway and enp0s1 as the network interface through which packets will be sent.
+
 
 ##### CHANGING MAC ADDRESS
 
@@ -138,7 +139,6 @@ To change the MAC address, the first step is to disable the network interface in
   - `"new MAC address"`: This should be replaced with the new MAC address you want to assign to the network interface enp0s1. Ensure that the MAC address you specify is in the correct format, typically six pairs of hexadecimal digits separated by colons or hyphens (e.g., 00:11:22:33:44:55).
 
 `ifconfig enp0s1 up` = This command is used to activate or enable a network interface named enp0s1 in a Linux system.
-
 
 
 ##### DNS 
@@ -172,12 +172,12 @@ DNS, or Domain Name System, is a hierarchical and distributed naming system for 
 * This setting specifies the IP address(es) of the DNS server(s) that the system should use for DNS resolution. The nameserver setting is often set to the IP address of the DNS server.
 * For example, a line like nameserver 192.168.1.2 in the /etc/resolv.conf file indicates that the system should use the DNS server at IP address 192.168.1.2 for DNS resolution. 
 
-The following example uses the host command, which works with DNS to associate a hostname with an IP address. Note that the example server is associated with the IP address 192.168.1.2 by the DNS server:
+The following example uses the `host` command, which works with DNS to associate a hostname with an IP address. Note that the example server is associated with the IP address 192.168.1.2 by the DNS server:
 
 `ikechukwu@ubuntu-22-04-3:~$ host example.com`                       
 `example.com has address 192.168.1.2`
 
-The `host command` is a utility used in Unix-like operating systems (including Linux) for performing DNS lookups and querying DNS servers to retrieve information about domain names and IP addresses.
+The `host` command is a utility used in Unix-like operating systems (including Linux) for performing DNS lookups and querying DNS servers to retrieve information about domain names and IP addresses.
 
 Remember that the address of the DNS server is stored in the /etc/resolv.conf file. 
 
@@ -212,6 +212,44 @@ This line indicates that the system should consult local files first in an attem
 nameserver 10.0.2.3</br>
 nameserver 10.0.2.4</br></br>
 The DNS resolution system will use the first name server for an attempted lookup of the name. If that is unavailable, or a timeout period is reached, the second server will then be queried for the name resolution. If a match is found, it is returned to the system and used for initiating a connection and is also placed in the DNS cache for a configurable time period. 
+
+The `dig` and `host` commands are both used for DNS-related tasks but have slightly different functionalities and use cases. Collectively, these commands are used for DNS querying, resolving hostnames to IP addresses, and retrieving detailed DNS information about a domain. </br></br>
+
+
+**THE `dig` COMMAND**
+
+There may be times when you need to test the functionality of the DNS server that your host is using. One way of doing this is to use the `dig` command, which performs queries on the DNS server to determine if the information needed is available on the server.
+
+In the following example, the `dig` command is used to determine the IP address of the example.com host:
+
+`root@ubuntu-22-04-3:~# dig example.com`
+
+If the DNS server doesn't have the requested information, it is configured to ask other DNS servers. If none of them have the requested information, an error message displays.
+
+To resolve a fully-qualified domain name (FQDN), you simply provide the domain name as an argument to the `dig` command. 
+
+`dig example.com`
+
+And you can use the `dig` command to resolve the IP address 192.168.1.2 to a hostname:
+
+`dig -x 192.168.1.2` = The `-x` option tells dig to perform a reverse DNS lookup.</br></br> 
+
+
+**THE `host` COMMAND**
+
+In its simplest form, the `host` command works with DNS to associate a hostname with an IP address.
+
+`root@ubuntu-22-04-3:~# host example.com`   
+
+The `host` command can also be used in reverse if an IP address is known, but the domain name is not.
+
+`root@ubuntu-22-04-3:~# host 192.168.1.2`
+
+A comprehensive list of DNS information regarding example.com can be found using the `-a` all option:
+
+`root@ubuntu-22-04-3:~# host -a example.com`      
+
+Sometimes, a system may be configured to not respond to ping requests. Therefore, the lack of a response to a `ping` command does not mean a system is not connected to a network. A quick response to a `ping` command does indicate, however, that a system is connected to a network.
 
 
 ### SETTING UP STATIC IP ON UBUNTU (netplan)
@@ -286,9 +324,8 @@ To prevent this, use the `-n` option.
 * ttl=48 This is the number of routers between the source and the destination. The TTL value of an IP packet represents the maximum number of IP routers that the packet can go through before being thrown away. It is decremented by each router the packet passes through. The TTL here is 48.
 * time=242 ms This is the round-trip time for the ICMP Echo Request and Echo Reply, measured in milliseconds. It represents the time taken for the packet to travel from the source to the destination and back. In this case, it's 242 milliseconds.
 
-`ping -i new interval time` = to change interval for output. Only the admin can change it below 0.2
-
-`ping -t 5` = shows the 5th router towards the destination.
+- `ping -i new interval time` = to change interval for output. Only the admin can change it below 0.2
+- `ping -t 5` = shows the 5th router towards the destination.
 
 To Troubleshoot,
 1. Ping the default gateway of the LAN - `route -n` or `ip route show` to get the default gateway, ping it. If it doesn’t work, either you’re not authenticated, or you don’t have the correct IP, or the route is not correctly configured. 
@@ -302,9 +339,9 @@ SSH is a network protocol used by sysadmins to securely configure a remote syste
 
 To install SSH (OpenSSH server and client) on your system, you can use the following commands:
 
-`sudo apt update && sudo apt install openssh-server openssh-client`: </br></br>
-`sudo apt update` = This part of the command updates the package list</br>
-`sudo apt install openssh-server openssh-client` = This command will install the OpenSSH server and client packages. 
+- `sudo apt update && sudo apt install openssh-server openssh-client`: </br></br>
+- `sudo apt update` = This part of the command updates the package list</br>
+- `sudo apt install openssh-server openssh-client` = This command will install the OpenSSH server and client packages. 
 
 SSH Server:</br>
     * The SSH server is the program or daemon running on a remote machine that listens for incoming SSH connections.</br>
@@ -313,8 +350,8 @@ SSH Client:</br>
     * The SSH client is the program or tool used by a user to connect to a remote system securely.</br>
     * It allows users to log in to a remote machine, execute commands on the remote system, and transfer files securely.
 
-`ssh username@IP address` OR `ssh -l username IP address` = This command is used to ssh into another machine.
-`ssh -p username IP` = This command will change the port number. 
+- `ssh username@IP address` OR `ssh -l username IP address` = This command is used to ssh into another machine.
+- `ssh -p username IP` = This command will change the port number. 
 
 
 ### TROUBLESHOOTING SSH
@@ -340,10 +377,9 @@ Firewall rules in a Linux system define how incoming and outgoing network traffi
 
 `ufw` (Uncomplicated Firewall) and `iptables` are both tools used for managing firewall rules on Linux systems. `ufw` is designed to simplify the process of configuring `iptables` and is often considered more user-friendly, especially for users who are not familiar with the complexities of `iptables`.
 
-`iptables` is a command-line utility for configuring the IP packet filter rules of the Linux kernel firewall.
-`ufw` is a user-friendly command-line interface for managing `iptables`. It is designed to make firewall configuration more accessible.
+`iptables` is a command-line utility for configuring the IP packet filter rules of the Linux kernel firewall. `ufw` is a user-friendly command-line interface for managing `iptables`. It is designed to make firewall configuration more accessible.
 
-- `ufw status verbose` = to see status of ufw
+- `ufw status verbose` = Used to see status of ufw
 - `sudo ufw app list` = List all application profiles available.
 
 The .ssh/known_hosts file is a file used by SSH (Secure Shell) to store information about host keys of remote servers. When you connect to a remote server for the first time, its public key is added to the known_hosts file on your local machine. This file helps to verify the authenticity of the remote server during subsequent connections.
@@ -352,9 +388,9 @@ In Linux, SSH (Secure Shell) servers use specific ports for communication. The d
 
 To permit ssh access only from two IP addresses or networks, the following iptables rules are required;
 
-`iptables -A INPUT -p tcp --dport 22 -s 192.168.64.1 -j ACCEPT` = Allow SSH connections from the IP address 192.168.64.1.
-`iptables -A INPUT -p tcp --dport 22 -s 192.168.64.1 -j ACCEPT` = Allow SSH connections from another IP address or network.
-`iptables -A INPUT -p tcp --dport 22 -j DROP` = Drop (block) all other SSH connections.
+- `iptables -A INPUT -p tcp --dport 22 -s 192.168.64.1 -j ACCEPT` = Allow SSH connections from the IP address 192.168.64.1.
+- `iptables -A INPUT -p tcp --dport 22 -s 192.168.64.1 -j ACCEPT` = Allow SSH connections from another IP address or network.
+- `iptables -A INPUT -p tcp --dport 22 -j DROP` = Drop (block) all other SSH connections.
 
 Only SSH connections coming from these two IP addresses will be permitted. 
 If you want to allow an entire network, use the network address instead of the IP address
@@ -408,10 +444,9 @@ SFTP, or Secure File Transfer Protocol, is a secure and encrypted file transfer 
 
 N/B: The user that runs the rsync command must have read permission on the source location and write permission on the destination directory location. 
 
-`rsync -av /etc/ ./etc-backup`: The source directory with a trailing slash copies the entire source directory (/etc), including its contents, to the destination directory (./etc-backup)
-`rsync -av /etc ./etc-backup`: The source directory without a trailing slash copies the contents of the source directory (/etc) to the destination directory (./etc-backup). The directory structure inside ./etc-backup will mirror the structure of /etc, but the source directory itself (/etc) is not copied.
-
-To sync deleted files too include the --delete option = rsync -av --delete /etc/ ./etc-backup
+- `rsync -av /etc/ ./etc-backup`: The source directory with a trailing slash copies the entire source directory (/etc), including its contents, to the destination directory (./etc-backup)
+- `rsync -av /etc ./etc-backup`: The source directory without a trailing slash copies the contents of the source directory (/etc) to the destination directory (./etc-backup). The directory structure inside ./etc-backup will mirror the structure of /etc, but the source directory itself (/etc) is not copied.
+- `rsync -av --delete /etc/ ./etc-backup` = This command is used to sync deleted files too include the --delete option.
 
 To exclude files when synchronising, run the following commands as described;
 - Create a new file containing the names of the files and directories you wish to exclude. `vim exclude_files.txt`
@@ -434,40 +469,37 @@ When you want to backup or mirror your server configurations over the network. T
 
 The wget command is a powerful tool for downloading files from the internet. Here are some common options and usage scenarios:
 
-`wget -P dir/ URL` = This command is used to download a file to a particular directory
-`wget --limit-rate=100k -P dir/ URL` = This option limits the download speed to 100 kilobytes per second (100k).
-`wget -c -P dir/ URL` = The -c option is used to resume a download.  
+- `wget -P dir/ URL` = This command is used to download a file to a particular directory
+- `wget --limit-rate=100k -P dir/ URL` = This option limits the download speed to 100 kilobytes per second (100k).
+- `wget -c -P dir/ URL` = The -c option is used to resume a download.  
 
-To download multiple files (-i)
-- `vi images.txt`
-- Input links to the file = image.txt 
-- `wget -i images.txt`
-  
-To download large files in the background:
-- `wget -b URL &`
-- `tail -f logname`
-- `pkill wget`
-
-`nohup wget -b -i URL` = When you use `nohup` with a command like `wget`, it allows the command to continue running even after you log out or close the terminal. 
-
-`wget -mkEpnp URL` = The wget command with the options -mkEpnp is commonly used for recursive downloading of a website, including converting links for offline viewing. Let's break down the options:
-* `-m`: Enables mirroring. This option turns on recursion and time-stamping, sets infinite recursion depth, and removes the size limitations on downloaded files.
-* `-k`: Converts the links in the downloaded documents to make them suitable for offline viewing. This includes converting links to local copies, so you can browse the downloaded site without an internet connection.
-* `-E`: Appends the .html extension to HTML files without it. This is useful for making the downloaded pages easier to open in a browser.
-* `-p`: Downloads all necessary files for displaying any HTML page. This includes images, stylesheets, and other resources linked from the HTML files.
-* `-n`: Turns on timestamping, allowing wget to download only newer files if the local version is outdated.
-* `-P`: Specifies the directory prefix where all files and directories are saved. If not specified, files are saved in the current directory.
+- To download multiple files (-i)
+	- `vi images.txt`
+	- Input links to the file = image.txt 
+	- `wget -i images.txt`  
+- To download large files in the background:
+	- `wget -b URL &`
+	- `tail -f logname`
+	- `pkill wget`
+- `nohup wget -b -i URL` = When you use `nohup` with a command like `wget`, it allows the command to continue running even after you log out or close the terminal. 
+- `wget -mkEpnp URL` = The wget command with the options -mkEpnp is commonly used for recursive downloading of a website, including converting links for offline viewing. Let's break down the options:
+	* `-m`: Enables mirroring. This option turns on recursion and time-stamping, sets infinite recursion depth, and removes the size limitations on downloaded files.
+	* `-k`: Converts the links in the downloaded documents to make them suitable for offline viewing. This includes converting links to local copies, so you can browse the downloaded site without an internet connection.
+	* `-E`: Appends the .html extension to HTML files without it. This is useful for making the downloaded pages easier to open in a browser.
+	* `-p`: Downloads all necessary files for displaying any HTML page. This includes images, stylesheets, and other resources linked from the HTML files.
+	* `-n`: Turns on timestamping, allowing `wget` to download only newer files if the local version is outdated.
+	* `-P`: Specifies the directory prefix where all files and directories are saved. If not specified, files are saved in the current directory.
 
 
-CHECKING FOR LISTENING PORTS 
+### CHECKING FOR LISTENING PORTS 
 
-Checking for listening ports on a system is crucial for network administration and security monitoring. Here are several methods and tools commonly used for this purpose:
+Checking for listening ports on a system is crucial for network administration and security monitoring. `netstat`, `ss`, and `lsof` are commonly used to display open ports on the current system or locate hosts. Here are several methods and tools commonly used for this purpose:
 
-### NETSTAT (now “ss”)
+**The `netstat` command** (now “ss”)
 
 The `netstat` command is a powerful tool that provides a large amount of network information. It can be used to display information about network connections as well as display the routing table similar to the `route` command. To display statistics regarding network traffic, use the `-i` option to the `netstat` command.
 
-`root@localhost:~# netstat -i`</br>                                                 
+- `root@localhost:~# netstat -i`</br>                                                 
 `Kernel Interface table`</br>                                                        
 `Iface   MTU Met   RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR Flg`</br>
 `eth0       1500 0       137      0      4 0        12      0      0      0 BMRU`</br>
@@ -481,7 +513,7 @@ The `netstat` command is also commonly used to display open ports. A port is 
 
 To see a list of all currently open ports, use the following command:
 
-`root@localhost:~# netstat -tln`</br>
+- `root@ubuntu-22-04-3:~# netstat -tln`</br>
 `Active Internet connections (only servers)`</br>
 `Proto Recv-Q Send-Q Local Address           Foreign Address         State` </br>
 `tcp        0      0 192.168.1.2:53          0.0.0.0:*               LISTEN`</br>
@@ -492,14 +524,25 @@ To see a list of all currently open ports, use the following command:
 `tcp6       0      0 :::22                  :::*                    LISTEN`</br>
 `tcp6       0      0 ::1:953                 :::*                    LISTEN`
 
-In the previous example, `-t` stands for TCP, `-l` stands for listening (which ports are listening) and `-n` stands for show numbers, not names.
+In the previous example, `-t` stands for TCP, `-l` stands for listening (which ports are listening), and `-n` stands for show numbers, not names.
 
 Sometimes showing the names can be more useful. This can be achieved by dropping the `-n` option
 
-This program is obsolete. Replacement for `netstat` is `ss`.</br> 
-Replacement for `netstat -r` is `ip route`. </br>
-Replacement for `netstat -i` is `ip -s link`. </br>
-Replacement for `netstat -g` is `ip maddr`.
+This program is obsolete. The replacement for `netstat` is `ss`.</br> 
+The replacement for `netstat -r` is `ip route`. </br>
+The replacement for `netstat -i` is `ip -s link`. </br>
+The replacement for `netstat -g` is `ip maddr`.
+
+- `netstat -tupan` = This command shows all open ports. 
+
+	- `-t` = shows TCP ports </br>
+	- `-u` = shows UDP ports </br>
+	- `-p` = Show the process ID and name associated with each socket. </br>
+	- `-a` = Display all sockets (both listening and non-listening). </br>
+	- `-n` =  Show numerical addresses and port numbers instead of resolving them to hostnames and services. 
+
+`sudo netstat -tupan | grep :22 = searches for all port : 22` = This command searches for all port : 22 
+
 
 **The `ss` Command**
 
@@ -519,4 +562,37 @@ When you run `ss`, the output is very similar to the output of the `netstat` c
 
 The format of the output of the `ss` command can change dramatically, given the options specified, such as the use of the `-s` option, which displays mostly the types of sockets, statistics about their existence, and numbers of actual packets sent and received via each socket type.
 
+**TCP**
+Local Address: This is the local IP address and port number. In this case, it is "0.0.0.0:22." The IP address "0.0.0.0" means that the server is listening on all available network interfaces, and ":22" is the port number.
+Foreign Address: For a listening socket, the foreign address is usually "0.0.0.0:*," indicating that it can accept connections from any remote IP address on any port.
 
+**UDP**
+Local Address: This is the local IP address and port number. In this case, ":::5353". The ":::" notation represents all available IPv6 addresses on the system, and "5353" is the port number.
+Foreign Address: For a listening socket, the foreign address is usually ":::*," indicating that it can accept connections from any remote IPv6 address on any port.
+
+
+**The `lsof` command**
+
+- `lsof` (List Open Files) is a command-line utility used to display information about files and processes currently open or in use by the system.
+- `sudo ls -u username` = This command lists files and processes that are currently open by the user. 
+- `lsof -u ^ikechukwu` = The negation symbol can be used to see all files opened except a specific user.
+- `lsof -iTCP -sTCP:LISTEN -nP` = This command is used to see files that have opened TCP ports (`iTCP sTCP:LISTEN` shows only the files that opened TCP ports which are in the listening state)
+	* `-iTCP`: Specifies that the information should be related to the TCP (Internet protocol) family.
+	* `-sTCP:LISTEN`: Filters the results to show only those connections in the LISTEN state (i.e., processes that are actively listening for incoming connections).
+	* `-nP`: Prevents `lsof` from resolving hostnames (numeric output) and from converting port numbers to service names (numeric port output).
+- `sudo lsof -iTCP:22 -sTCP:LISTEN -nP` = This command is used to identify which file has opened a specific port (e.g., port 22 in this example).
+
+
+**The `telnet` command**
+
+To check what ports are open in another system, scan the ports on that system using `telnet` command. For example; 
+
+- `telnet IP Port number` - `telnet 192.168.64.1 22` = If the connection is successful, you'll typically see a blank screen or a message indicating that the connection has been established. If the connection fails, you may receive an error message indicating the reason for the failure.
+
+To quit telnet, press "Ctrl + ]" and then type quit.
+
+
+**The `nmap` command**
+
+For professional port scanning, nmap is a widely used tool. Install it using `sudo apt install nmap` and use commands like `nmap -p 80 linux.com` to see the status of a specific port.
+Please see for more information on the `nmap` command.
