@@ -7,12 +7,12 @@ Networking in Linux encompasses a wide array of activities, ranging from configu
 Understanding and managing network interfaces is essential for configuring and troubleshooting network connections in Linux systems. 
 To gather information about network interfaces in Linux, two commonly used commands are `ifconfig` and `ip`.
 
-`ifconfig` 
+1. `ifconfig` 
 
 `ifconfig -a` = Displays information about all network interfaces, including both enabled and disabled ones.
 Note: `ifconfig` is part of the net-tools package, which may need to be installed separately (`sudo apt install net-tools` on Debian-based systems).
 
-`ip`
+2. `ip`
 
 `ip address show` = Displays detailed information about network interfaces.
 
@@ -21,7 +21,7 @@ Both `ifconfig` and `ip address show` provide similar output, typically listing 
 To obtain specific information about a particular interface, you can use commands like `ifconfig <interface-name>` or `ip address show dev <interface-name>`.
 For example, `ifconfig enp0s3` or `ip address show dev enp0s3`
 
-`route`
+3. `route`
 
 The `route` command is primarily used to display and manipulate the IP routing table on Linux systems, which includes information about network routes and gateways. It provides details about how network packets should be forwarded to their destinations.
 
@@ -216,7 +216,7 @@ The DNS resolution system will use the first name server for an attempted lookup
 The `dig` and `host` commands are both used for DNS-related tasks but have slightly different functionalities and use cases. Collectively, these commands are used for DNS querying, resolving hostnames to IP addresses, and retrieving detailed DNS information about a domain. </br></br>
 
 
-**THE `dig` COMMAND**
+1. **THE `dig` COMMAND**
 
 There may be times when you need to test the functionality of the DNS server that your host is using. One way of doing this is to use the `dig` command, which performs queries on the DNS server to determine if the information needed is available on the server.
 
@@ -235,7 +235,7 @@ And you can use the `dig` command to resolve the IP address 192.168.1.2 to a
 `dig -x 192.168.1.2` = The `-x` option tells dig to perform a reverse DNS lookup.</br></br> 
 
 
-**THE `host` COMMAND**
+2. **THE `host` COMMAND**
 
 In its simplest form, the `host` command works with DNS to associate a hostname with an IP address.
 
@@ -495,7 +495,7 @@ The wget command is a powerful tool for downloading files from the internet. Her
 
 Checking for listening ports on a system is crucial for network administration and security monitoring. `netstat`, `ss`, and `lsof` are commonly used to display open ports on the current system or locate hosts. Here are several methods and tools commonly used for this purpose:
 
-**The `netstat` command** (now “ss”)
+1. **The `netstat` command** (now “ss”)
 
 The `netstat` command is a powerful tool that provides a large amount of network information. It can be used to display information about network connections as well as display the routing table similar to the `route` command. To display statistics regarding network traffic, use the `-i` option to the `netstat` command.
 
@@ -544,7 +544,7 @@ The replacement for `netstat -g` is `ip maddr`.
 `sudo netstat -tupan | grep :22 = searches for all port : 22` = This command searches for all port : 22 
 
 
-**The `ss` Command**
+2. **The `ss` Command**
 
 The `ss` command is designed to show socket statistics and supports all the major packet and socket types. Meant to be a replacement for and to be similar in function to
 the `netstat` command, it also shows a lot more information and has more features.
@@ -571,7 +571,7 @@ Local Address: This is the local IP address and port number. In this case, ":::5
 Foreign Address: For a listening socket, the foreign address is usually ":::*," indicating that it can accept connections from any remote IPv6 address on any port.
 
 
-**The `lsof` command**
+3. **The `lsof` command**
 
 - `lsof` (List Open Files) is a command-line utility used to display information about files and processes currently open or in use by the system.
 - `sudo ls -u username` = This command lists files and processes that are currently open by the user. 
@@ -583,7 +583,7 @@ Foreign Address: For a listening socket, the foreign address is usually ":::*," 
 - `sudo lsof -iTCP:22 -sTCP:LISTEN -nP` = This command is used to identify which file has opened a specific port (e.g., port 22 in this example).
 
 
-**The `telnet` command**
+4. **The `telnet` command**
 
 To check what ports are open in another system, scan the ports on that system using `telnet` command. For example; 
 
@@ -592,7 +592,7 @@ To check what ports are open in another system, scan the ports on that system us
 To quit telnet, press "Ctrl + ]" and then type quit.
 
 
-**The `nmap` command**
+5. **The `nmap` command**
 
 For professional port scanning, nmap is a widely used tool. Install it using `sudo apt install nmap` and use commands like `nmap -p 80 linux.com` to see the status of a specific port.
 Please see for more information on the `nmap` command.
