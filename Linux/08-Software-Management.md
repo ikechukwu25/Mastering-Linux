@@ -1,4 +1,4 @@
-## DPKG (Debian and Ubuntu Based Distros)
+# DPKG (Debian and Ubuntu Based Distros)
 
 Software management in Debian and Ubuntu-based distributions relies on DPKG, a package management system. DPKG operates at a low level, executing fundamental tasks for package management. At its core lies the concept of binary packages, which contain precompiled executables ready for deployment. These executables result from the compilation process, where source code, authored in languages like C, C++, or Rust, is translated into machine-executable binary code.
 
@@ -44,7 +44,7 @@ To manage installed packages and gather information about them, you can use vari
 - `dpkg -P`: This command is used to purge (completely remove) a package and its configuration files from the system. Purging a package removes not only the package files but also its associated configuration files, essentially performing a more thorough removal than a regular uninstallation.
 
 
-## APT - Advanced Package Tool:
+# APT - Advanced Package Tool
 
 The recommended method for managing software packages on Ubuntu and other Debian-based distributions is using APT. Unlike dpkg, APT does not directly handle .deb files. Instead, it works with packages downloaded from repositories and calls dpkg directly after fetching the .deb archives.
 
@@ -70,7 +70,7 @@ Common APT Commands include:
 - `sudo apt install synaptic`: Installs the Synaptic software manager with a GUI.
 
 
-## COMPILING PROGRAMS FROM SOURCE CODE VS. PACKAGE MANAGER
+# COMPILING PROGRAMS FROM SOURCE CODE VS. PACKAGE MANAGER
 
 Compiling executable files from source code and using package management tools like APT (Advanced Package Tool) and dpkg represent two different approaches to managing software on a Debian-based Linux system.
 
@@ -95,7 +95,7 @@ Compiling a single source file using gcc.
 - ./filename to open: After successful compilation, you can run the generated executable by executing the command.
 
 
-Source Compilation Guide
+### SOURCE COMPILATION GUIDE
 
 1. Install the prerequisites: gcc, g++, make
   - Ubuntu: `sudo apt update && sudo apt install build-essential`
@@ -111,7 +111,7 @@ Source Compilation Guide
 8. Run `make clean` - Optionally, to clean up temporary build files.
 
 
-Compiling Software from Source Code: Lab ProFTPD
+### COMPILING SOFTWARE FROM SOURCE CODE (Lab ProFTPD)
 
 FTP (File Transfer Protocol) is a standard network protocol used for transferring files between a client and a server on a computer network. It operates on a client-server model where the client initiates a connection to the server to perform file transfers.
 
