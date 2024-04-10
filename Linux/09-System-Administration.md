@@ -98,9 +98,9 @@ Example;
 `7	10	cron.weekly 		run-parts --report /etc/cron.weekly` </br>
 `@daily	15			cron.weekly 		run-parts --report /etc/cron.weekly`
 
-- 7 (days) = This means the command should be run every 7 days - weekly	
-- 10 (minutes) = This identifies the delay in minutes. This is intended to keep the system from being overloaded with the jobs. If `anacron` determines that it needs to run several commands when it starts up, it won’t run them simultaneously but with a delay. 
-- cron.weekly = This is a job identifier. It is the name of the file that will be created under /var/spool/anacron. This is also called the job timestamp file that will contain a single line that indicates the last time this job was executed.  The identifier identifies the job in the messages or the log files. 
+- `7` (days) = This means the command should be run every 7 days - weekly	
+- `10` (minutes) = This identifies the delay in minutes. This is intended to keep the system from being overloaded with the jobs. If `anacron` determines that it needs to run several commands when it starts up, it won’t run them simultaneously but with a delay. 
+- `cron.weekly` = This is a job identifier. It is the name of the file that will be created under /var/spool/anacron. This is also called the job timestamp file that will contain a single line that indicates the last time this job was executed.  The identifier identifies the job in the messages or the log files. 
 
 **Additional Anacron Commands**:
 
@@ -400,7 +400,6 @@ The `dd` command works with blocks and cloning the device by copying everything 
 
 #### MBR
 
-
 The Master Boot Record (MBR) is a special type of boot sector located at the very beginning of a storage device, such as a hard disk drive or solid-state drive. It contains the information necessary to boot the operating system.
 The MBR holds the info on how the logical partition containing file systems are organised on that medium. It also contains executable codes which is referred to as the boot loader. 
 
@@ -466,7 +465,6 @@ These are essential commands for managing and analyzing the systemd initializati
 
 #### SERVICE MANAGEMENT (systemd and systemctl)
 
-
 Service management is a critical aspect of system administration, ensuring that essential processes and applications run smoothly and reliably on a Linux system. 
 
 Services are background processes or daemons that perform specific functions, such as web servers (e.g., Apache or Nginx), databases (e.g., MySQL or PostgreSQL), or networking services (e.g., SSH or DNS). Proper management of services is essential for system stability, security, and performance.
@@ -495,7 +493,7 @@ If you only use start after making changes, you might experience a brief interru
 - `systemctl list-units --all`: It is used to display a list of all loaded units in the system, including active and inactive units 
 
 
-#### GRUB (GNU GRand Unified Bootloader):
+# GRUB (GNU GRand Unified Bootloader):
 
 GRUB is a boot loader used on many Unix-like operating systems, including most Linux distributions. Its primary function is to load the operating system kernel into memory and transfer control to it. GRUB offers a flexible and configurable way to manage the boot process.
 
