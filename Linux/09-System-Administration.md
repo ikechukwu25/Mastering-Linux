@@ -112,7 +112,7 @@ Example;
 - `sudo cat /var/spool/anacron` = Displays the log file containing information about Anacron job executions.
 
 
-UNDERTSTANDING COMPUTER HARDWARE
+# UNDERTSTANDING COMPUTER HARDWARE
 
 The motherboard, or system board, is the main hardware board in the computer through which the central processing unit (CPU), random-access memory (RAM) and other components are all connected. 
 
@@ -218,6 +218,7 @@ Hard drives are associated with file names (called device files) that are stored
 * Device Order Each hard drive is then assigned a letter which follows the prefix. For example, the first IDE hard drive would be named /dev/hda and the second would be /dev/hdb, and so on.
 * Partition Finally, each partition on a disk is given a unique numeric indicator. For example, if a USB hard drive has two partitions, they could be associated with the /dev/sda1 and /dev/sda2 device files.
 
+
 #### SOLID STATE DISKS
 
 While the phrase hard disk is typically considered to encompass traditional spinning disk devices, it can also refer to the newer and very different solid state drives or disks.
@@ -308,45 +309,85 @@ Cloning an entire partition to a file on another partition involves specifying t
 
 A "block" refers to a small unit of storage, and a "partition" is a section of a storage device used to organize and manage data. `dd` operates at the block level, providing precise control over data copying and manipulation.
 
-`sudo if=/dev/sdb of=/home/ikechukwu/backup-usb.img status=progress` : (for cloning the device file)you want to create an image of the entire /dev/sdb device and save it as backup-usb.img in the /home/ikechukwu/ directory. The status=progress option is included to show the progress of the dd command, which can be helpful for larger operations.
-* sudo: Run the command with superuser privileges.
-* dd: The command for copying and converting data.
-* if=/dev/sdb: Specifies the input file, in this case, /dev/sdb (the USB drive).
-* of=/home/ikechukwu/backup-usb.img: Specifies the output file, the image file to be created.
-* status=progress: Shows the progress of the dd command. You need to use the GNU dd command from coreutils version 8.24 or above to use the status=progress option.
+Examples:
+
+1. `sudo if=/dev/sdb of=/home/ikechukwu/backup-usb.img status=progress` : This command is used for cloning the device file you want to create an image of the entire /dev/sdb device and save it as backup-usb.img in the /home/ikechukwu/ directory. The `status=progress` option is included to show the progress of the `dd` command, which can be helpful for larger operations. Breakdown:
+* `sudo`: Runs the command with superuser privileges, allowing it to access the specified device file and write to the specified output file.
+* `dd`: The command for copying and converting data.
+* `if=/dev/sdb`: Specifies the input file, which in this case is /dev/sdb, representing the USB drive you want to clone.
+* `of=/home/ikechukwu/backup-usb.img`: Specifies the output file, which is the image file that will be created. It will be named backup-usb.img and will be saved in the /home/ikechukwu/ directory.
+* `status=progress`: This option shows the progress of the `dd` command as it runs, indicating how much data has been copied and how much is remaining. This can be particularly helpful for larger operations to track the progress of the cloning process. </br>
+It's important to note that the `status=progress` option requires the use of the GNU dd command from coreutils version 8.24 or above to function properly.
 
 After the command completes, you should have a file named backup-usb.img in the /home/ikechukwu/ directory, which is an image of your USB drive.
-The dd command works with blocks and cloning the device by copying everything including the empty and occupied space. If you have a partition of 10gb and 9 are free, the dd command will copy 10gb to the destination which makes it differ from the cp command.
 
-sudo dd if=/home/ikechukwu/backup-usb.img of=/dev/sdb status=progress conv=sync
+The `dd` command works with blocks and cloning the device by copying everything including the empty and occupied space. If you have a partition of 10gb and 9 are free, the dd command will copy 10gb to the destination which makes it differ from the `cp` command.
 
-This will write the contents of a disk image (backup.img) to a block device (/dev/sdb). Here's a breakdown of the command:
-* sudo: This command is used to execute the subsequent command with elevated privileges.
-* dd: This is a command used for copying and converting files. In this case, it's being used to copy the contents of a disk image to a block device.
-* if=/home/ikechukwu/backup.img: This specifies the input file (source), which is the disk image located at /home/ikechukwu/backup.img.
-* of=/dev/sdb: This specifies the output file (destination), which is the block device /dev/sdb.
-* status=progress: This option shows the progress of the dd command, indicating how much data has been transferred.
-* conv=sync: This option ensures that the data is synchronized after each write operation, making sure that all data is written to the destination before completing.
+2. `sudo dd if=/home/ikechukwu/backup-usb.img of=/dev/sdb status=progress conv=sync`: This will write the contents of a disk image (backup.img) to a block device (/dev/sdb). Breakdown:
+* `sudo`: This command is used to execute the subsequent command with elevated privileges.
+* `dd`: This is a command used for copying and converting files. In this case, it's being used to copy the contents of a disk image to a block device.
+* `if=/home/ikechukwu/backup.img`: This specifies the input file (source), which is the disk image located at /home/ikechukwu/backup.img.
+* `of=/dev/sdb`: This specifies the output file (destination), which is the block device /dev/sdb.
+* `status=progress`: This option shows the progress of the dd command, indicating how much data has been transferred.
+* `conv=sync`: This option ensures that the data is synchronized after each write operation, making sure that all data is written to the destination before completing.
 
-Cloning the partition where the root file is mounted to the USB stick. 
+3. To clone the partition where the root file system is mounted to a USB stick partition, follow these steps:
 
-* fdisk -l or df -h = confirm the name of the partition.
-* sudo dd if=/dev/sda2 of=/dev/sdb status=progress : This will clone the root file partition to the USB stick partition. 
+- Confirm the name of the partition where the root file system is mounted using either `fdisk -l` or `df -h` command.
+- Once you have identified the source partition (let's assume it's /dev/sda2) and the destination partition on the USB stick (let's assume it's /dev/sdb), use the following command to clone the partition:
+  - `sudo dd if=/dev/sda2 of=/dev/sdb status=progress`
+    - `sudo`: Execute the command with elevated privileges.
+    - `dd`: Command for copying and converting data.
+    - `if=/dev/sda2`: Specifies the input file, which is the source partition where the root file system is mounted (/dev/sda2 in this case).
+    - `of=/dev/sdb`: Specifies the output file, which is the destination partition on the USB stick (/dev/sdb in this case).
+    - `status=progress`: Option to display the progress of the `dd` command, showing how much data has been transferred.
+- Wait for the cloning process to complete. Depending on the size of the partition and the speed of the devices involved, this process may take some time.
+- Once the cloning process is finished, you can safely remove the USB stick and use it as needed. Make sure to eject it properly before removing it to avoid data corruption.
 
-Ensure that you are copying to the correct destination as dd can overwrite data, and choosing the wrong output device can result in data loss.
+#### MBR
 
-MBR
 
-The Master Boot Record (MBR) is a special type of boot sector located at the very beginning of a storage device, such as a hard disk drive or solid-state drive. The MBR contains the information necessary to boot the operating system.
+The Master Boot Record (MBR) is a special type of boot sector located at the very beginning of a storage device, such as a hard disk drive or solid-state drive. It contains the information necessary to boot the operating system.
 The MBR holds the info on how the logical partition containing file systems are organised on that medium. It also contains executable codes which is referred to as the boot loader. 
 
-dd if=/dev/sda of=/root/mbr.dat bs=512 count=1
-* bs=512: Sets the block size to 512 bytes. This is typical for the MBR, as the MBR is usually 512 bytes in size.
-* count=1: Specifies that only one block should be copied. Since the block size is set to 512 bytes, this means copying only the first 512 bytes of the source device, which includes the MBR. 
-To restore the MBR from a file, run the command : dd if=/root/mbr.dat of=/dev/sda  bs=512 count=1 
+
+
+
+The MBR itself is usually not represented as a partition. It is a small region at the very beginning of the disk that contains the partition table and the Master Boot Code. If you want to examine the MBR directly, you would typically use a tool like dd to copy the first sector of the disk to a file, as shown in the previous examples. The MBR doesn't have a specific partition designation like /dev/sda1. Instead, it resides in the initial sectors of the disk, before any partitions.
+
+
+
+To create a backup of the MBR, you can use the dd command with specific options:
+
+`sudo dd if=/dev/sda of=/root/mbr.dat bs=512 count=1`
+Here's what each part of the command does:
+
+- dd: Command for copying and converting data.
+- if=/dev/sda: Specifies the input file, which is the entire storage device (/dev/sda in this case).
+- of=/root/mbr.dat: Specifies the output file, where the MBR snapshot will be saved (/root/mbr.dat in this case).
+- bs=512: Sets the block size to 512 bytes, which is the typical size of an MBR.
+- count=1: Specifies that only one block (512 bytes) should be copied, containing the MBR.
 
 This command essentially takes a snapshot of the MBR from /dev/sda and stores it in the file /root/mbr.dat. It's a common practice to create such backups before making changes to the disk or performing operations that might affect the MBR. The MBR is a critical component for booting the operating system, and having a backup can be useful for recovery purposes.
 
-The MBR itself is usually not represented as a partition. It is a small region at the very beginning of the disk that contains the partition table and the Master Boot Code. If you want to examine the MBR directly, you would typically use a tool like dd to copy the first sector of the disk to a file, as shown in the previous examples. The MBR doesn't have a specific partition designation like /dev/sda1. Instead, it resides in the initial sectors of the disk, before any partitions.
+To restore the MBR from the backup file, you can use the following command:
+
+`sudo dd if=/root/mbr.dat of=/dev/sda bs=512 count=1`
+This command copies the contents of the backup file (/root/mbr.dat) back to the beginning of the storage device (/dev/sda), effectively restoring the MBR. Again, it's crucial to exercise caution when performing such operations, as improper manipulation of the MBR can lead to system boot failures and data loss.
+
+#### CREATING A BOOTABLE USB STICK USING DD
+
+To create a bootable USB stick using the dd command, follow these steps:
+
+* Download an iso file: Obtain the ISO file of the operating system or software you want to make bootable.
+* Identify the USB drive: Use the lsblk command to find the name of the device file for the USB drive. It's usually located under /media/username/....
+* Unmount the USB drive: To make the USB drive bootable, it should be formatted with a file system : `umount /media/ikechukwu/……`
+* Format the USB drive: Format using the shell command `mkfs -t vfat /dev/sdb` (unmount before formatting).
+  * mkfs : Used to create a file system on a disk partition. It stands for "make file system." This command is used after creating a
+  partition on a storage device (using tools like fdisk or parted) to prepare the partition for storing files by creating the necessary data structures for a specific file system type.
+  * vfat :This is the filesystem 
+* Write the ISO file to the USB drive: Now, use the dd command to write the contents of the ISO file to the USB drive. Specify the input file (if) as the path to the ISO file and the output file (of) as the device file of the USB drive. Set the block size (bs) for optimal performance and include status=progress to monitor the progress of the operation.
+  * `sudo dd  if=/home/ikechukwu/Downloads/newbootablefile.iso of=/dev/sdb bs=4M status=progress`. Ensure to replace /home/ikechukwu/Downloads/newbootablefile.iso with the path to your downloaded ISO file, and /dev/sdb with the actual device file of your USB drive.
+* After executing this command, you'll have a bootable USB stick ready for use with the contents of the ISO file written onto it.
 
 
