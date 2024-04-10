@@ -296,6 +296,7 @@ N/B: Serial ATA (Serial Advanced Technology Attachment or SATA) is a command and
   - `uname -a`: This command provides more comprehensive information about the system, including the kernel version, hostname, architecture, and more.
   - `acpi -V`: This command shows detailed information about the system's Advanced Configuration and Power Interface (ACPI), including thermal zones, battery status, and power adapter information.
   - `acpi -b`: Specifically displays information about the battery, including its status, charge level, and capacity.
+  - `lshw -C network` or `iw -l` or `lspci | grep wireless` : To display as much information as possible about the WiFi card, you can use any of these commands.
 
 
 # MOUNTING AND UNMOUNTING FILE SYSTEMS (df, mount, umount, fdisk, gparted)
@@ -403,11 +404,7 @@ The `dd` command works with blocks and cloning the device by copying everything 
 The Master Boot Record (MBR) is a special type of boot sector located at the very beginning of a storage device, such as a hard disk drive or solid-state drive. It contains the information necessary to boot the operating system.
 The MBR holds the info on how the logical partition containing file systems are organised on that medium. It also contains executable codes which is referred to as the boot loader. 
 
-
-
-
 The MBR itself is usually not represented as a partition. It is a small region at the very beginning of the disk that contains the partition table and the Master Boot Code. If you want to examine the MBR directly, you would typically use a tool like dd to copy the first sector of the disk to a file, as shown in the previous examples. The MBR doesn't have a specific partition designation like /dev/sda1. Instead, it resides in the initial sectors of the disk, before any partitions.
-
 
 
 To create a backup of the MBR, you can use the dd command with specific options:
@@ -450,7 +447,57 @@ systemd (system management daemon) is a system and service manager for Linux ope
 
 systemd is responsible for starting, stopping, and managing background services (daemons) on the system. The init process is the ancestor of all processes on a Unix or Unix-like operating system. It is the first process started by the kernel during system initialization. systemd starts with PID 1 as the first process, then takes over and continues to mount the host’s file systems and starts services.
 
-systemd is a Linux initialisation system and service manager with many components, such as on-demand service management, logging, boot manager, etc.
+systemd is a Linux initialisation system and service manager with many components, such as on-demand service management, logging, boot manager, etc. One of the key features of systemd, the system and service manager for Linux, is its ability to start services in parallel. Traditional init systems typically start services sequentially, one after the other, which can lead to increased boot times.
+
+**systemd units**: These are defined by configuration files with specific file extensions, typically `.service` for services, although there are other types like `.socket`, `.target`, and `.timer`, among others. These unit files provide instructions to systemd on how to manage and interact with the corresponding resource, whether it's a service, socket, target, timer, or other component.
+
+For example, a unit file named `nginx.service` would define how systemd should manage the Nginx web server service. Similarly, a unit file named `sshd.service` would provide instructions on managing the SSH server service.
+
+Each unit file contains configuration directives specifying various parameters such as the service executable path, startup type, dependencies, permissions, and more. These directives allow systemd to control the lifecycle of the associated resource, including starting, stopping, restarting, and monitoring it.
+
+By adhering to the systemd unit file format and naming conventions, administrators can effectively manage system resources and services using systemd's powerful management capabilities.
+
+These are essential commands for managing and analyzing the systemd initialization system:
+
+- `systemd --version`: This command displays the version of systemd installed on the system.
+- `systemd-analyze`: Running this command without any arguments shows how long the boot process took, providing information on the time spent in the kernel as well as userspace.
+- `systemd-analyze blame`: This command identifies the services or units that contribute the most to the overall system boot time. When executed, it provides a list of services along with the time each service takes to start during the boot process, helping administrators identify potential bottlenecks and optimize boot time by focusing on the services causing delays.
+
+
+#### SERVICE MANAGEMENT (systemd and systemctl)
+
+
+Service management is a critical aspect of system administration, ensuring that essential processes and applications run smoothly and reliably on a Linux system. 
+
+Services are background processes or daemons that perform specific functions, such as web servers (e.g., Apache or Nginx), databases (e.g., MySQL or PostgreSQL), or networking services (e.g., SSH or DNS). Proper management of services is essential for system stability, security, and performance.
+
+**systemctl**: `systemctl` is the primary command-line tool for managing services with systemd. It allows administrators to start, stop, enable, disable, restart, mask, and unmask services, among other tasks.
+
+Key systemctl Commands include:
+
+- `systemctl start nginx`: Start a nginx service.
+- `systemctl stop nginx`: Stop a nginx service.
+- `systemctl restart nginx`: Restart a nginx service.
+- `systemctl status nginx`: View the status of a nginx service.
+
+If you only use start after making changes, you might experience a brief interruption in service as the old instance of Nginx continues to handle requests until the new instance fully starts. In summary, restart is often preferred over start in situations where you've made configuration changes to a running service, as it helps maintain continuous service availability during the configuration update process.
+
+- `systemctl enable nginx`: To configure a service to start at boot time, use the `enable` command.
+- `systemctl disable nginx`: Prevents a service from starting automatically at boot time.
+- `systemctl is-enabled nginx`: This command is used to confirm if a service will start automatically at boot time.
+  
+`enable`, `disable`, `is-enabled`: These options are used to manage whether a service starts automatically at boot time.
+`start, stop, and restart`: actions that refer to the current session, affecting what's happening to the service at the time of input.
+
+- `systemctl mask nginx`: The `systemctl mask` command is used to mask a service unit, effectively making it impossible to start the service through `systemctl`. When you mask a service, you are creating a symbolic link from the service's unit file to /dev/null, which prevents `systemctl` from managing the service. To unmask, run `systemctl unmask nginx`.
+
+- `systemctl list-units`: This command is used to display information about active units on the system. Units can include services, sockets, devices, mounts, and more
+- `systemctl list-units --all`: It is used to display a list of all loaded units in the system, including active and inactive units 
+
+
+#### GRUB (GNU GRand Unified Bootloader):
+
+GRUB is a boot loader used on many Unix-like operating systems, including most Linux distributions. Its primary function is to load the operating system kernel into memory and transfer control to it. GRUB offers a flexible and configurable way to manage the boot process.
 
 Linux boot process has the following phases;
 
@@ -461,6 +508,5 @@ Linux boot process has the following phases;
 - Root File System Initialization: The kernel locates and mounts the root file system as specified in the bootloader configuration. It may be located on a local disk, network drive, or other storage devices. Once the root file system is mounted, the kernel transitions control to the init process.
 - Systemd Initialization: On modern Linux distributions, systemd is the initialization system that takes control after the kernel initializes. systemd starts as the first process with PID 1. It manages system services, mounts additional file systems, sets up network interfaces, and performs other initialization tasks necessary for the system to become fully operational.
 - Service Initialization: systemd continues the boot process by starting essential system services in parallel. This parallelization improves boot times by executing services concurrently rather than sequentially. Once all necessary services are started, the system is ready for user interaction.
-
 
 
