@@ -245,6 +245,60 @@ For hardware to function, the Linux kernel usually loads a driver or module. Use
 The `fdisk` command is useful for identifying and manipulating disk storage resources on a system. Since it can be used to create, format and delete partitions, as well as for getting information, it should be used with care in administrator mode to avoid data loss. The fdisk command can be used in two ways: interactively and non-interactively.
 
 
+#### GETTING SYSTEM HARDWARE INFORMATION (lshw, lscpu, lsusb, lspci, dmidecode, hdparm) (must be run as root)
+
+1. `lshw` is a command-line utility in Unix-like operating systems that provides detailed information about the hardware configuration of the system. The name "lshw" stands for "list hardware." It is a versatile tool that can display information about various hardware components, including the processor, memory, disk drives, network interfaces, and more. It’s always advisable to pipe it to less as the output is a lot. Below are some common usage:
+- `lshw -short`: This option provides a summary of the hardware configuration in a concise format.
+- `lshw -html | less`
+  * `lshw`: This is the command that lists hardware information on a Linux system.
+  * `-html`: This option specifies the output format as HTML.
+  * `|`: This is the pipe symbol, which is used to redirect the output of one command as input to another.
+  * `less`: This is a pager program that allows you to view text files or command output one screen at a time.
+In virtualised environments, the info displayed by these commands (`lwhw`, `lscpu`, `lsusb`, `lspci`, `dmidecode`, `hdparm`) reflects the configuration of the guest operating system which is different from the physical host system. I.E when you run commands like `lwhw`, `lscpu`, etc., within a virtual machine, the information they provide reflects the virtualized hardware configuration of that specific virtual machine, and it may not accurately represent the physical hardware of the host machine running the virtualization software.
+
+2. `inxi` is a command-line tool that provides a comprehensive and easily readable system information summary for Unix-like operating systems, particularly Linux. It displays details about the hardware, system, and network. Below are some common usage:
+- `sudo apt install infix`: To install the command as it is not pre-installed in Linux.
+- `inxi -Fx`: used to display a detailed output of your system's information, providing an extensive overview of both hardware and software configurations.
+  * `inxi`: The main command for retrieving system information.
+  * `-F`: This option specifies the level of information to be displayed. In this case, it stands for "Full," indicating a detailed output.
+  * `-x`: This option adds extra details to the output, providing even more information.
+
+
+3. The `lscpu` command is a useful tool for retrieving information about the CPU and its architecture on Unix-like operating systems, particularly Linux. Below are some common usage:
+- `lscpu`: Displays info about the CPU and its architecture. 
+- `lscpu -J`: displays output in JSON format. 
+- `lscpu | grep -i MHz`: search for the unit of the speed.
+N/B: `lscpu` = `lshw -C cpu` which means that you can also use the `lshw` command to show information about the CPU but running `lshw -C cpu` which provides almost the same information with the `lscpu` command.
+
+4. The `dmidecode` command shows all memory modules and their capacity. It provides information about the system's hardware as described in the System Management BIOS (SMBIOS) and Desktop Management Interface (DMI) specifications.
+- `dmidecode -t memory`: Displays information about memory modules installed on the system.
+- `dmidecode -t memory | grep -i size`: Shows the amount of RAM memory already installed on the system.
+- `dmidecode -t memory | grep -i max`: Indicates the maximum RAM memory that can be installed on the system.
+The `dmidecode` provides information about installed memory modules but does not directly report the amount of free or used memory in the system. To check the amount of free or used memory, you can use commands like `free -m` or monitor memory usage with tools like `top`. 
+  - `free -m` = shows the amount of memory used or free.
+
+5. PCI buses, or Peripheral Component Interconnect buses, are a type of computer bus (A computer bus is a communication system that transfers data between components inside a computer or between multiple computers) standard used for connecting various hardware devices to the motherboard of a computer. See below for an overview of several commands used to gather information about hardware components connected to a computer system.
+- `lspci -v`: It is used to display information about the PCI buses and the devices connected to them. It provides detailed information about the hardware components connected to the PCI (Peripheral Component Interconnect) bus on your system.
+- `lsusb -v`: The `lsusb` command is used in Linux to list USB devices connected to the system. It provides information about the USB buses and the devices attached to them.
+- `lshw -C disk`: This command displays detailed information about disks or storage devices connected to the system. It provides information about the hardware configuration of disks.
+- `lsblk`: This command displays information about all block devices, including hard disks and partitions. It provides a hierarchical view of block devices and their partitions.
+- `fdisk -l`: The `fdisk` command with the `-l` option displays detailed information about disks and their partitions. It provides information such as size, filesystem type, and number of sectors for each disk and partition.
+
+6. The `hdparm` command allows users to get or set SATA drive parameters and configure various aspects of a disk operation. It allows users to interact with and control the behavior of hard disk drives. For example:
+  - `hdparm -i /dev/sda (drive)`:  
+    * `hdparm: The command itself`.
+    * `-i`: This option stands for "get information." It tells hdparm to display detailed information about the specified device.
+    * `/dev/sda`: This is the device file for the first SATA hard disk drive. In Linux, devices are represented as files in the /dev directory.
+N/B: Serial ATA (Serial Advanced Technology Attachment or SATA) is a command and transport protocol that defines how data is transferred between a computer's motherboard and mass storage devices, such as hard disk drives (HDDs), optical drives, and solid-state drives (SSDs).
+
+7.  Other commands that are usedful include:
+  - The `iw list` This command provides detailed information about wireless devices, including their capabilities, supported modes, and available frequencies.
+  - `uname -r`: This displays the version of the running kernel.
+  - `uname -a`: This command provides more comprehensive information about the system, including the kernel version, hostname, architecture, and more.
+  - `acpi -V`: This command shows detailed information about the system's Advanced Configuration and Power Interface (ACPI), including thermal zones, battery status, and power adapter information.
+  - `acpi -b`: Specifically displays information about the battery, including its status, charge level, and capacity.
+
+
 # MOUNTING AND UNMOUNTING FILE SYSTEMS (df, mount, umount, fdisk, gparted)
 
 In Linux, mounting is the process of making the contents of a storage device (like a USB drive or a hard disk) accessible at a specific location in your computer's directory structure. This location is called the "mount point," and it's like assigning a specific drawer in the filing cabinet for that storage device.
@@ -362,11 +416,11 @@ To create a backup of the MBR, you can use the dd command with specific options:
 `sudo dd if=/dev/sda of=/root/mbr.dat bs=512 count=1`
 Here's what each part of the command does:
 
-- dd: Command for copying and converting data.
-- if=/dev/sda: Specifies the input file, which is the entire storage device (/dev/sda in this case).
-- of=/root/mbr.dat: Specifies the output file, where the MBR snapshot will be saved (/root/mbr.dat in this case).
-- bs=512: Sets the block size to 512 bytes, which is the typical size of an MBR.
-- count=1: Specifies that only one block (512 bytes) should be copied, containing the MBR.
+- `dd`: Command for copying and converting data.
+- `if=/dev/sda`: Specifies the input file, which is the entire storage device (/dev/sda in this case).
+- `of=/root/mbr.dat`: Specifies the output file, where the MBR snapshot will be saved (/root/mbr.dat in this case).
+- `bs=512`: Sets the block size to 512 bytes, which is the typical size of an MBR.
+- `count=1`: Specifies that only one block (512 bytes) should be copied, containing the MBR.
 
 This command essentially takes a snapshot of the MBR from /dev/sda and stores it in the file /root/mbr.dat. It's a common practice to create such backups before making changes to the disk or performing operations that might affect the MBR. The MBR is a critical component for booting the operating system, and having a backup can be useful for recovery purposes.
 
@@ -380,14 +434,16 @@ This command copies the contents of the backup file (/root/mbr.dat) back to the 
 To create a bootable USB stick using the dd command, follow these steps:
 
 * Download an iso file: Obtain the ISO file of the operating system or software you want to make bootable.
-* Identify the USB drive: Use the lsblk command to find the name of the device file for the USB drive. It's usually located under /media/username/....
-* Unmount the USB drive: To make the USB drive bootable, it should be formatted with a file system : `umount /media/ikechukwu/……`
+* Identify the USB drive: Use the `lsblk` command to find the name of the device file for the USB drive. It's usually located under /media/username/....
+* Unmount the USB drive: To make the USB drive bootable, it should be formatted with a file system: `umount /media/ikechukwu/……`
 * Format the USB drive: Format using the shell command `mkfs -t vfat /dev/sdb` (unmount before formatting).
-  * mkfs : Used to create a file system on a disk partition. It stands for "make file system." This command is used after creating a
+  * mkfs: Used to create a file system on a disk partition. It stands for "make file system." This command is used after creating a
   partition on a storage device (using tools like fdisk or parted) to prepare the partition for storing files by creating the necessary data structures for a specific file system type.
-  * vfat :This is the filesystem 
+  * vfat: This is the filesystem 
 * Write the ISO file to the USB drive: Now, use the dd command to write the contents of the ISO file to the USB drive. Specify the input file (if) as the path to the ISO file and the output file (of) as the device file of the USB drive. Set the block size (bs) for optimal performance and include status=progress to monitor the progress of the operation.
   * `sudo dd  if=/home/ikechukwu/Downloads/newbootablefile.iso of=/dev/sdb bs=4M status=progress`. Ensure to replace /home/ikechukwu/Downloads/newbootablefile.iso with the path to your downloaded ISO file, and /dev/sdb with the actual device file of your USB drive.
 * After executing this command, you'll have a bootable USB stick ready for use with the contents of the ISO file written onto it.
 
+
+INTRODUCTION TO SYSTEMD
 
