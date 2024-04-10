@@ -27,7 +27,6 @@ Cron is employed for automating various tasks, including:
 - Performing routine maintenance tasks.
 - By utilizing cron, users can streamline their workflows, reduce manual intervention, and ensure the timely execution of critical system tasks.
 
-
 Below is a cron job schedule, specifying the time and frequency at which a particular command or script should be executed.
 
 Remember that when you open the user crontab file using `crontab -e`, you get to see the crontab file and edit it. 
@@ -38,14 +37,12 @@ N/B: </br>
 
 `0 6,8,10 * */3 1-5 /root/backup.sh`
 
-* Minute Field (0): This field is for the “minute”. The cron job is scheduled to run at the 0th minute of the specified hours.
-* Hour Field (6,8,10): This field means “hour” The cron job is scheduled to run at the 6th, 7th, and 8th hours of the day (6 AM, 8 AM, and 10 AM).
-* Day of Month Field (\*): The asterisk (*) in this field means "every day of the month." It doesn't restrict the cron job based on the day of the month.
-* Month Field (*/3): This field means "every month." It doesn't restrict the cron job based on the month. The job is scheduled to run every 3 months. The */3 means "every 3 months."
-* Day of Week Field (*): 1-5: The day of the week field, meaning Monday through Friday (1 is Monday and 5 is Friday).
-* Command (/root/backup.sh): The command to be executed is /root/backup.sh.
-
-<img width="760" alt="Screenshot 2024-04-08 at 23 23 12" src="https://github.com/ikechukwu25/Mastering-Linux/assets/64879420/a7e3ba1b-6b04-48e1-bcd1-7d959409c780">
+* Minute Field (`0`): This field is for the “minute”. The cron job is scheduled to run at the 0th minute of the specified hours.
+* Hour Field (`6,8,10`): This field means “hour” The cron job is scheduled to run at the 6th, 7th, and 8th hours of the day (6 AM, 8 AM, and 10 AM).
+* Day of Month Field (`\*`): The asterisk (*) in this field means "every day of the month." It doesn't restrict the cron job based on the day of the month.
+* Month Field (`*/3`): This field means "every month." It doesn't restrict the cron job based on the month. The job is scheduled to run every 3 months. The */3 means "every 3 months."
+* Day of Week Field (`*`): 1-5: The day of the week field, meaning Monday through Friday (1 is Monday and 5 is Friday).
+* Command (`/root/backup.sh`): The command to be executed is /root/backup.sh.
 
 
 <img width="813" alt="image" src="https://github.com/ikechukwu25/Mastering-Linux/assets/64879420/fdb0ff83-6a90-47f6-a61c-1194fa98a407">
@@ -54,18 +51,18 @@ This cron job will append the current date and time to the file today.txt in the
 
 `*/3 10 1 12 *`: Specifies the timing for the command:
 
-- */3: Indicates that the command will run every 3 minutes.
-- 10: The hour (10:00 AM).
-- 1: The day of the month (1st day).
-- 12: The month (December).
-- *: The day of the week (any day).
+- `*/3`: Indicates that the command will run every 3 minutes.
+- `10`: The hour (10:00 AM).
+- `1`: The day of the month (1st day).
+- `12`: The month (December).
+- `*`: The day of the week (any day).
 - `date >> ~/today.txt`: The command to be executed. It appends the output of the date command (current date and time) to the file today.txt in the user's home directory (~).
 
-The @yearly directive in a cron job is equivalent to the cron expression 0 0 1 1 *. It specifies that the associated command should be executed once a year, specifically at midnight on January 1st.
+The `@yearly` directive in a cron job is equivalent to the cron expression 0 0 1 1 *. It specifies that the associated command should be executed once a year, specifically at midnight on January 1st.
 
-The @monthly cron expression is a special string used in cron to specify a monthly schedule. In this case, it is equivalent to the more detailed cron expression 0 0 1 * *, which means "at midnight on the first day of every month."
+The `@monthly` cron expression is a special string used in cron to specify a monthly schedule. In this case, it is equivalent to the more detailed cron expression 0 0 1 * *, which means "at midnight on the first day of every month."
 
-The @reboot cron expression is a special string used in cron to specify a schedule that runs once when the system starts or is rebooted.
+The `@reboot` cron expression is a special string used in cron to specify a schedule that runs once when the system starts or is rebooted.
 
 System Files:
 
@@ -75,7 +72,7 @@ System Files:
 
 Additional Information:
 
-- tail -f /var/log/syslog: Command to view the cron log file in Ubuntu, useful for monitoring cron job execution and troubleshooting.
+- `tail -f /var/log/syslog`: Command to view the cron log file in Ubuntu, useful for monitoring cron job execution and troubleshooting.
 
 - Root Privileges: Root can edit a user's crontab using the -u option. To edit a user's crontab as root;
   - `sudo su` = became root
@@ -181,7 +178,9 @@ To view the amount of RAM in your system, including the swap space, execute the�
 `-/+ buffers/cache:        153       1741`</br>
 `Swap:         4063          0       4063`</br>
 </br>
-`Buses`
+
+
+#### BUSES
 
 A bus is a high-speed connection that allows communication between computers or the components inside a computer. The motherboard has buses that allow for multiple devices to connect to the system, including the Peripheral Component Interconnect (PCI) and Universal Serial Bus (USB). The motherboard also has connectors for monitors, keyboards and mice.
 
@@ -291,7 +290,7 @@ The `dmidecode` provides information about installed memory modules but does not
     * `/dev/sda`: This is the device file for the first SATA hard disk drive. In Linux, devices are represented as files in the /dev directory.
 N/B: Serial ATA (Serial Advanced Technology Attachment or SATA) is a command and transport protocol that defines how data is transferred between a computer's motherboard and mass storage devices, such as hard disk drives (HDDs), optical drives, and solid-state drives (SSDs).
 
-7.  Other commands that are usedful include:
+7.  Other commands that are useful include:
   - The `iw list` This command provides detailed information about wireless devices, including their capabilities, supported modes, and available frequencies.
   - `uname -r`: This displays the version of the running kernel.
   - `uname -a`: This command provides more comprehensive information about the system, including the kernel version, hostname, architecture, and more.
@@ -445,5 +444,23 @@ To create a bootable USB stick using the dd command, follow these steps:
 * After executing this command, you'll have a bootable USB stick ready for use with the contents of the ISO file written onto it.
 
 
-INTRODUCTION TO SYSTEMD
+# INTRODUCTION TO SYSTEMD
+
+systemd (system management daemon) is a system and service manager for Linux operating systems. It is designed to be a replacement for the traditional System V init system and the older init daemon. systemd provides a range of system management features, and it has become the default initialization system for many Linux distributions. It is the system initialization system responsible for managing the booting and startup process.
+
+systemd is responsible for starting, stopping, and managing background services (daemons) on the system. The init process is the ancestor of all processes on a Unix or Unix-like operating system. It is the first process started by the kernel during system initialization. systemd starts with PID 1 as the first process, then takes over and continues to mount the host’s file systems and starts services.
+
+systemd is a Linux initialisation system and service manager with many components, such as on-demand service management, logging, boot manager, etc.
+
+Linux boot process has the following phases;
+
+- Power Up: The system is powered on, initiating the boot process.
+- Bootloader (GRUB): The bootloader, often GRUB (GNU GRand Unified Bootloader), is loaded. Its primary function is to locate and load the kernel into memory. GRUB presents the user with a boot menu if multiple operating systems are installed.
+- Kernel Initialization: The kernel is loaded into memory by the bootloader. It initializes essential system components and drivers necessary for the system to function. During this phase, the kernel also loads an initial RAM disk (initramfs or initrd) into memory. This RAM disk contains the necessary drivers and utilities required for the subsequent stages of the boot process.
+- Initramfs Stage: The kernel mounts the initial RAM disk and extracts its contents. The initramfs contain essential modules and executables needed to bootstrap the system and locate the root file system. It may include device drivers, disk encryption tools, and filesystem utilities.
+- Root File System Initialization: The kernel locates and mounts the root file system as specified in the bootloader configuration. It may be located on a local disk, network drive, or other storage devices. Once the root file system is mounted, the kernel transitions control to the init process.
+- Systemd Initialization: On modern Linux distributions, systemd is the initialization system that takes control after the kernel initializes. systemd starts as the first process with PID 1. It manages system services, mounts additional file systems, sets up network interfaces, and performs other initialization tasks necessary for the system to become fully operational.
+- Service Initialization: systemd continues the boot process by starting essential system services in parallel. This parallelization improves boot times by executing services concurrently rather than sequentially. Once all necessary services are started, the system is ready for user interaction.
+
+
 
