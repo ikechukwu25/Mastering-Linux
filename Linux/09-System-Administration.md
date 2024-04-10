@@ -285,6 +285,68 @@ N/B: When a USD drive or hard drive is connected, they can be located at the med
 - Confirm the block device file using `lsblk`.
 - Utilize graphical tools like `GParted` for disk partition management (`sudo apt install gparted` to install).
 
+The `df` command displays information about total space and available space on a file system. It's particularly useful for monitoring disk space usage, providing insights into the available and used space on mounted file systems. The -h option enhances readability by presenting sizes in human-readable format.
 
+On the other hand, du serves a different purpose. It's employed to determine the disk space utilized by directories and files. For example:
+
+`du -sh /path/to/directory`: This command would display the disk space used by the specified directory in a human-readable format.
+
+# WORKING WITH DEVICE FILES (dd)
+
+
+The `dd` command in Linux is a versatile tool primarily used for copying and converting files, offering options to specify block size, input/output files, and other parameters. Despite its name standing for "data duplicator," it's often humorously referred to as "disk destroyer" due to its powerful and potentially destructive capabilities if used incorrectly.
+
+It's crucial to note that dd has the potential to cause data loss, so it's necessary to back up files before using it.
+
+In Linux, hard disks are represented as special device files. Unlike the `cp` command, `dd` directly reads from and writes to these device files.
+
+`dd` can work directly with these device files and is commonly used for tasks such as backing up the boot sector of a hard drive, cloning a disk or partition to another one, or creating a bootable USB stick.
+
+The command-line syntax for `dd` differs from other Linux commands, using the syntax `option=value` for its command-line options.
+
+Cloning an entire partition to a file on another partition involves specifying the input file (source partition) and the output file (destination partition or backup file) using if and of options, respectively.
+
+A "block" refers to a small unit of storage, and a "partition" is a section of a storage device used to organize and manage data. `dd` operates at the block level, providing precise control over data copying and manipulation.
+
+`sudo if=/dev/sdb of=/home/ikechukwu/backup-usb.img status=progress` : (for cloning the device file)you want to create an image of the entire /dev/sdb device and save it as backup-usb.img in the /home/ikechukwu/ directory. The status=progress option is included to show the progress of the dd command, which can be helpful for larger operations.
+* sudo: Run the command with superuser privileges.
+* dd: The command for copying and converting data.
+* if=/dev/sdb: Specifies the input file, in this case, /dev/sdb (the USB drive).
+* of=/home/ikechukwu/backup-usb.img: Specifies the output file, the image file to be created.
+* status=progress: Shows the progress of the dd command. You need to use the GNU dd command from coreutils version 8.24 or above to use the status=progress option.
+
+After the command completes, you should have a file named backup-usb.img in the /home/ikechukwu/ directory, which is an image of your USB drive.
+The dd command works with blocks and cloning the device by copying everything including the empty and occupied space. If you have a partition of 10gb and 9 are free, the dd command will copy 10gb to the destination which makes it differ from the cp command.
+
+sudo dd if=/home/ikechukwu/backup-usb.img of=/dev/sdb status=progress conv=sync
+
+This will write the contents of a disk image (backup.img) to a block device (/dev/sdb). Here's a breakdown of the command:
+* sudo: This command is used to execute the subsequent command with elevated privileges.
+* dd: This is a command used for copying and converting files. In this case, it's being used to copy the contents of a disk image to a block device.
+* if=/home/ikechukwu/backup.img: This specifies the input file (source), which is the disk image located at /home/ikechukwu/backup.img.
+* of=/dev/sdb: This specifies the output file (destination), which is the block device /dev/sdb.
+* status=progress: This option shows the progress of the dd command, indicating how much data has been transferred.
+* conv=sync: This option ensures that the data is synchronized after each write operation, making sure that all data is written to the destination before completing.
+
+Cloning the partition where the root file is mounted to the USB stick. 
+
+* fdisk -l or df -h = confirm the name of the partition.
+* sudo dd if=/dev/sda2 of=/dev/sdb status=progress : This will clone the root file partition to the USB stick partition. 
+
+Ensure that you are copying to the correct destination as dd can overwrite data, and choosing the wrong output device can result in data loss.
+
+MBR
+
+The Master Boot Record (MBR) is a special type of boot sector located at the very beginning of a storage device, such as a hard disk drive or solid-state drive. The MBR contains the information necessary to boot the operating system.
+The MBR holds the info on how the logical partition containing file systems are organised on that medium. It also contains executable codes which is referred to as the boot loader. 
+
+dd if=/dev/sda of=/root/mbr.dat bs=512 count=1
+* bs=512: Sets the block size to 512 bytes. This is typical for the MBR, as the MBR is usually 512 bytes in size.
+* count=1: Specifies that only one block should be copied. Since the block size is set to 512 bytes, this means copying only the first 512 bytes of the source device, which includes the MBR. 
+To restore the MBR from a file, run the command : dd if=/root/mbr.dat of=/dev/sda  bs=512 count=1 
+
+This command essentially takes a snapshot of the MBR from /dev/sda and stores it in the file /root/mbr.dat. It's a common practice to create such backups before making changes to the disk or performing operations that might affect the MBR. The MBR is a critical component for booting the operating system, and having a backup can be useful for recovery purposes.
+
+The MBR itself is usually not represented as a partition. It is a small region at the very beginning of the disk that contains the partition table and the Master Boot Code. If you want to examine the MBR directly, you would typically use a tool like dd to copy the first sector of the disk to a file, as shown in the previous examples. The MBR doesn't have a specific partition designation like /dev/sda1. Instead, it resides in the initial sectors of the disk, before any partitions.
 
 
