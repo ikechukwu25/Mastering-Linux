@@ -12,9 +12,9 @@ Cron runs as a daemon and is utilized for automating repetitive tasks such as ba
 
 **Common Commands**:
 
-`crontab -l`: Displays the content of the current user's crontab file.
-`crontab -e`: Edits the current user's crontab file.
-`crontab -r`: Removes the current user's crontab file.
+`crontab -l`: Displays the content of the current user's crontab file. </br>
+`crontab -e`: Edits the current user's crontab file.</br>
+`crontab -r`: Removes the current user's crontab file.</br>
 crontab: Abbreviation for "crontable," synonymous with the crontab command.
 
 Usage:
@@ -69,14 +69,13 @@ The `@reboot` cron expression is a special string used in cron to specify a sche
 
 System Files:
 
-/etc/crontab: System-wide cron configuration file.
-/etc/cron.daily: Directory containing daily cron jobs.
+/etc/crontab: System-wide cron configuration file. </br>
+/etc/cron.daily: Directory containing daily cron jobs.</br>
 /etc/cron.weekly: Directory containing weekly cron jobs.
 
 Additional Information:
 
 - `tail -f /var/log/syslog`: Command to view the cron log file in Ubuntu, useful for monitoring cron job execution and troubleshooting.
-
 - Root Privileges: Root can edit a user's crontab using the -u option. To edit a user's crontab as root;
   - `sudo su` = became root
   - `crontab -e -u username` = This command allows root to edit a user’s crontab.
@@ -88,9 +87,9 @@ Anacron serves a similar purpose to cron but is designed for systems that are no
 
 Anacron Job layout includes Days Delay Identifier Command
 
-Days: Specifies the interval in days at which the command should be executed.
-Delay: Identifies the delay in minutes before the command execution. This helps prevent system overload by staggering the execution of multiple tasks.
-Identifier: This is a unique identifier for the job, typically the name of the associated script or task.
+Days: Specifies the interval in days at which the command should be executed. </br>
+Delay: Identifies the delay in minutes before the command execution. This helps prevent system overload by staggering the execution of multiple tasks. </br>
+Identifier: This is a unique identifier for the job, typically the name of the associated script or task. </br>
 Command: The command to be executed.
 
 Example; 
@@ -125,7 +124,7 @@ In summary, a multiprocessor system comprises multiple independent processors wo
 
 Although support is available for more types of processors in Linux than any other operating system, there are primarily just two types of processors used on desktop and server computers: x86 and x86_64.
 
-On an x86 system, the system processes data 32 bits at a time; on an x86_64 the system processes data 64 bits at a time. An x86_64 system is also capable of processing data 32 bits at a time in a backward compatible mode. One of the main advantages of a 64-bit system is the ability to work with more memory, while other advantages include increased efficiency of processing and increased security.
+On an x86 system, the system processes data 32 bits at a time; on an x86_64 the system processes data 64 bits at a time. An x86_64 system is also capable of processing data 32 bits at a time in a backward-compatible mode. One of the main advantages of a 64-bit system is the ability to work with more memory, while other advantages include increased efficiency of processing and increased security.
 
 Intel originated the x86 family of processors in 1978 with the release of the 8086 processor. Since that time, Intel has produced many other processors that are improvements to the original 8086; they are known generically as x86 processors. These processors include the 80386 (i386), 80486 (i486), the Pentium series (i586) and the Pentium Pro series (i686). 
 While Linux is capable of supporting processors back to the i386 generation, many distributions (especially the ones that feature corporate support, such as SUSE, Red Hat and Canonical) limit their support to i686 or later.
