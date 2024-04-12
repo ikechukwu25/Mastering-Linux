@@ -47,8 +47,9 @@ N/B: </br>
 
 <img width="813" alt="image" src="https://github.com/ikechukwu25/Mastering-Linux/assets/64879420/fdb0ff83-6a90-47f6-a61c-1194fa98a407">
 </br></br>
-2. `0 6,8,10 * */3 1-5 /root/backup.sh`
 
+
+2. `0 6,8,10 * */3 1-5 /root/backup.sh`
 * Minute Field (`0`): This field is for the “minute”. The cron job is scheduled to run at the 0th minute of the specified hours.
 * Hour Field (`6,8,10`): This field means “hour” The cron job is scheduled to run at the 6th, 7th, and 8th hours of the day (6 AM, 8 AM, and 10 AM).
 * Day of Month Field (`\*`): The asterisk (*) in this field means "every day of the month." It doesn't restrict the cron job based on the day of the month.
