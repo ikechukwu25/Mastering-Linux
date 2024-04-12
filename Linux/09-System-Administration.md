@@ -85,7 +85,7 @@ Additional Information:
 
 Anacron serves a similar purpose to cron but is designed for systems that are not continuously powered on, such as desktops or laptops. It operates with root privileges and executes tasks with a frequency expressed in days rather than minutes, as in cron. The configuration file for Anacron is located at /etc/anacrontab.
 
-Anacron Job layout includes Days Delay Identifier Command
+Anacron's job layout includes Days, Delay, Identifier, and Command.
 
 Days: Specifies the interval in days at which the command should be executed. </br>
 Delay: Identifies the delay in minutes before the command execution. This helps prevent system overload by staggering the execution of multiple tasks. </br>
