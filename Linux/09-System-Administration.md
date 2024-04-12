@@ -35,7 +35,19 @@ N/B: </br>
 - \* in the day or the week means every day or every week 
 - The minimum time limit used by cron is the minute as you cannot schedule a task to run by seconds using cron. You can create a bash script with a white loop and run the script instead.
 
-`0 6,8,10 * */3 1-5 /root/backup.sh`
+
+1. `*/3 10 1 12 *`: Specifies the timing for the command:
+
+- `*/3`: Indicates that the command will run every 3 minutes.
+- `10`: The hour (10:00 AM).
+- `1`: The day of the month (1st day).
+- `12`: The month (December).
+- `*`: The day of the week (any day).
+- `date >> ~/today.txt`: The command to be executed. It appends the output of the date command (current date and time) to the file today.txt in the user's home directory (~).
+
+<img width="813" alt="image" src="https://github.com/ikechukwu25/Mastering-Linux/assets/64879420/fdb0ff83-6a90-47f6-a61c-1194fa98a407">
+</br></br>
+2. `0 6,8,10 * */3 1-5 /root/backup.sh`
 
 * Minute Field (`0`): This field is for the “minute”. The cron job is scheduled to run at the 0th minute of the specified hours.
 * Hour Field (`6,8,10`): This field means “hour” The cron job is scheduled to run at the 6th, 7th, and 8th hours of the day (6 AM, 8 AM, and 10 AM).
@@ -44,19 +56,9 @@ N/B: </br>
 * Day of Week Field (`*`): 1-5: The day of the week field, meaning Monday through Friday (1 is Monday and 5 is Friday).
 * Command (`/root/backup.sh`): The command to be executed is /root/backup.sh.
 
-
-<img width="813" alt="image" src="https://github.com/ikechukwu25/Mastering-Linux/assets/64879420/fdb0ff83-6a90-47f6-a61c-1194fa98a407">
-
 This cron job will append the current date and time to the file today.txt in the user's home directory every 3 minutes past 10:00 AM on the 1st day of December every year.
 
-`*/3 10 1 12 *`: Specifies the timing for the command:
 
-- `*/3`: Indicates that the command will run every 3 minutes.
-- `10`: The hour (10:00 AM).
-- `1`: The day of the month (1st day).
-- `12`: The month (December).
-- `*`: The day of the week (any day).
-- `date >> ~/today.txt`: The command to be executed. It appends the output of the date command (current date and time) to the file today.txt in the user's home directory (~).
 
 The `@yearly` directive in a cron job is equivalent to the cron expression 0 0 1 1 *. It specifies that the associated command should be executed once a year, specifically at midnight on January 1st.
 
@@ -365,17 +367,17 @@ A "block" refers to a small unit of storage, and a "partition" is a section of a
 
 Examples:
 
-1. `sudo if=/dev/sdb of=/home/ikechukwu/backup-usb.img status=progress` : This command is used for cloning the device file you want to create an image of the entire /dev/sdb device and save it as backup-usb.img in the /home/ikechukwu/ directory. The `status=progress` option is included to show the progress of the `dd` command, which can be helpful for larger operations. Breakdown:
+1. `sudo if=/dev/sdb of=/home/ikechukwu/backup-usb.img status=progress`: This command is used for cloning the device file you want to create an image of the entire /dev/sdb device and save it as backup-usb.img in the /home/ikechukwu/ directory. The `status=progress` option is included to show the progress of the `dd` command, which can be helpful for larger operations. Breakdown:
 * `sudo`: Runs the command with superuser privileges, allowing it to access the specified device file and write to the specified output file.
 * `dd`: The command for copying and converting data.
 * `if=/dev/sdb`: Specifies the input file, which in this case is /dev/sdb, representing the USB drive you want to clone.
 * `of=/home/ikechukwu/backup-usb.img`: Specifies the output file, which is the image file that will be created. It will be named backup-usb.img and will be saved in the /home/ikechukwu/ directory.
 * `status=progress`: This option shows the progress of the `dd` command as it runs, indicating how much data has been copied and how much is remaining. This can be particularly helpful for larger operations to track the progress of the cloning process. </br>
-It's important to note that the `status=progress` option requires the use of the GNU dd command from coreutils version 8.24 or above to function properly.
+It's important to note that the `status=progress` option requires the use of the GNU dd command from Coreutils version 8.24 or above to function properly.
 
 After the command completes, you should have a file named backup-usb.img in the /home/ikechukwu/ directory, which is an image of your USB drive.
 
-The `dd` command works with blocks and cloning the device by copying everything including the empty and occupied space. If you have a partition of 10gb and 9 are free, the dd command will copy 10gb to the destination which makes it differ from the `cp` command.
+The `dd` command works with blocks and cloning the device by copying everything including the empty and occupied space. If you have a partition of 10gb and 9 are free, the dd command will copy 10GB to the destination which makes it different from the `cp` command.
 
 2. `sudo dd if=/home/ikechukwu/backup-usb.img of=/dev/sdb status=progress conv=sync`: This will write the contents of a disk image (backup.img) to a block device (/dev/sdb). Breakdown:
 * `sudo`: This command is used to execute the subsequent command with elevated privileges.
@@ -429,7 +431,7 @@ This command copies the contents of the backup file (/root/mbr.dat) back to the 
 To create a bootable USB stick using the dd command, follow these steps:
 
 * Download an iso file: Obtain the ISO file of the operating system or software you want to make bootable.
-* Identify the USB drive: Use the `lsblk` command to find the name of the device file for the USB drive. It's usually located under /media/username/....
+* Identify the USB drive: Use the `lsblk` command to find the name of the device file for the USB drive. It's usually located under /media/username/...
 * Unmount the USB drive: To make the USB drive bootable, it should be formatted with a file system: `umount /media/ikechukwu/……`
 * Format the USB drive: Format using the shell command `mkfs -t vfat /dev/sdb` (unmount before formatting).
   * mkfs: Used to create a file system on a disk partition. It stands for "make file system." This command is used after creating a
