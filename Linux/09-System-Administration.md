@@ -428,7 +428,9 @@ This command copies the contents of the backup file (/root/mbr.dat) back to the 
 
 #### CREATING A BOOTABLE USB STICK USING DD
 
-To create a bootable USB stick using the dd command, follow these steps:
+Creating a bootable USB stick using `dd` involves transferring the contents of a disk image file directly onto a USB flash drive. 
+
+To create a bootable USB stick using the `dd` command, follow these steps:
 
 * Download an iso file: Obtain the ISO file of the operating system or software you want to make bootable.
 * Identify the USB drive: Use the `lsblk` command to find the name of the device file for the USB drive. It's usually located under /media/username/...
