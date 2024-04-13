@@ -298,17 +298,77 @@ The test command gives you easy access to comparison and file test operators. 
 The script below will show the content of a file (`cat $1`) as in if and the content of a directory as in the elif (`ls -l $1`), the else statement gives the response for any other argument that’s not in the script. 
 
 `#!/bin/bash`</br>
-`if [ -f $1 ];` - - if statement</br>
+`if [ -f $1 ];`</br>
+\# if statement</br>
 `then`</br>
 `        echo "Displaying the content of $1.."`</br>
 `        sleep 2`</br>
-`        cat $1` - - main command</br>
-`elif [ -d $1 ];` - - elif statement</br>
+`        cat $1`</br>
+\# main command</br>
+`elif [ -d $1 ];` </br>
+\# elif statement</br>
 `then`</br>
 `        echo "Listing content of the directory ($1)"`</br>
 `        sleep 2`</br>
-`        ls -l $1` - - main command</br>
-`else` - - else statement </br>
+`        ls -l $1`</br>
+\# main command</br>
+`else` </br>
+\# else statement </br>
 `        echo "Get serious, this is neither a file nor a directory in the current directory"`</br>
 `fi`
 
+DO NOT FORGET TO ENABLE PERMISSION AFTER CREATING A BASH SCRIPT - `chmod 700 filename` or `chmod +x filename`
+
+
+In Bash scripting, [ ] (single square brackets) and [[ ]] (double square brackets) are both used for conditional expressions, but they have some notable differences in functionality and use cases:
+
+- Syntax and Punctuation:
+  - [ ]: Requires spaces around the operators and operands inside the brackets.
+  - [[ ]]: Does not require spaces around the operators and operands inside the double brackets.
+- Logical Operators:
+  - [ ]: Uses -a for logical AND and -o for logical OR.
+  - [[ ]]: Uses && for logical AND and || for logical OR, which are more intuitive.
+- String Comparisons:
+  - [ ]: String comparisons use = for equality.
+  - [[ ]]: Allows = for equality and == for pattern matching.
+- Quoting:
+  - [ ]: Requires variable references to be quoted to handle cases with spaces.
+  - [[ ]]: Variable references inside double brackets don't require quotes in most cases.
+ 
+
+### TESTING CONDITIONS FOR NUMBERS
+
+When dealing with integer operands in conditional statements (if and elif), several comparison operators can be used to determine the relationship between values:
+
+-eq: equals (=)
+-ge: greater than or equal to (>=)
+-gt: greater than (>)
+-le: less than or equal to (<=)
+-lt: less than (<)
+-ne: not equal to (!=)
+
+Below is an example Bash script named age.sh that prompts the user to input their age and then categorizes it based on the specified conditions:
+
+`ikechukwu@ubuntu-22-04-3:~/scripts$ vim age.sh` </br>
+
+`#!/bin/bash`</br>
+\# Prompt the user to enter their age</br>
+`read -p "Enter your age: " age`</br>
+\# Check if the age is less than 18</br>
+`if [[ $age -lt 18 ]]; then`</br>
+`    sleep 2`</br>
+`    echo "You are a minor"`</br>
+\# Check if the age is exactly 18</br>
+`elif [[ $age -eq 18 ]]; then`</br>
+`    sleep 2`</br>
+`    echo "You just became a minor"`</br>
+\# Execute if none of the previous conditions are true</br>
+`else`</br>
+`    sleep 2`</br>
+`    echo "You are an adult"`</br>
+`fi`</br>
+
+`ikechukwu@ubuntu-22-04-3:~/scripts$ chmod +x age.sh`</br>
+`ikechukwu@ubuntu-22-04-3:~/scripts$ ./age.sh`
+
+This script efficiently categorizes the user's age into different groups based on the provided conditions, providing a clear and concise output message.
