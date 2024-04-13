@@ -168,41 +168,35 @@ In the above example, the read command prompts the user to enter their name, and
 
 The examples below demonstrate how to incorporate user input into Bash scripts and perform actions based on that input, making scripts more interactive and flexible:
 
-1. **Script that drops all packets**
-
-Let us create a script that drops all packets from a specific IP address. Below are the steps;
-
+1. **Script that drops all packets**</br></br>
+Let us create a script that drops all packets from a specific IP address. Below are the steps;</br></br>
 - `vi block_ip.sh`: creates a new bash script file. 
 - `#!/bin/bash`: Shebang line: Specifies the path to the Bash interpreter
 - `read -p "Enter IP address to block: " IP`: The `-p` "Prompt message:": This option allows you to specify a prompt message that will be displayed to the user before they enter input. This command prompts the user to enter an IP address and assigns it to the variable 'ip'. 
 - `iptables -I INPUT -s "$IP" -j DROP`: Uses `iptables` to insert a rule into the INPUT chain, blocking traffic from the specified IP address
-- `echo "This packet from $ip will be dropped"`: Displays a message indicating that packets from the specified IP address will be dropped. 
-
+- `echo "This packet from $ip will be dropped"`: Displays a message indicating that packets from the specified IP address will be dropped.</br></br>
 In this script named block_ip.sh, the user is prompted to enter an IP address to block. The entered IP address is stored in the variable `$ip`. Then, `iptables` is used to insert a rule into the INPUT chain, blocking traffic from the specified IP address. Finally, a message is displayed indicating that packets from the specified IP address will be dropped.
 
 
-2. **Script to Fix Permissions Recursively**
-
-**For Files:** 
-
+2. **Script to Fix Permissions Recursively**</br></br>
+**For Files:** </br></br>
 `#!/bin/bash`</br>
 `read -p "Enter directory: " dir`: Prompt the user to enter a directory</br>
 `echo -n "Changing files permissions to 644 recursively..."`</br>
 `find $dir -type f -exec chmod 644 {} \;`: Uses `find` command to recursively search for files (-type f) within the specified directory and changes their permissions accordingly using `chmod`.</br>
-`echo "Done"`
-
-**For Directories:**
-
+`echo "Done"`</br></br>
+**For Directories:**</br></br>
 `echo -n "Changing subdirectories permissions to 755 recursively..."`</br>
 `find $dir -type d -exec chmod 755 {} \;`: Uses `find` command to recursively search for files (-type d) within the specified directory and changes their permissions accordingly using `chmod`.</br>
-`echo "Done"`
-
+`echo "Done"`</br></br>
 In this script named fix_permissions.sh, the user is prompted to enter a directory. Then, the script uses `find` command to recursively search and change the permissions of files to 644 (-type f) and subdirectories to 755 (-type d) within the specified directory using `chmod`. Finally, messages are displayed to indicate the completion of the operations.
 
 
 ### SPECIAL VARIABLES AND POSITIONAL ARGUMENTS
 
-In shell scripting, positional arguments refer to the arguments passed to a script or a function when it is executed. These arguments are provided on the command line and are referenced by position or order within the script. The first positional argument is represented by $1, the second by $2, and so on.
+In shell scripting, positional arguments refer to the arguments passed to a script or a function when it is executed. These arguments are provided on the command line and are referenced by position or order within the script. The first positional argument is represented by $1, the second by $2, and so on. For example:
+
+`script.sh filename1 dir1 10.0.0.1`
 
 - $0 is the name of the script itself (script.sh).
 - $1 is the first positional argument (filename1).
