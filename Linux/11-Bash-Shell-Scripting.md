@@ -244,3 +244,51 @@ The script below, when executed with `./display_and_compress.sh scripts.txt`, wi
 - `ikechukwu@ubuntu-22-04-3:~/scripts$ ./display_and_compress.sh scripts.txt`
 
 
+### PROGRAM CONTROL FLOW
+
+Program control flow constructs can be categorized into two main types:
+
+- Conditional Constructs: These constructs enable the execution of different blocks of code based on whether specific conditions are true or false. In Bash scripting, conditional constructs include the if statement and the case statement.
+
+- Iterative Constructs (Loops): These constructs allow the repetition of a block of code multiple times until a certain condition is met or until all iterations have been completed. In Bash scripting, iterative constructs include for loops and while loops.
+
+Both conditions and loops play crucial roles in controlling the flow of execution in scripts and programs, allowing for more dynamic and responsive behavior based on various factors and inputs.
+
+### IF, ELIF AND ELSE STATEMENTS
+
+They are used for decision-making. This is program flow control in general and allows us to have logic in our scripts and execute a section of code only when some criteria are met. 
+
+if [ condition ]; 
+then
+    # Code to execute if the condition is true
+elif [ another_condition ]; 
+then
+    # Code to execute if the previous condition is false, and this condition is true
+else
+    # Code to execute if none of the previous conditions are true
+fi
+
+NOTES: 
+
+- The conditions are enclosed in square brackets ( [ and ] ), and spaces are important around the square brackets.
+- The `elif` statement allows you to test an additional condition if the previous if statement's condition is false.
+- You can have multiple `elif` statements to test multiple conditions sequentially.
+- The `elif` and `else` statements are optional.
+
+The `test` command in Linux is used to evaluate conditional expressions. It is commonly used in various shell scripts and commands. The test command can also be used with square brackets `[ ]` as a synonym for the test command. (`man test` provides detailed information about the various options and usage of the `test` command. Additionally, since `[ ]` is a synonym for test, you can also check the manual page for [ ] - man [ ] )
+
+The test command gives you easy access to comparison and file test operators. For example:
+
+| Command |	Description |
+|-----|-----|
+| test –f /dev/ttyS0	| 0 if the file exists| 
+| test ! –f /dev/ttyS0	| 0 if the file doesn’t exist| 
+| test –d /tmp	| 0 if the directory exists| 
+| test –x `which ls`	| substitute the location of ls then test if the user can execute| 
+| test 1 –eq 1	0 | if numeric comparison succeeds| 
+| test ! 1 –eq 1 | NOT – 0 if the comparison fails| 
+| test 1 –ne 1	| Easier, test for numeric inequality| 
+| test “a” = “a”	| 0 if the string comparison succeeds| 
+| test “a” != “a”	| 0 if the strings are different| 
+| test 1 –eq 1 –o 2 –eq 2	| -o is OR: | either can be the same| 
+| test 1 –eq 1 –a 2 –eq 2	| -a is AND: both must be the same| 
