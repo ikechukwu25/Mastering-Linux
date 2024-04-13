@@ -96,7 +96,7 @@ It is important to note that there are no spaces allowed in variables, but strin
 - Avoid Using Bash Special Variables: It's recommended to avoid using names that coincide with Bash's special variables (e.g., PATH, HOME, PWD, etc.) to prevent unintentional conflicts.
 
 
-Below is a typic example of how to use Varibales; 
+Below is a typical example of how to use Variables; 
 
 `ikechukwu@ubuntu-22-04-3:~/scripts$ age=30`</br>
 `ikechukwu@ubuntu-22-04-3:~/scripts$ echo $age`</br>
@@ -118,4 +118,85 @@ To prevent changes to a variable's content, use the declare builtin command with
 To display all defined variables, use the `set` command. For better readability, pipe the output to less:
 
 `set | less`
+
+
+#### ENVIRONMENT VARIABLES
+
+Environment variables play a crucial role in configuring and customizing the behavior of the shell and various processes running within it. They are essential elements of the environment in which a process operates, providing dynamic values and information to programs and scripts.
+
+Each time we launch a terminal window a collection of predefined variables are set with some dynamic values and are used to customise the way the system works. 
+
+- Environment Variables: Environment variables are variables that are defined for the current shell environment and inherited by any child shells or processes. They are typically written in uppercase letters by convention and are used to pass information to processes spawned from the current shell. For example, `echo $PATH` displays the value of the PATH environment variable, which contains a colon-separated list of directories where executable files are located.
+
+- Shell Variables: Shell variables, on the other hand, are contained within the shell in which they are defined or set. They are specific to the shell session and are not inherited by child processes.
+
+To manage environment variables and shell variables, various commands and techniques are available:
+
+- `env`: Displays all the environment variables currently set in the shell.
+- `printenv`: Displays the values of specific environment variables. For example, `printenv USER` shows the value of the USER environment variable.
+- `set`: Shows all variables, including both environment variables and shell variables.
+- `set -o posix`: Cleans up the output of set by operating in POSIX mode, which excludes shell functions from the output.
+
+
+**Customizing the Shell Environment**
+
+The .bashrc file is a vital component of shell customization in Unix-like operating systems, particularly for the Bash shell. It is read and executed by interactive, non-login Bash shells and allows users to configure their shell environment according to their preferences. See the steps below; 
+
+- `vi ~/.bashrc`: This command opens the .bashrc file in the Vi text editor for editing. The .bashrc file contains shell commands and configurations that are executed whenever a new terminal session is initiated. It is primarily used for setting environment variables, defining aliases, and other customizations specific to the user's environment.
+- `export PATH=$PATH:~/scripts`: This line adds the ~/scripts directory to the PATH environment variable. Breaking down the command:
+  - `export`: This keyword is used to make the variable (PATH in this case) available to subprocesses of the shell.
+  - `PATH=$PATH:~/scripts`: This command appends the ~/scripts directory to the existing PATH variable. The PATH variable specifies a colon-separated list of directories in which the shell looks for executable files. By adding ~/scripts to PATH, any executable files located in the ~/scripts directory can be executed directly from the command line without specifying the full path.
+- `source ~/.bashrc` or `. ~/.bashrc`: This command reloads the .bashrc file, applying any changes made to it without needing to restart the shell. It ensures that the modifications made to the shell environment, such as adding directories to the PATH, take effect immediately.
+
+To create a new environment variable in a Unix/Linux shell, the `export` command is used followed by the variable name and its value, as shown below:
+
+`export VARIABLE_NAME=value`
+
+To make environment variables available systemwide, they can be declared in system-level configuration files such as /etc/profile or /etc/bash.bashrc. Alternatively, the /etc/environment file can be used to specify systemwide environment variables.
+
+
+### GETTING USER INPUT
+
+The `read` command in Unix/Linux is used to read a line from the standard input (usually from the keyboard) and assign the words to one or more variables. It halts the program execution until the user provides input and presses the enter key.
+
+`ikechukwu@ubuntu-22-04-3:~$ read name` </br>
+`ikechukwu` ---input </br>
+`ikechukwu@ubuntu-22-04-3:~$ echo $name`</br>
+`ikechukwu`
+
+In the above example, the read command prompts the user to enter their name, and the input is stored in the variable $name. The subsequent `echo` command then displays the value of $name.
+
+The examples below demonstrate how to incorporate user input into Bash scripts and perform actions based on that input, making scripts more interactive and flexible:
+
+1. **Script that drops all packets**
+
+Let us create a script that drops all packets from a specific IP address. Below are the steps;
+
+- `vi block_ip.sh`: creates a new bash script file. 
+- `#!/bin/bash`: Shebang line: Specifies the path to the Bash interpreter
+- `read -p "Enter IP address to block: " IP`: The `-p` "Prompt message:": This option allows you to specify a prompt message that will be displayed to the user before they enter input. This command prompts the user to enter an IP address and assigns it to the variable 'ip'. 
+- `iptables -I INPUT -s "$IP" -j DROP`: Uses `iptables` to insert a rule into the INPUT chain, blocking traffic from the specified IP address
+- `echo "This packet from $ip will be dropped"`: Displays a message indicating that packets from the specified IP address will be dropped. 
+
+In this script named block_ip.sh, the user is prompted to enter an IP address to block. The entered IP address is stored in the variable `$ip`. Then, `iptables` is used to insert a rule into the INPUT chain, blocking traffic from the specified IP address. Finally, a message is displayed indicating that packets from the specified IP address will be dropped.
+
+
+2. **Script to Fix Permissions Recursively**
+
+**For Files:** 
+
+`#!/bin/bash`</br>
+`read -p "Enter directory: " dir`: Prompt the user to enter a directory</br>
+`echo -n "Changing files permissions to 644 recursively..."`</br>
+`find $dir -type f -exec chmod 644 {} \;`: Uses `find` command to recursively search for files (-type f) within the specified directory and changes their permissions accordingly using `chmod`.</br>
+`echo "Done"`
+
+**For Directories:**
+
+`echo -n "Changing subdirectories permissions to 755 recursively..."`</br>
+`find $dir -type d -exec chmod 755 {} \;`: Uses `find` command to recursively search for files (-type d) within the specified directory and changes their permissions accordingly using `chmod`.</br>
+`echo "Done"`
+
+In this script named fix_permissions.sh, the user is prompted to enter a directory. Then, the script uses `find` command to recursively search for files (-type f) and directories (-type d) within the specified directory and changes their permissions accordingly using `chmod`. Finally, messages are displayed to indicate the completion of the operations.
+
 
