@@ -8,7 +8,7 @@ Bash shell scripting involves writing scripts in the Bash (Bourne Again Shell) l
 #### SHELL SCRIPTING BASICS
 
 - File Format: The `.sh` file extension commonly signifies a shell script, serving as a human-readable hint rather than influencing system behavior. Linux disregards file extensions.
-- Execution: After creating a shell script, you need to make it executable using the `chmod` command:.
+- Execution: After creating a shell script, you need to make it executable using the `chmod` command:
   -  `chmod +x script.sh`:
   -  `./script.sh`: 
 
@@ -215,21 +215,21 @@ In shell scripting, positional arguments refer to the arguments passed to a scri
 
 **Example Script to Handle Positional Arguments**
 
-`ikechukwu@ubuntu-22-04-3:~/scripts$ vi pos_arguments.sh`
-`#!/bin/bash`
-`echo "First argument: $1"`
-`echo "Second argument: $2"`
-`echo "third argument: $3"`
-`echo "Fourth argument: $4"`
-`echo "Total number of arguments: $#"`
+`ikechukwu@ubuntu-22-04-3:~/scripts$ vi pos_arguments.sh`</br>
+`#!/bin/bash`</br>
+`echo "First argument: $1"`</br>
+`echo "Second argument: $2"`</br>
+`echo "third argument: $3"`</br>
+`echo "Fourth argument: $4"`</br>
+`echo "Total number of arguments: $#"`</br>
 `echo "All arguments: $*"`
 
-`ikechukwu@ubuntu-22-04-3:~/scripts$ ./pos_arguments.sh Linux is really good `
-First argument: `$1`=Linux
-Second argument: `$2` = is
-third argument: `$3` = really
-Fourth argument: `$4` = good
-Total number of arguments: `$5` 
+`ikechukwu@ubuntu-22-04-3:~/scripts$ ./pos_arguments.sh Linux is really good `</br>
+First argument: `$1`=Linux</br>
+Second argument: `$2` = is</br>
+third argument: `$3` = really</br>
+Fourth argument: `$4` = good</br>
+Total number of arguments: `$5` </br>
 All arguments: `$*` Linux is really good though.
 
 
