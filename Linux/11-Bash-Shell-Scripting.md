@@ -197,6 +197,56 @@ In this script named block_ip.sh, the user is prompted to enter an IP address to
 `find $dir -type d -exec chmod 755 {} \;`: Uses `find` command to recursively search for files (-type d) within the specified directory and changes their permissions accordingly using `chmod`.</br>
 `echo "Done"`
 
-In this script named fix_permissions.sh, the user is prompted to enter a directory. Then, the script uses `find` command to recursively search for files (-type f) and directories (-type d) within the specified directory and changes their permissions accordingly using `chmod`. Finally, messages are displayed to indicate the completion of the operations.
+In this script named fix_permissions.sh, the user is prompted to enter a directory. Then, the script uses `find` command to recursively search and change the permissions of files to 644 (-type f) and subdirectories to 755 (-type d) within the specified directory using `chmod`. Finally, messages are displayed to indicate the completion of the operations.
+
+
+### SPECIAL VARIABLES AND POSITIONAL ARGUMENTS
+
+In shell scripting, positional arguments refer to the arguments passed to a script or a function when it is executed. These arguments are provided on the command line and are referenced by position or order within the script. The first positional argument is represented by $1, the second by $2, and so on.
+
+- $0 is the name of the script itself (script.sh).
+- $1 is the first positional argument (filename1).
+- $2 is the second positional argument (dir1).
+- $3 is the last argument of the script (10.0.0.1).
+- $9 would be the ninth argument and ${10} the tenth.
+- $# is the number of the positional arguments.
+- "$*" is a string representation of all positional arguments: $1, $2, $3, and so on.
+- $? holds the exit status of the last executed command or function.
+
+**Example Script to Handle Positional Arguments**
+
+`ikechukwu@ubuntu-22-04-3:~/scripts$ vi pos_arguments.sh`
+`#!/bin/bash`
+`echo "First argument: $1"`
+`echo "Second argument: $2"`
+`echo "third argument: $3"`
+`echo "Fourth argument: $4"`
+`echo "Total number of arguments: $#"`
+`echo "All arguments: $*"`
+
+`ikechukwu@ubuntu-22-04-3:~/scripts$ ./pos_arguments.sh Linux is really good `
+First argument: `$1`=Linux
+Second argument: `$2` = is
+third argument: `$3` = really
+Fourth argument: `$4` = good
+Total number of arguments: `$5` 
+All arguments: `$*` Linux is really good though.
+
+
+The script below, when executed with `./display_and_compress.sh scripts.txt`, will display the content of the file scripts.txt and then compress it into a .tar.gz archive with the same name.
+
+- `ikechukwu@ubuntu-22-04-3:~$ cd scripts/`
+- `ikechukwu@ubuntu-22-04-3:~/scripts$ vi display_and_compress.sh`
+
+  - `#!/bin/bash`: shebang line which specifies the path to the Bash interpreter.
+  - `echo "Displaying the content of $1"`: Displays a message indicating that the content of the file specified as the first argument ($1) will be displayed
+  - `sleep 2`: Pauses the script execution for 2 seconds.
+  - `cat $1`:  Displays the content of the file specified as the first argument ($1).
+  - `echo`: Prints a new line for better formatting.
+  - `echo "Compressing $1"`: Displays a message indicating that the specified file will be compressed.
+  - `sleep 2`: Pauses the script execution for another 2 seconds.
+  - `tar -czvf "$1.tar.gz" $1`: Creates a compressed .tar.gz archive of the specified file. The archive will be named after the original file with a .tar.gz extension.
+- `ikechukwu@ubuntu-22-04-3:~/scripts$ chmod 755 display_and_compress.sh`
+- `ikechukwu@ubuntu-22-04-3:~/scripts$ ./display_and_compress.sh scripts.txt`
 
 
