@@ -202,7 +202,7 @@ In shell scripting, positional arguments refer to the arguments passed to a scri
 - $1 is the first positional argument (filename1).
 - $2 is the second positional argument (dir1).
 - $3 is the last argument of the script (10.0.0.1).
-- $9 would be the ninth argument and ${10} the tenth.
+- ${10} would be the tenth argument.
 - $# is the number of the positional arguments.
 - "$*" is a string representation of all positional arguments: $1, $2, $3, and so on.
 - $? holds the exit status of the last executed command or function.
