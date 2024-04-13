@@ -293,7 +293,7 @@ The test command gives you easy access to comparison and file test operators. 
 | test 1 –eq 1 –o 2 –eq 2	| -o is OR: | either can be the same| 
 | test 1 –eq 1 –a 2 –eq 2	| -a is AND: both must be the same| 
 
-See an example below; 
+**Example; **
 
 The script below will show the content of a file (`cat $1`) as in if and the content of a directory as in the elif (`ls -l $1`), the else statement gives the response for any other argument that’s not in the script. 
 
