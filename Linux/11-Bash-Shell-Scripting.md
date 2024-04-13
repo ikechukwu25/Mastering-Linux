@@ -403,9 +403,9 @@ This is a simple Bash script that takes user input for age and then categorizes 
 `else`</br>
 `    sleep 2`</br>
 `    echo "Invalid input"`</br>
-`fi`
+`fi`</br></br>
 
-Using an if statement inside another if statement. For example, this script is designed to check whether an argument passed to it is a file, a directory, or neither. 
+Using an if statement inside another if statement. For example, this script is designed to check whether an argument passed to it is a file, a directory, or neither. </br></br>
 
 
 `#!/bin/bash`</br>
@@ -422,7 +422,7 @@ Using an if statement inside another if statement. For example, this script is d
 `        else`</br>
 `            echo "The file is empty"`</br>
 `        fi`</br>
-    # Check if the argument is a directory</br>
+    # Check if the argument is a directory </br>
 `    elif [ -d $1 ]; then`</br>
 `        echo "The argument is a directory, displaying its contents..."`</br>
 `        sleep 2`</br>
