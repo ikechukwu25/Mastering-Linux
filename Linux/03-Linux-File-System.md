@@ -264,39 +264,39 @@ Here's an overview of Vim's modes and commands to aid navigation and editing:
 The mode of operation in Vim can be categorized into Command mode, Insert mode, and Last Line mode.
 
 - Command Mode: Upon opening Vim, you're in Command mode. Here, characters are interpreted as commands. Common commands include: </br></br>
-  - X: Deletes characters under the cursor.</br>
-  - R: Replaces the character under the cursor.</br>
-  - :: Moves the cursor to the Last Line mode.</br>
-  - :w!: Saves the file without closing Vim.</br>
-  - :q!: Closes Vim without saving.</br>
-  - :wq! or Shift + zz: Saves the file and closes Vim.</br>
+  - `X`: Deletes characters under the cursor.</br>
+  - `R`: Replaces the character under the cursor.</br>
+  - `:`: Moves the cursor to the Last Line mode.</br>
+  - `:w!`: Saves the file without closing Vim.</br>
+  - `:q!`: Closes Vim without saving.</br>
+  - `:wq!` or `Shift + zz`: Saves the file and closes Vim.</br>
   - Pressing the Esc button takes you back to Command mode.
 
 - Insert Mode: Press i, I, a, A, o, or O to enter Insert mode. Common insert commands include:</br></br>
-  - i: Inserts text before the cursor.</br>
-  - I: Insert text at the beginning of the current line.</br>
-  - o: Insert text on a new line below the current line.</br>
-  - O: Inserts text on a new line above the current line.</br>
-  - a: Inserts text after the cursor.</br>
-  - A: Appends text at the end of the line.
+  - `i:` Inserts text before the cursor.</br>
+  - `I`: Insert text at the beginning of the current line.</br>
+  - `o`: Insert text on a new line below the current line.</br>
+  - `O`: Inserts text on a new line above the current line.</br>
+  - `a`: Inserts text after the cursor.</br>
+  - `A`: Appends text at the end of the line.
 
 - Last Line Mode: Accessed by typing: in Command mode, Last Line mode is used for commands that apply to the entire file or for performing actions like searching and replacing. Common Last Line mode commands include:</br></br>
-  - :%s/string/replacement/g: Search for a pattern and replace all occurrences.</br>
-  - :e!: Undo everything done since the last save.</br>
-  - u: Undo the last event.</br>
-  - Ctrl + R: Redo.</br>
-  - dd: Cut. </br>
-  - p: Paste.</br>
-  - 10 + dd: Cut 10 lines from the cursor.</br>
-  - V: Highlight text for copying.</br>
-  - y: Copy.</br>
-  - G: Moves to the bottom of the file.</br>
-  - gg: Moves to the first line of the file.</br>
-  - :set nu: Enables line numbering.</br>
-  - :set nonu: Disables line numbering.</br>
-  - :syntax off: Disables syntax coloring.</br>
-  - :syntax on: Enables syntax coloring.</br>
-  - :number: Jumps to a specific line number.
+  - `:%s/string/replacement/g`: Search for a pattern and replace all occurrences.</br>
+  - `:e!`: Undo everything done since the last save.</br>
+  - `u`: Undo the last event.</br>
+  - `Ctrl + R`: Redo.</br>
+  - `dd`: Cut. </br>
+  - `p`: Paste.</br>
+  - `10 + dd`: Cut 10 lines from the cursor.</br>
+  - `V`: Highlight text for copying.</br>
+  - `y`: Copy.</br>
+  - `G`: Moves to the bottom of the file.</br>
+  - `gg`: Moves to the first line of the file.</br>
+  - `:set nu`: Enables line numbering.</br>
+  - `:set nonu`: Disables line numbering.</br>
+  - `:syntax off`: Disables syntax coloring.</br>
+  - `:syntax on`: Enables syntax coloring.</br>
+  - `:number`: Jumps to a specific line number.
  
 Press each of the following keys once or twice and observe how the cursor moves. Remember that you are in command mode:
 
