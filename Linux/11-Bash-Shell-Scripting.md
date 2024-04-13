@@ -355,11 +355,13 @@ Below is an example Bash script named age.sh that prompts the user to input thei
 \# Prompt the user to enter their age</br>
 `read -p "Enter your age: " age`</br>
 \# Check if the age is less than 18</br>
-`if [[ $age -lt 18 ]]; then`</br>
+`if [[ $age -lt 18 ]];` </br>
+`then`</br>
 `    sleep 2`</br>
 `    echo "You are a minor"`</br>
 \# Check if the age is exactly 18</br>
-`elif [[ $age -eq 18 ]]; then`</br>
+`elif [[ $age -eq 18 ]];` </br>
+`then`</br>
 `    sleep 2`</br>
 `    echo "You just became a minor"`</br>
 \# Execute if none of the previous conditions are true</br>
@@ -372,3 +374,67 @@ Below is an example Bash script named age.sh that prompts the user to input thei
 `ikechukwu@ubuntu-22-04-3:~/scripts$ ./age.sh`
 
 This script efficiently categorizes the user's age into different groups based on the provided conditions, providing a clear and concise output message.
+
+
+### MULTIPLE CONDITIONS AND NESTED IF STATEMENTS
+
+In Bash scripting, you can handle multiple conditions using logical operators and nested if statements which have been mentioned above. Logical operators such as && (AND) and || (OR) help combine conditions. For example;
+
+This is a simple Bash script that takes user input for age and then categorizes the input into different age groups.
+
+`#!/bin/bash`</br>
+\# Prompt the user to enter their age</br>
+`read -p "Enter your age: " age`</br>
+\# Check if the age is between 0 and 18 (exclusive)</br>
+`if [[ $age -lt 18 && $age -ge 0 ]];`</br>
+`then`</br>
+`    sleep 2`</br>
+`    echo "You are a minor"`</br>
+\# Check if the age is exactly 18</br>
+`elif [[ $age -eq 18 ]];` </br>
+`then`</br>
+`    sleep 2`</br>
+`    echo "You just became an adult"`</br>
+\# Check if the age is between 18 and 100 (inclusive)</br>
+`elif [[ $age -gt 18 && $age -le 100 ]];` </br>
+`then`</br>
+`    echo "You are a major"`</br>
+\# Execute if none of the previous conditions are true</br>
+`else`</br>
+`    sleep 2`</br>
+`    echo "Invalid input"`</br>
+`fi`
+
+Using an if statement inside another if statement. For example, this script is designed to check whether an argument passed to it is a file, a directory, or neither. 
+
+
+`#!/bin/bash`</br>
+\# Check if the script is called with exactly one argument</br>
+`if [[ $# -eq 1 ]]; `</br>
+`then`</br>
+    \# Check if the argument is a file</br>
+`    if [ -f $1 ]; then`</br>
+`        echo "The argument is a file, displaying its contents..."`</br>
+`        sleep 2`</br>
+        # Check if the file is not empty</br>
+`        if [[ -s $1 ]]; then`</br>
+`            cat $1`</br>
+`        else`</br>
+`            echo "The file is empty"`</br>
+`        fi`</br>
+    # Check if the argument is a directory</br>
+`    elif [ -d $1 ]; then`</br>
+`        echo "The argument is a directory, displaying its contents..."`</br>
+`        sleep 2`</br>
+`        ls -l $1`</br>
+    # Execute if the argument is neither a file nor a directory</br>
+`    else`</br>
+`        echo "Be serious, the file ($1) is neither an existing file nor directory"`</br>
+`    fi`</br>
+\# Execute if the script is not called with exactly one argument</br>
+`else`</br>
+`    echo "This script should be run with exactly one argument"`</br>
+`fi`
+
+This script is useful for performing different actions based on whether the argument passed to it is a file, a directory, or something else. It provides informative messages to the user depending on the type of argument passed.
+
