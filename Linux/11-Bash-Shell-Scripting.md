@@ -13,6 +13,7 @@ Bash shell scripting involves writing scripts in the Bash (Bourne Again Shell) l
   -  `./script.sh`: 
 
 
+
 ## BASH SHELL SCRIPTING
 
 A shell is a programme that takes commands from the user through the keyboard and gives them to the OS kernel to get executed. 
@@ -203,7 +204,7 @@ In shell scripting, positional arguments refer to the arguments passed to a scri
 - $2 is the second positional argument (dir1).
 - $3 is the last argument of the script (10.0.0.1).
 - ${10} would be the tenth argument.
-- $# is the number of the positional arguments.
+- $# is the number of positional arguments.
 - "$*" is a string representation of all positional arguments: $1, $2, $3, and so on.
 - $? holds the exit status of the last executed command or function.
 
@@ -258,15 +259,15 @@ Both conditions and loops play crucial roles in controlling the flow of executio
 
 They are used for decision-making. This is program flow control in general and allows us to have logic in our scripts and execute a section of code only when some criteria are met. 
 
-if [ condition ]; 
-then
-    # Code to execute if the condition is true
-elif [ another_condition ]; 
-then
-    # Code to execute if the previous condition is false, and this condition is true
-else
-    # Code to execute if none of the previous conditions are true
-fi
+`if [ condition ]; </br>
+then</br>
+    # Code to execute if the condition is true</br>
+elif [ another_condition ]; </br>
+then</br>
+    # Code to execute if the previous condition is false, and this condition is true</br>
+else</br>
+    # Code to execute if none of the previous conditions are true</br>
+fi</br>
 
 NOTES: 
 
@@ -275,7 +276,7 @@ NOTES:
 - You can have multiple `elif` statements to test multiple conditions sequentially.
 - The `elif` and `else` statements are optional.
 
-The `test` command in Linux is used to evaluate conditional expressions. It is commonly used in various shell scripts and commands. The test command can also be used with square brackets `[ ]` as a synonym for the test command. (`man test` provides detailed information about the various options and usage of the `test` command. Additionally, since `[ ]` is a synonym for test, you can also check the manual page for [ ] - man [ ] )
+The `test` command in Linux is used to evaluate conditional expressions. It is commonly used in various shell scripts and commands. The test command can also be used with square brackets `[ ]` as a synonym for the test command. (`man test` provides detailed information about the various options and usage of the `test` command. Additionally, since `[ ]` is a synonym for test, you can also check the manual page for [ ] - `man [ ]` )
 
 The test command gives you easy access to comparison and file test operators. For example:
 
@@ -292,3 +293,23 @@ The test command gives you easy access to comparison and file test operators. 
 | test “a” != “a”	| 0 if the strings are different| 
 | test 1 –eq 1 –o 2 –eq 2	| -o is OR: | either can be the same| 
 | test 1 –eq 1 –a 2 –eq 2	| -a is AND: both must be the same| 
+
+See an example below; 
+
+The script below will show the content of a file (`cat $1`) as in if and the content of a directory as in the elif (`ls -l $1`), the else statement gives the response for any other argument that’s not in the script. 
+
+`#!/bin/bash`</br>
+`if [ -f $1 ];` - - if statement</br>
+`then`</br>
+`        echo "Displaying the content of $1.."`</br>
+`        sleep 2`</br>
+`        cat $1` - - main command</br>
+`elif [ -d $1 ];` - - elif statement</br>
+`then`</br>
+`        echo "Listing content of the directory ($1)"`</br>
+`        sleep 2`</br>
+`        ls -l $1` - - main command</br>
+`else` - - else statement </br>
+`        echo "Get serious, this is neither a file nor a directory in the current directory"`</br>
+`fi`
+
