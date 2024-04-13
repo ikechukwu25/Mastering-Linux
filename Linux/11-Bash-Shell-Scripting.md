@@ -9,9 +9,8 @@ Bash shell scripting involves writing scripts in the Bash (Bourne Again Shell) l
 
 - File Format: The `.sh` file extension commonly signifies a shell script, serving as a human-readable hint rather than influencing system behavior. Linux disregards file extensions.
 - Execution: After creating a shell script, you need to make it executable using the `chmod` command:
-  -  `chmod +x script.sh`:
-  -  `./script.sh`: 
-
+  -  `chmod +x script.sh`: This command grants the user execute permission for the script named script.sh. Without execute permission, the script cannot be run as an executable file.
+  -  `./script.sh`: This command executes the script named script.sh. The ./ prefix indicates that the script is located in the current directory. If the script is located in a different directory, you would need to specify the path to the script instead of just ./.
 
 
 ## BASH SHELL SCRIPTING
@@ -25,7 +24,7 @@ These are fundamental commands used in shell environments to retrieve informatio
 `cat /etc/shells`: Displays a catalog of all installed shells.
 `cat /etc/passwd`: Reveals user account information, including default shells, like `pr2:x:1004:1006:Back-End:/home/pr2:/bin/bash`.
 
-A shell script, an executable text file, encompasses shell commands along with structures like variables and functions, executed sequentially. It serves as a potent tool for automating repetitive tasks, enhancing productivity. Whenever you find yourself running a task over and over, you should use shell scripting. 
+A shell script, an executable text file, encompasses shell commands along with structures like variables and functions, executed sequentially. It serves as a potent tool for automating repetitive tasks, and enhancing productivity. Whenever you find yourself running a task over and over, you should use shell scripting. 
 
 Practical examples of shell script applications include system monitoring, data backup and restoration, and the establishment of email-based alert systems for event notifications. Additionally, shell scripts are invaluable for user administration and security auditing.
 
@@ -49,16 +48,16 @@ Below are the ways to run the bash scripts.
 2. Relative Path: Navigate to the directory where the script is located and run it using its relative path.
   - `./first_script.sh`: Make sure you are in the directory where the script is located.
 3. Using Bash or Python Interpreter: Execute the script by invoking the Bash or Python interpreter, for example:
-  - `bash first_script.sh` or `python3 first_script`: Make sure you are in the directory where the script is located. This pattern, the user does not need the execute permission to run the script and it. This way will also overwrite the shebang directive. 
-4. Using source or . Command: Execute the script using the source command or its shorthand, fornexample;
-  - `source first_script.sh` or `. first_script`: It does not require the execution permission and the source command reads and executes command from the file specified as it’s argument in the current shell environment.
+  - `bash first_script.sh` or `python3 first_script`: Make sure you are in the directory where the script is located. In this pattern, the user does not need the execute permission to run the script and it. This way will also overwrite the shebang directive. 
+4. Using source or . Command: Execute the script using the source command or its shorthand, for example;
+  - `source first_script.sh` or `. first_script`: It does not require execution permission and the source command reads and executes the command from the file specified as its argument in the current shell environment.
 
 These methods provide flexibility in running Bash scripts, catering to various use cases and requirements.
 
 
 ## SHELL CUSTOMIZATION
 
-Shell customization refers to the process of tailoring the shell environment to suit individual preferences and optimize workflow efficiency. It involves configuring various aspects of the shell, such as aliases, variables etc to enhance usability and productivity.
+Shell customization refers to the process of tailoring the shell environment to suit individual preferences and optimize workflow efficiency. It involves configuring various aspects of the shell, such as aliases, variables, etc to enhance usability and productivity.
 
 They allow users to personalize their shell environment by creating shortcuts (aliases) for frequently used commands and storing data or values (variables) for easy reference and manipulation within scripts.
 
