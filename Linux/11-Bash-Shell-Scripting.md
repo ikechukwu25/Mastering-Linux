@@ -561,49 +561,49 @@ For statement is used to execute a block of codes repeatedly. The for loop in Ba
 
 **SYNTAX:**
 
-`for item in LIST`
-`do`
-`COMMANDS`
-`done`
+`for item in LIST`</br>
+`do`</br>
+`COMMANDS`</br>
+`done`</br>
 
 `Item` becomes the variable. 
 
 **EXAMPLES: **
 
-1. `#!/bin/bash`
-\# Loop 1: iterating over a list of strings
-`for os in Ubuntu CentOS "Mx Linux" Kali`
-`do`
-`    echo "os is $os"`
+1. `#!/bin/bash`</br>
+\# Loop 1: iterating over a list of strings</br>
+`for os in Ubuntu CentOS "Mx Linux" Kali`</br>
+`do`</br>
+`    echo "os is $os"`</br>
 `done`
 
-2. `#!/bin/bash`
-\# Loop 2: Iterate over a range of numbers
-`for num in {10..15}`
-`do`
-`    echo "num is $num"`
-`done`
-
-
-3. `#!/bin/bash`
-\# Loop 3: iterating over a list of files
-`for item in ./* `       # files in the current dir
-`do`
-`    if [[ -f $item ]];` # using the if statement to confirm if the variable is a file. 
-`    then`
-`        echo "Displaying the contents of $item"`
-`        sleep 1`
-`        cat $item`
-`        echo "#######################"`
-`    fi`
+2. `#!/bin/bash`</br>
+\# Loop 2: Iterate over a range of numbers</br>
+`for num in {10..15}`</br>
+`do`</br>
+`    echo "num is $num"`</br>
 `done`
 
 
-4. `#!/bin/bash`
-\# Loop 4:  iterating over a list of numbers in increments
-`for x in {10..100..5} `
-`do`
-`        echo $x`
+3. `#!/bin/bash`</br>
+\# Loop 3: iterating over a list of files</br>
+`for item in ./* `       # files in the current dir</br>
+`do`</br>
+`    if [[ -f $item ]];` # using the if statement to confirm if the variable is a file. </br>
+`    then`</br>
+`        echo "Displaying the contents of $item"`</br>
+`        sleep 1`</br>
+`        cat $item`</br>
+`        echo "#######################"`</br>
+`    fi`</br>
+`done`
+
+
+4. `#!/bin/bash`</br>
+\# Loop 4:  iterating over a list of numbers in increments</br>
+`for x in {10..100..5} `</br>
+`do`</br>
+`        echo $x`</br>
 `done`
 
 These scripts demonstrate various uses of the for loop in Bash, including iterating over lists of strings, numbers, and files, as well as iterating with specified increments. 
@@ -612,30 +612,31 @@ These scripts demonstrate various uses of the for loop in Bash, including iterat
 
 **Dropping a List of IP addresses Using a For Loop**
 
-`#!/bin/bash`
-`DROPPED_IPs="8.8.8.8 10.10.10.1 4.4.4.4”`    #The values for the variables are separated with spaces 
-`for ip in $DROPPED_IPs`  #Second variable
-`do`
-`        echo "Dropped packets from $ip"`
-`        iptables -I INPUT -s $ip -j DROP`
+`#!/bin/bash`</br>
+`DROPPED_IPs="8.8.8.8 10.10.10.1 4.4.4.4”`    #The values for the variables are separated with spaces </br>
+`for ip in $DROPPED_IPs`  #Second variable</br>
+`do`</br>
+`        echo "Dropped packets from $ip"`</br>
+`        iptables -I INPUT -s $ip -j DROP`</br>
 `done`
 ~           
 
 OR 
 
 You can create a file containing the list of IPs to be dropped line by line. 
-`vim IPs`
-Input the IP addresses line by line;
-2.2.2.2
+
+`vim IPs`</br>
+Input the IP addresses line by line;</br>
+2.2.2.2</br>
 8.8.8.8
 
 In the script file, run;
 
-`#!/bin/bash`
-`for ip in $(cat ip.txt)`  #This is a command substitution running the command to display the content of the just created file containing the IPs..
-`do`
-`        echo "Dropped packets from $ip"`
-`        iptables -I INPUT -s $ip -j DROP`
+`#!/bin/bash`</br>
+`for ip in $(cat ip.txt)`  #This is a command substitution running the command to display the content of the just created file containing the IPs..</br>
+`do`</br>
+`        echo "Dropped packets from $ip"`</br>
+`        iptables -I INPUT -s $ip -j DROP`</br>
 `done`
 
 
