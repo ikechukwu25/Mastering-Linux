@@ -476,6 +476,8 @@ For arithmetic operations, you use double parentheses ((...)) syntax. This allow
 `ikechukwu@ubuntu-22-04-3:~$ echo $d` </br>
 `11`
 
+The `let` command is often used for arithmetic operations in Bash scripts.
+
 **USE OF DOUBLE BRACKET FOR ARITHMETIC IN COMMAND SUBSTITUTION**
 
 This script below allows the user to specify a file and two positive integers n and m. It then displays a portion of the content of the file, starting from line n and ending at line m, inclusively.
@@ -648,32 +650,70 @@ While loops are another way to execute code repeatedly in Bash scripting. They c
 
 **SYNTAX:**
 
-`While CONDITION`
-`do`
-`	COMMANDS`
+`While CONDITION`</br>
+`do`</br>
+`	COMMANDS`</br>
 `done`
 
 The set of commands are executed as long as the given condition evaluates to true.
 
 **INFINTE LOOP**
 
-`#!/bin/bash`
-`while [ 1 -eq 1 ]`
-`do`
-`	echo “This is an infinite loop that can be stopped with CTRL + C”`
-`	sleep 2`
+`#!/bin/bash`</br>
+`while [ 1 -eq 1 ]`</br>
+`do`</br>
+`	echo “This is an infinite loop that can be stopped with CTRL + C”`</br>
+`	sleep 2`</br>
 `done`
 
 This script creates an infinite loop because the condition [ 1 -eq 1 ] always evaluates to true (1 is indeed equal to 1). As a result, the code block within the loop will continue to execute indefinitely until it's interrupted, typically by pressing Ctrl + C. This type of loop is useful for situations where you want a process to run continuously until manually stopped. However, it's important to use infinite loops judiciously to avoid consuming excessive system resources.
 
-`#!/bin/bash`
-`while :`
-`do`
-`    echo "This is an infinite loop that can be stopped with CTRL + C"`
-`    sleep 2`
+`#!/bin/bash`</br>
+`while :`</br>
+`do`</br>
+`    echo "This is an infinite loop that can be stopped with CTRL + C"`</br>
+`    sleep 2`</br>
 `done`
 
 This script creates an infinite loop using the while : syntax, where : represents a shell built-in command that always returns true. As a result, the loop continues indefinitely until it's interrupted, typically by pressing Ctrl + C. This type of loop is useful for situations where you want a process to run continuously until manually stopped, such as monitoring or background tasks."
 
 **USE CASES**
 
+If I want to continuously check every 3 seconds if a particular process is running, imagine having a sever application that should be continuously monitored,. It can’t be done with cronjob because the minute is the minimum time period available. Hence, it can be done by running the below script. 
+
+`#!/bin/bash` </br>
+`while :` # Infinite loop to continuously monitor the specified process </br>
+`do`</br>
+`        output="$(pgrep -l $1)"`</br>
+`        if [[ -n "$output" ]]` # Check if the output is not empty, indicating the process is running </br>
+`                then`</br>
+`                echo "The process "$1" is running"`</br>
+`        else`</br>
+`                echo "The process "$1" is NOT running"` # If the process is not found, print a message and exit the loop </br>
+`                break`
+`        fi`</br>
+`done`
+~
+
+The `break` statement is a control flow statement used in many programming languages to terminate the execution of a loop (such as for or while) or switch statement prematurely. When the `break` statement is encountered, the program exits the loop or switch statement immediately, and the control is transferred to the next statement after the loop or switch.
+
+
+
+The `let` command is often used for arithmetic operations in Bash scripts. This Bash script below demonstrates the use of a while loop to iterate over a sequence of numbers from 1 to 50, incrementing by 2 in each iteration. The loop continues as long as the value of the counter variable i is less than or equal to 50. Inside the loop, the current value of i is echoed to the console, and then i is incremented by 2 using the let command.
+
+`#!/bin/bash`
+`i=1` # Initialize the counter variable
+`while [[ $i -le 50 ]]` # Loop while the value of i is less than or equal to 50
+`do`
+`    echo $i` # Output the current value of i
+`    let "i += 2"`  # Increment i by 2 for the next iteration
+`done`
+
+* let "i ≤ 50": The `let` command is used to evaluate the condition inside the double quotes. If the result is true (i.e., i is less than 50), the loop will continue; otherwise, it will exit.
+* let "i += 2": This effectively increments the value of i by 2 in each iteration of the loop.
+  - let: The let command is used for evaluating arithmetic expressions in Bash.
+  - "i += 2": This is the arithmetic expression that adds 2 to the value of the variable i.
+  - i: Represents the variable i.
+  - +=: Is the assignment operator for addition. It adds the value on the right side of the operator to the variable on the left side.
+  - 2: Is the value to be added to the variable i.
+ 
