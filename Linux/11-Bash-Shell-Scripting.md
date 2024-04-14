@@ -554,3 +554,89 @@ The script below will attempt to check whether a string is zero length or not us
 `    echo "String is zero length"`  # Prints a message indicating that the string is zero length if the condition is false</br>
 `fi`
 
+
+## FOR LOOPS
+
+For statement is used to execute a block of codes repeatedly. The for loop in Bash is used to iterate over a sequence of values, such as a range of numbers, a list of items, or the contents of an array. 
+
+**SYNTAX:**
+
+`for item in LIST`
+`do`
+`COMMANDS`
+`done`
+
+`Item` becomes the variable. 
+
+**EXAMPLES: **
+
+1. `#!/bin/bash`
+\# Loop 1: iterating over a list of strings
+`for os in Ubuntu CentOS "Mx Linux" Kali`
+`do`
+`    echo "os is $os"`
+`done`
+
+2. `#!/bin/bash`
+\# Loop 2: Iterate over a range of numbers
+`for num in {10..15}`
+`do`
+`    echo "num is $num"`
+`done`
+
+
+3. `#!/bin/bash`
+\# Loop 3: iterating over a list of files
+`for item in ./* `       # files in the current dir
+`do`
+`    if [[ -f $item ]];` # using the if statement to confirm if the variable is a file. 
+`    then`
+`        echo "Displaying the contents of $item"`
+`        sleep 1`
+`        cat $item`
+`        echo "#######################"`
+`    fi`
+`done`
+
+
+4. `#!/bin/bash`
+\# Loop 4:  iterating over a list of numbers in increments
+`for x in {10..100..5} `
+`do`
+`        echo $x`
+`done`
+
+These scripts demonstrate various uses of the for loop in Bash, including iterating over lists of strings, numbers, and files, as well as iterating with specified increments. 
+
+**LAB:** 
+
+**Dropping a List of IP addresses Using a For Loop**
+
+`#!/bin/bash`
+`DROPPED_IPs="8.8.8.8 10.10.10.1 4.4.4.4”`    #The values for the variables are separated with spaces 
+`for ip in $DROPPED_IPs`  #Second variable
+`do`
+`        echo "Dropped packets from $ip"`
+`        iptables -I INPUT -s $ip -j DROP`
+`done`
+~           
+
+OR 
+
+You can create a file containing the list of IPs to be dropped line by line. 
+`vim IPs`
+Input the IP addresses line by line;
+2.2.2.2
+8.8.8.8
+
+In the script file, run;
+
+`#!/bin/bash`
+`for ip in $(cat ip.txt)`  #This is a command substitution running the command to display the content of the just created file containing the IPs..
+`do`
+`        echo "Dropped packets from $ip"`
+`        iptables -I INPUT -s $ip -j DROP`
+`done`
+
+
+ 
