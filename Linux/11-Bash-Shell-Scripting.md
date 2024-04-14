@@ -568,7 +568,7 @@ For statement is used to execute a block of codes repeatedly. The for loop in Ba
 
 `Item` becomes the variable. 
 
-**EXAMPLES: **
+**EXAMPLES:**
 
 1. `#!/bin/bash`</br>
 \# Loop 1: iterating over a list of strings</br>
