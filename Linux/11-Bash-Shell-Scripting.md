@@ -244,7 +244,7 @@ The script below, when executed with `./display_and_compress.sh scripts.txt`, wi
 - `ikechukwu@ubuntu-22-04-3:~/scripts$ ./display_and_compress.sh scripts.txt`
 
 
-### PROGRAM CONTROL FLOW
+## PROGRAM CONTROL FLOW
 
 Program control flow constructs can be categorized into two main types:
 
@@ -254,7 +254,7 @@ Program control flow constructs can be categorized into two main types:
 
 Both conditions and loops play crucial roles in controlling the flow of execution in scripts and programs, allowing for more dynamic and responsive behavior based on various factors and inputs.
 
-### IF, ELIF AND ELSE STATEMENTS
+## IF, ELIF AND ELSE STATEMENTS
 
 They are used for decision-making. This is program flow control in general and allows us to have logic in our scripts and execute a section of code only when some criteria are met. 
 
@@ -437,4 +437,120 @@ Using an if statement inside another if statement. For example, this script is d
 `fi`
 
 This script is useful for performing different actions based on whether the argument passed to it is a file, a directory, or something else. It provides informative messages to the user depending on the type of argument passed.
+
+
+### COMMAND SUBSTITUTION 
+
+Command Substitution simply means running a shell command and storing its output in a variable for later use. There are two syntaxes for command substitution:
+
+Using backticks: result=\`command` </br>
+Using $() syntax: result=$(command) </br>
+
+`now=$(date)` </br>
+`echo $now` </br>
+
+Examples: 
+
+`output=$(ps -ef | grep ls)`: creating a variable. </br>
+`echo $output`: view the content of the variable </br>
+`set | less`: To view all the creates variables and their value
+
+**USING COMMAND SUBSTITUTION IN CREATING COMPRESSED ARCHIVES**
+
+You can embed the current date and time in the filename of a compressed archive using command substitution with the `date` command.
+
+`sudo tar -czvf etc-$(date +%F_%H%M).tar.gz /etc/`: This command will give the file - etc-2023-12-14_0824.tar.gz which has the date and time of the new backup file. In this case, it won’t overwrite the previous file. 
+  - `date +%F_%H%M`: Changes the display format of the date command output. 
+  - `sudo tar -czvf "etc.tar.gz" /etc/`: To compress the etc directory into a compressed file - etc.tar.gz, but when the command is being run again, it overwrites the previously compressed file.
+
+For arithmetic operations, you use double parentheses ((...)) syntax. This allows you to perform arithmetic calculations and assign the result to a variable. For example:
+
+`ikechukwu@ubuntu-22-04-3:~$ c=$((a+b))` </br>
+`ikechukwu@ubuntu-22-04-3: ~$` </br>
+`echo $c` </br>
+`11` </br>
+`ikechukwu@ubuntu-22-04-3:~$` </br>
+`ikechukwu@ubuntu-22-04-3:~$ let d=$a+$b` </br>
+`ikechukwu@ubuntu-22-04-3:~$ echo $d` </br>
+`11`
+
+**USE OF DOUBLE BRACKET FOR ARITHMETIC IN COMMAND SUBSTITUTION**
+
+This script below allows the user to specify a file and two positive integers n and m. It then displays a portion of the content of the file, starting from line n and ending at line m, inclusively.
+
+`#!/bin/bash` </br>
+`read -p "Enter the filename: " filename`</br>
+`if [[ -f $filename ]];`</br>
+`then`</br>
+`    read -p "Enter a positive integer n: " n`</br>
+`    read -p "Enter a positive integer m: " m`</br>
+`    q=$((m - n + 1))` # Calculates the number of lines to display</br>
+`    tail -n "+$n" $filename | head -n $q`</br>
+`else`</br>
+`    echo "$filename is not a file."`</br>
+`fi`
+
+In Bash, the expression `q=$((m+n+1))` is used to perform arithmetic operations and assign the result to the variable q. Below is an explanation of this script:
+* $((...)): This is the arithmetic expansion syntax in Bash. Anything inside the double parentheses is treated as an arithmetic expression.
+* m+n+1: This is the arithmetic expression in your case. It adds the values of variables m and n and then adds 1 to the result.
+* q=: This is the assignment operator, assigning the result of the arithmetic expression to the variable q.
+
+
+### COMPARING STRINGS IN 'IF STATEMENTS'.
+
+N/B: Two strings are equal if they have the same length and contain the same sequence. 
+
+`#!/bin/bash` </br>
+`read -p "String1: " str1`</br>
+`read -p "String2: " str2`</br>
+`if [[ "$str1" == "$str2" ]];`</br>
+`then`</br>
+`        echo "They are equal"`</br>
+`elif [[ "$str1" != "$str2" ]];`</br>
+`then`</br>
+`        echo "They are not equal"`</br>
+`else`</br>
+`        echo "What are you inputting, this man?"`</br>
+`fi`
+
+**Important Notes**:
+
+- Do not forget to quote string variables in testing conditions to avoid word splitting or global issues.
+- A blank space must be used between the operator and the operand.
+- '=' is the operator; 'str1' and 'str2' are the operands.
+
+
+### TO CHECK FOR SUBSTRINGS
+
+`#!/bin/bash`</br>
+`str1="Nowadays, Linux powers the servers of the internet"`</br>
+`if [[ "$str1" == *"Linux"* ]]`</br>
+`then`</br>
+`        echo "The substring Linux is there"`</br>
+`else`</br>
+`        echo "The substring Linux is not there"`</br>
+`fi`
+
+The above script is a good example of how to check if a substring exists within a larger string in a Bash script. The [[ "$str1" == \*"Linux"* ]] condition uses the == operator for string comparison, and the * wildcard before and after "Linux" checks if "Linux" is a substring of the variable str1. If the substring is found, it prints a message indicating its presence; otherwise, it prints a message stating its absence.
+
+
+### CHECKING STRING LENGTH IN BASH SCRIPTING
+
+The script below will attempt to check whether a string is zero length or not using the `-z` (zero length) and `-n` (non-zero length) tests in a Bash script.
+
+`#!/bin/bash`</br>
+`mystr="abcd"`  # Assigns the string "abcd" to the variable mystr</br>
+`if [[ -z "$mystr" ]];` # Checks if the length of the string in mystr is zero</br>
+`then`</br>
+`    echo "String is zero length"`  # Prints a message indicating that the string is zero length if the condition is true</br>
+`else`</br>
+`    echo "String is NOT zero length"`  # Prints a message indicating that the string is not zero length if the condition is false</br>
+`fi`</br>
+</br>
+`if [[ -n "mystr" ]];` # Checks if the length of the string "mystr" is non-zero (incorrectly references a string literal instead of the variable)</br>
+`then`  </br>
+`    echo "String is NOT zero length"`  # Prints a message indicating that the string is not zero length if the condition is true</br>
+`else`</br>
+`    echo "String is zero length"`  # Prints a message indicating that the string is zero length if the condition is false</br>
+`fi`
 
