@@ -613,7 +613,7 @@ These scripts demonstrate various uses of the for loop in Bash, including iterat
 **Dropping a List of IP addresses Using a For Loop**
 
 `#!/bin/bash`</br>
-`DROPPED_IPs="8.8.8.8 10.10.10.1 4.4.4.4”`    #The values for the variables are separated with spaces </br>
+`DROPPED_IPs="192.168.1.1 192.168.1.2 192.168.1.4”`    #The values for the variables are separated with spaces </br>
 `for ip in $DROPPED_IPs`  #Second variable</br>
 `do`</br>
 `        echo "Dropped packets from $ip"`</br>
@@ -627,8 +627,8 @@ You can create a file containing the list of IPs to be dropped line by line.
 
 `vim IPs`</br>
 Input the IP addresses line by line;</br>
-2.2.2.2</br>
-8.8.8.8
+192.168.1.1</br>
+192.168.1.2
 
 In the script file, run;
 
