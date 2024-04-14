@@ -293,7 +293,7 @@ The test command gives you easy access to comparison and file test operators. 
 | test 1 –eq 1 –o 2 –eq 2	| -o is OR: | either can be the same| 
 | test 1 –eq 1 –a 2 –eq 2	| -a is AND: both must be the same| 
 
-**Example; **
+**USE CASES**
 
 The script below will show the content of a file (`cat $1`) as in if and the content of a directory as in the elif (`ls -l $1`), the else statement gives the response for any other argument that’s not in the script. 
 
@@ -455,6 +455,8 @@ Examples:
 `echo $output`: view the content of the variable </br>
 `set | less`: To view all the creates variables and their value
 
+**USE CASES**
+
 **USING COMMAND SUBSTITUTION IN CREATING COMPRESSED ARCHIVES**
 
 You can embed the current date and time in the filename of a compressed archive using command substitution with the `date` command.
@@ -608,7 +610,7 @@ For statement is used to execute a block of codes repeatedly. The for loop in Ba
 
 These scripts demonstrate various uses of the for loop in Bash, including iterating over lists of strings, numbers, and files, as well as iterating with specified increments. 
 
-**LAB:** 
+**USE CASES**
 
 **Dropping a List of IP addresses Using a For Loop**
 
@@ -640,4 +642,38 @@ In the script file, run;
 `done`
 
 
- 
+### WHILE LOOPS
+
+While loops are another way to execute code repeatedly in Bash scripting. They continue to execute a block of code as long as a specified condition is true. In while loops, the semicolon ; is not necessary because the newline character serves as the command separator.
+
+**SYNTAX:**
+
+`While CONDITION`
+`do`
+`	COMMANDS`
+`done`
+
+The set of commands are executed as long as the given condition evaluates to true.
+
+**INFINTE LOOP**
+
+`#!/bin/bash`
+`while [ 1 -eq 1 ]`
+`do`
+`	echo “This is an infinite loop that can be stopped with CTRL + C”`
+`	sleep 2`
+`done`
+
+This script creates an infinite loop because the condition [ 1 -eq 1 ] always evaluates to true (1 is indeed equal to 1). As a result, the code block within the loop will continue to execute indefinitely until it's interrupted, typically by pressing Ctrl + C. This type of loop is useful for situations where you want a process to run continuously until manually stopped. However, it's important to use infinite loops judiciously to avoid consuming excessive system resources.
+
+`#!/bin/bash`
+`while :`
+`do`
+`    echo "This is an infinite loop that can be stopped with CTRL + C"`
+`    sleep 2`
+`done`
+
+This script creates an infinite loop using the while : syntax, where : represents a shell built-in command that always returns true. As a result, the loop continues indefinitely until it's interrupted, typically by pressing Ctrl + C. This type of loop is useful for situations where you want a process to run continuously until manually stopped, such as monitoring or background tasks."
+
+**USE CASES**
+
