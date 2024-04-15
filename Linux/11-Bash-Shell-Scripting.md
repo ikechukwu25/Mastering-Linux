@@ -701,12 +701,12 @@ The `break` statement is a control flow statement used in many programming langu
 
 The `let` command is often used for arithmetic operations in Bash scripts. This Bash script below demonstrates the use of a while loop to iterate over a sequence of numbers from 1 to 50, incrementing by 2 in each iteration. The loop continues as long as the value of the counter variable i is less than or equal to 50. Inside the loop, the current value of i is echoed to the console, and then i is incremented by 2 using the let command.
 
-`#!/bin/bash`
-`i=1` # Initialize the counter variable
-`while [[ $i -le 50 ]]` # Loop while the value of i is less than or equal to 50
-`do`
-`    echo $i` # Output the current value of i
-`    let "i += 2"`  # Increment i by 2 for the next iteration
+`#!/bin/bash` </br>
+`i=1` # Initialize the counter variable </br>
+`while [[ $i -le 50 ]]` # Loop while the value of i is less than or equal to 50 </br>
+`do`</br>
+`    echo $i` # Output the current value of i </br>
+`    let "i += 2"`  # Increment i by 2 for the next iteration </br>
 `done`
 
 * let "i ≤ 50": The `let` command is used to evaluate the condition inside the double quotes. If the result is true (i.e., i is less than 50), the loop will continue; otherwise, it will exit.
