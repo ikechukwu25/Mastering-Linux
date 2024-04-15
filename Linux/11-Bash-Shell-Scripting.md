@@ -695,9 +695,7 @@ If I want to continuously check every 3 seconds if a particular process is runni
 `done`
 ~
 
-The `break` statement is a control flow statement used in many programming languages to terminate the execution of a loop (such as for or while) or switch statement prematurely. When the `break` statement is encountered, the program exits the loop or switch statement immediately, and the control is transferred to the next statement after the loop or switch.
-
-
+The `break` statement is a control flow statement used in many programming languages to terminate the execution of a loop (such as for or while) or switch statement prematurely. When the `break` statement is encountered, the program exits the loop or switch statement immediately, and the control is transferred to the next statement after the loop or switch. </br></br>
 
 The `let` command is often used for arithmetic operations in Bash scripts. This Bash script below demonstrates the use of a while loop to iterate over a sequence of numbers from 1 to 50, incrementing by 2 in each iteration. The loop continues as long as the value of the counter variable i is less than or equal to 50. Inside the loop, the current value of i is echoed to the console, and then i is incremented by 2 using the let command.
 
@@ -716,4 +714,48 @@ The `let` command is often used for arithmetic operations in Bash scripts. This 
   - i: Represents the variable i.
   - +=: Is the assignment operator for addition. It adds the value on the right side of the operator to the variable on the left side.
   - 2: Is the value to be added to the variable i.
- 
+
+
+The below script prompts the user to enter a number specifying how many files they want to create. Then, it uses a `while` loop to create the specified number of files, naming each file with a numeric suffix (e.g., 0.txt, 1.txt, etc.). Finally, it prints a message confirming the number of files created.
+
+`#!/bin/bash`
+`read -p "Enter the number of files to create: " n`  # Prompt the user to enter the number of files to create and store the input in the variable 'n'
+`i=0`  # Initialize a variable 'i' to 0 to serve as a counter
+`while [[ $i -lt $n ]]`  # Start a while loop that continues as long as 'i' is less than 'n'
+`do`
+    `touch "$i.txt"`  # Inside the loop, create a file with the name '$i.txt' using the 'touch' command
+    `((i++))`  # Increment the value of 'i' by 1 using the '((i++))' expression
+`done`
+`echo "$n files were created!"` # After the loop completes, print a message indicating the number of files created
+
+The expression ((i++)) is a shorthand notation for incrementing the value of a variable by 1. Let's break down what each part of this expression does:
+
+- `((...))`: This is an arithmetic expansion in Bash. It allows you to perform arithmetic operations.
+- `i++`: This is the post-increment operator. It increments the value of the variable i by 1 after the current value of i has been used in the expression where it appears.
+
+So, ((i++)) effectively increments the value of i by 1. In the context of the script you provided, this operation is used inside the while loop to increment the loop control variable i after each iteration of the loop. This ensures that the loop will eventually terminate after creating the specified number of files.
+
+## CASE STATEMENT
+
+Case statement allows us to test strings and numbers and is a simpler form of the bash if, elif, else statement. It is not a loop as it does not execute a block of code for n number of times. The case statement on Bash is similar to switch statement in C, C++ or Java.
+
+
+**SYNTAX**
+
+
+`case`
+` EXPRESSION `
+`in`
+`  PATTERN_1)`
+`    STATEMENTS`
+`    ;;`
+`  PATTERN_2)`
+`    STATEMENTS`
+`    ;;`
+`  PATTERN_N)`
+`    STATEMENTS`
+`    ;;`
+`  *)`
+`    STATEMENTS`
+`    ;;`
+`esac`
