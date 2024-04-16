@@ -8,7 +8,7 @@ Docker containers are lightweight, self-contained units that encapsulate all the
 Virtual Machines and containers provide isolation for running applications, they differ in their architecture, resource overhead, portability, and performance characteristics. The choice between VMs and containers depends on factors such as application requirements, resource constraints, and deployment environments.
 
 
-**DIFFERENCE BETWEEN A VIRTUAL MACHINE AND A CONTAINER**
+**DIFFERENCE BETWEEN A VIRTUAL MACHINE AND A CONTAINER** </br></br>
 ￼
 <img width="944" alt="Pasted Graphic 1" src="https://github.com/ikechukwu25/Mastering-Linux/assets/64879420/06cf3a02-0b29-46b9-bc80-412893402dfa">
 
