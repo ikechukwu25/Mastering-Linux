@@ -37,13 +37,12 @@ N/B: </br>
 
 
 1. `*/3 10 1 12 *`: Specifies the timing for the command:
-
 - `*/3`: Indicates that the command will run every 3 minutes.
 - `10`: The hour (10:00 AM).
 - `1`: The day of the month (1st day).
 - `12`: The month (December).
 - `*`: The day of the week (any day).
-- `date >> ~/today.txt`: The command to be executed. It appends the output of the date command (current date and time) to the file today.txt in the user's home directory (~).
+- `date >> ~/today.txt`: The command to be executed. It appends the output of the date command (current date and time) to the file today.txt in the user's home directory (~).</br></br>
 
 <img width="813" alt="image" src="https://github.com/ikechukwu25/Mastering-Linux/assets/64879420/fdb0ff83-6a90-47f6-a61c-1194fa98a407">
 </br></br>
@@ -55,8 +54,7 @@ N/B: </br>
 * Day of Month Field (`\*`): The asterisk (*) in this field means "every day of the month." It doesn't restrict the cron job based on the day of the month.
 * Month Field (`*/3`): This field means "every month." It doesn't restrict the cron job based on the month. The job is scheduled to run every 3 months. The */3 means "every 3 months."
 * Day of Week Field (`*`): 1-5: The day of the week field, meaning Monday through Friday (1 is Monday and 5 is Friday).
-* Command (`/root/backup.sh`): The command to be executed is /root/backup.sh.
-
+* Command (`/root/backup.sh`): The command to be executed is /root/backup.sh. </br></br>
 This cron job will append the current date and time to the file today.txt in the user's home directory every 3 minutes past 10:00 AM on the 1st day of December every year.
 
 
@@ -248,14 +246,16 @@ The `fdisk` command is useful for identifying and manipulating disk storage re
 
 #### GETTING SYSTEM HARDWARE INFORMATION (lshw, lscpu, lsusb, lspci, dmidecode, hdparm) (must be run as root)
 
-1. `lshw` is a command-line utility in Unix-like operating systems that provides detailed information about the hardware configuration of the system. The name "lshw" stands for "list hardware." It is a versatile tool that can display information about various hardware components, including the processor, memory, disk drives, network interfaces, and more. It’s always advisable to pipe it to less as the output is a lot. Below are some common usage:
+1. `lshw` is a command-line utility in Unix-like operating systems that provides detailed information about the hardware configuration of the system. The name "lshw" stands for "list hardware." It is a versatile tool that can display information about various hardware components, including the processor, memory, disk drives, network interfaces, and more. It’s always advisable to pipe it to less as the output is a lot. </br></br>
+In virtualised environments, the info displayed by these commands (`lwhw`, `lscpu`, `lsusb`, `lspci`, `dmidecode`, `hdparm`) reflects the configuration of the guest operating system which is different from the physical host system. I.E when you run commands like `lwhw`, `lscpu`, etc., within a virtual machine, the information they provide reflects the virtualized hardware configuration of that specific virtual machine, and it may not accurately represent the physical hardware of the host machine running the virtualization software.</br></br>
+Below are some common usage:
 - `lshw -short`: This option provides a summary of the hardware configuration in a concise format.
 - `lshw -html | less`
   * `lshw`: This is the command that lists hardware information on a Linux system.
   * `-html`: This option specifies the output format as HTML.
   * `|`: This is the pipe symbol, which is used to redirect the output of one command as input to another.
-  * `less`: This is a pager program that allows you to view text files or command output one screen at a time.
-In virtualised environments, the info displayed by these commands (`lwhw`, `lscpu`, `lsusb`, `lspci`, `dmidecode`, `hdparm`) reflects the configuration of the guest operating system which is different from the physical host system. I.E when you run commands like `lwhw`, `lscpu`, etc., within a virtual machine, the information they provide reflects the virtualized hardware configuration of that specific virtual machine, and it may not accurately represent the physical hardware of the host machine running the virtualization software.
+  * `less`: This is a pager program that allows you to view text files or command output one screen at a time.</br></br>
+
 
 2. `inxi` is a command-line tool that provides a comprehensive and easily readable system information summary for Unix-like operating systems, particularly Linux. It displays details about the hardware, system, and network. Below are some common usage:
 - `sudo apt install infix`: To install the command as it is not pre-installed in Linux.
@@ -265,11 +265,13 @@ In virtualised environments, the info displayed by these commands (`lwhw`, `lscp
   * `-x`: This option adds extra details to the output, providing even more information.
 
 
-3. The `lscpu` command is a useful tool for retrieving information about the CPU and its architecture on Unix-like operating systems, particularly Linux. Below are some common usage:
+3. The `lscpu` command is a useful tool for retrieving information about the CPU and its architecture on Unix-like operating systems, particularly Linux.</br></br>
+N/B: `lscpu` = `lshw -C cpu` which means that you can also use the `lshw` command to show information about the CPU but running `lshw -C cpu` which provides almost the same information with the `lscpu` command.</br>
+Below are some common usage:
 - `lscpu`: Displays info about the CPU and its architecture. 
 - `lscpu -J`: displays output in JSON format. 
 - `lscpu | grep -i MHz`: search for the unit of the speed.
-N/B: `lscpu` = `lshw -C cpu` which means that you can also use the `lshw` command to show information about the CPU but running `lshw -C cpu` which provides almost the same information with the `lscpu` command.
+
 
 4. The `dmidecode` command shows all memory modules and their capacity. It provides information about the system's hardware as described in the System Management BIOS (SMBIOS) and Desktop Management Interface (DMI) specifications.
 - `dmidecode -t memory`: Displays information about memory modules installed on the system.
@@ -324,9 +326,9 @@ In Linux, storage devices, including USB sticks, are logically represented as sp
 In the above command, /home/ikechukwu/file. Is the mount point.
 - `sudo mount -o ro /dev/sdb1 /home/ikechukwu/file`: The `-o ro` option is used to specify that the filesystem should be mounted as read-only. 
 - `sudo mount -o rw,remount /dev/sr0 /home/ikechukwu/Desktop/usb`: This command will remount the previous command from read only to read and write. The `-o` loop option in Linux is used with the `mount` command to associate a regular file with a loop device. This is commonly used when mounting disk images, such as ISO files.
-- `sudo fdisk -l` : used to list information about all the available disk drives and their partitions on your system.
+- `sudo fdisk -l`: used to list information about all the available disk drives and their partitions on your system.
   - `fdisk`: It is a command-line utility for disk partitioning. 
-- `lsblk` : This command will provide a hierarchical view of the block devices attached to your system, along with information about their partitions and mount points. You can run the `dmesg` and `lsblk` (lists all block devices) commands to find the name of the device.
+- `lsblk`: This command will provide a hierarchical view of the block devices attached to your system, along with information about their partitions and mount points. You can run the `dmesg` and `lsblk` (lists all block devices) commands to find the name of the device.
 
 **Unmounting**
 
@@ -367,17 +369,17 @@ A "block" refers to a small unit of storage, and a "partition" is a section of a
 
 Examples:
 
-1. `sudo if=/dev/sdb of=/home/ikechukwu/backup-usb.img status=progress`: This command is used for cloning the device file you want to create an image of the entire /dev/sdb device and save it as backup-usb.img in the /home/ikechukwu/ directory. The `status=progress` option is included to show the progress of the `dd` command, which can be helpful for larger operations. Breakdown:
+1. `sudo if=/dev/sdb of=/home/ikechukwu/backup-usb.img status=progress`: This command is used for cloning the device file you want to create an image of the entire /dev/sdb device and save it as backup-usb.img in the /home/ikechukwu/ directory. The `status=progress` option is included to show the progress of the `dd` command, which can be helpful for larger operations.</br></br>
+After the command completes, you should have a file named backup-usb.img in the /home/ikechukwu/ directory, which is an image of your USB drive.</br></br>
+The `dd` command works with blocks and cloning the device by copying everything including the empty and occupied space. If you have a partition of 10GB and 9 are free, the dd command will copy 10GB to the destination which makes it different from the `cp` command.</br></br>
+Breakdown:
 * `sudo`: Runs the command with superuser privileges, allowing it to access the specified device file and write to the specified output file.
 * `dd`: The command for copying and converting data.
 * `if=/dev/sdb`: Specifies the input file, which in this case is /dev/sdb, representing the USB drive you want to clone.
 * `of=/home/ikechukwu/backup-usb.img`: Specifies the output file, which is the image file that will be created. It will be named backup-usb.img and will be saved in the /home/ikechukwu/ directory.
 * `status=progress`: This option shows the progress of the `dd` command as it runs, indicating how much data has been copied and how much is remaining. This can be particularly helpful for larger operations to track the progress of the cloning process. </br>
-It's important to note that the `status=progress` option requires the use of the GNU dd command from Coreutils version 8.24 or above to function properly.
+It's important to note that the `status=progress` option requires the use of the GNU dd command from Coreutils version 8.24 or above to function properly.</br></br>
 
-After the command completes, you should have a file named backup-usb.img in the /home/ikechukwu/ directory, which is an image of your USB drive.
-
-The `dd` command works with blocks and cloning the device by copying everything including the empty and occupied space. If you have a partition of 10gb and 9 are free, the dd command will copy 10GB to the destination which makes it different from the `cp` command.
 
 2. `sudo dd if=/home/ikechukwu/backup-usb.img of=/dev/sdb status=progress conv=sync`: This will write the contents of a disk image (backup.img) to a block device (/dev/sdb). Breakdown:
 * `sudo`: This command is used to execute the subsequent command with elevated privileges.
@@ -385,10 +387,9 @@ The `dd` command works with blocks and cloning the device by copying everything 
 * `if=/home/ikechukwu/backup.img`: This specifies the input file (source), which is the disk image located at /home/ikechukwu/backup.img.
 * `of=/dev/sdb`: This specifies the output file (destination), which is the block device /dev/sdb.
 * `status=progress`: This option shows the progress of the dd command, indicating how much data has been transferred.
-* `conv=sync`: This option ensures that the data is synchronized after each write operation, making sure that all data is written to the destination before completing.
+* `conv=sync`: This option ensures that the data is synchronized after each write operation, making sure that all data is written to the destination before completing.</br></br>
 
-3. To clone the partition where the root file system is mounted to a USB stick partition, follow these steps:
-
+3. To clone the partition where the root file system is mounted to a USB stick partition, follow these steps:</br></br>
 - Confirm the name of the partition where the root file system is mounted using either `fdisk -l` or `df -h` command.
 - Once you have identified the source partition (let's assume it's /dev/sda2) and the destination partition on the USB stick (let's assume it's /dev/sdb), use the following command to clone the partition:
   - `sudo dd if=/dev/sda2 of=/dev/sdb status=progress`
@@ -399,6 +400,7 @@ The `dd` command works with blocks and cloning the device by copying everything 
     - `status=progress`: Option to display the progress of the `dd` command, showing how much data has been transferred.
 - Wait for the cloning process to complete. Depending on the size of the partition and the speed of the devices involved, this process may take some time.
 - Once the cloning process is finished, you can safely remove the USB stick and use it as needed. Make sure to eject it properly before removing it to avoid data corruption.
+  
 
 #### MBR
 
