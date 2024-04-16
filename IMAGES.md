@@ -5,3 +5,4 @@ These are the images that were utilized in this documentation.
 ![image](https://github.com/ikechukwu25/Mastering-Linux/assets/64879420/fdeb3fbb-5bec-4926-9a6c-8ef006da6dca)
 <img width="813" alt="image" src="https://github.com/ikechukwu25/Mastering-Linux/assets/64879420/fdb0ff83-6a90-47f6-a61c-1194fa98a407">
 <img width="799" alt="image" src="https://github.com/ikechukwu25/Mastering-Linux/assets/64879420/159a5029-a111-4433-8fa3-91a3bb0136d5">
+<img width="944" alt="Pasted Graphic 1" src="https://github.com/ikechukwu25/Mastering-Linux/assets/64879420/894ac4f1-ec93-4bc4-abea-42a65019181d">
