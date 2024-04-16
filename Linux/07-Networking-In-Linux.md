@@ -1,5 +1,3 @@
-![image](https://github.com/ikechukwu25/Mastering-Linux/assets/64879420/744abbeb-edf3-4433-9401-6ae7db6a2843)# NETWORKING IN LINUX
-
 Networking in Linux encompasses a wide array of activities, ranging from configuring basic network settings to managing network interfaces. It also involves establishing connections, and troubleshooting network issues. 
 
 ### NETWORK INTERFACES 
@@ -339,7 +337,8 @@ If you cannot connect to the remote server,
 - Try restarting the service by running - `systemctl restart ssh`
 - If on the client part you get the below error response when trying to connect the authenticator, you should double-check to confirm you’re connecting to the right server. Also, you can access the host keys via `cat .ssh/known_hosts` file and remove the server’s key `vi .ssh/known_hosts`. When connecting to the server, the new messages about the correct server will be displayed. 
 
-￼<img width="862" alt="Add correct host key in homeandrei sshknown hosts to get rid of this message" src="https://github.com/ikechukwu25/Mastering-Linux/assets/64879420/1667126f-4436-4669-ac0c-0fd0991a993d">
+<img width="862" alt="Add correct host key in homeandrei sshknown hosts to get rid of this message" src="https://github.com/ikechukwu25/Mastering-Linux/assets/64879420/77f2027c-76ed-4664-a40b-bc339dc7e2ec">
+
 
 - If the ssh connection is still not working check if the port 22 on which the server license is opened. From the client, scan port 22 using a command like `telnet` or `nmap` (install telnet first - `sudo apt install telnet`). Afterwards, run `telnet IP port number` (22) to connect to the server. Or install `nmap` and run `nmap -p 22 IP`
 - Check if there is a firewall that is dropping the packets by running sudo `iptables -vnL`. If there is a firewall issue, then Ubuntu could have "ufw". To configure the ufw file to allow incoming ssh connections, use `sudo ufw allow ssh`
