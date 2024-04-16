@@ -10,7 +10,7 @@ Bash shell scripting involves writing scripts in the Bash (Bourne Again Shell) l
 - File Format: The `.sh` file extension commonly signifies a shell script, serving as a human-readable hint rather than influencing system behavior. Linux disregards file extensions.
 - Execution: After creating a shell script, you need to make it executable using the `chmod` command:
   -  `chmod +x script.sh`: This command grants the user execute permission for the script named script.sh. Without execute permission, the script cannot be run as an executable file.
-  -  `./script.sh`: This command executes the script named script.sh. The ./ prefix indicates that the script is located in the current directory. If the script is located in a different directory, you would need to specify the path to the script instead of just ./.
+  -  `./script.sh`: This command executes the script named script.sh. The `./` prefix indicates that the script is located in the current directory. If the script is located in a different directory, you would need to specify the path to the script instead of just ./.
 
 
 ## BASH SHELL SCRIPTING
@@ -812,12 +812,10 @@ This Bash script prompts the user to enter a day of the week. Based on the input
 `                 echo "The signal number $1 will not be delivered"`</br>
 `esac`
 
-
-
 The script is designed to be run with two command-line arguments: a signal number and a process ID. It then uses a case statement to determine the corresponding signal to send to the specified process. If the number of arguments is not exactly two, it provides a usage message and exits.
 
 
-FUNCTIONS IN BASH
+### FUNCTIONS IN BASH
 
 We use functions to organise our codes in blocks that can be later reused without the need to rewrites copy and paste that block of code. 
 Functions are useful for organizing code, improving reusability, and making scripts more modular.
@@ -848,8 +846,8 @@ Use $1 for the first argument of the function, and $2 for the second.
 `}`</br>
 `function lines_in_file () {`  # Function to count lines containing a pattern in a file </br>
 `        grep -c "$1" "$2"` </br>
-`}` </br></br>
-
+`}` </br>
+</br>
 `create_file new_me.txt life.txt`  # Create files and set permissions</br>
 `n=$(lines_in_file "usb" "/var/log/dmesg")`  # Count lines containing "usb" in /var/log/dmesg and store the result in n</br>
 `echo $n`  # Print the result
@@ -867,5 +865,35 @@ Use $1 for the first argument of the function, and $2 for the second.
 * It then calls lines_in_file with the pattern "usb" and the file "/var/log/dmesg" and stores the result in the variable n.
 * Finally, it echoes the value of n, which represents the number of lines containing "usb" in the specified log file.
 
-When you run this script, it will create two files, "new_me.txt" and "life.txt," in the current directory, and set their permissions to allow only the owner to read, write, and execute. It also print the number of lines in "/var/log/dmesg" that contain the pattern "USB."
+When you run this script, it will create two files, "new_me.txt" and "life.txt," in the current directory, and set their permissions to allow only the owner to read, write, and execute. It also prints the number of lines in "/var/log/dmesg" that contain the pattern "USB."
+
+
+### VARIABLE SCOPE IN FUNCTIONS
+
+Scope refers to each part of a script where a variable is visible. Variable scope determines where a variable is accessible and modifiable within a script or function. There are two primary types of variable scope: Global scope and Local scope.
+
+* Variables declared with the local keyword inside a function have local scope.
+* Local variables are accessible and modifiable only within the function where they are declared.
+* They do not affect global variables with the same name.
+
+`#!/bin/bash` </br>
+`var1="AA" - - - - global var` </br>
+`var2="BB" - - - - global var` </br>
+</br>
+`function func1 () {`</br>
+`        var1="CC" - - - - global var`</br>
+`        local var2="DD" - - - - local var`</br>
+`        echo "Inside func1: var1= $var1 var2=$var2"`</br>
+`}`</br>
+</br>
+`func1`</br>
+`echo "After calling func1: var1: $var1 var2: $var2"`
+
+* var1 and var2 are defined in the global scope with values "AA" and "BB," respectively.
+    * The func1 function is defined, and within the function:
+    * var1 is reassigned to a new value "CC" in the global scope.
+    * var2 is defined as a local variable within the function with the value "DD."
+    * The function prints the values of var1 and var2 within its local scope.
+* The function func1 is called.
+* After calling the function, the script prints the values of var1 and var2 in the global scope.
 
