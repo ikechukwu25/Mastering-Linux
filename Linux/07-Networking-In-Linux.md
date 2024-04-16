@@ -1,4 +1,4 @@
-# NETWORKING IN LINUX
+![image](https://github.com/ikechukwu25/Mastering-Linux/assets/64879420/744abbeb-edf3-4433-9401-6ae7db6a2843)# NETWORKING IN LINUX
 
 Networking in Linux encompasses a wide array of activities, ranging from configuring basic network settings to managing network interfaces. It also involves establishing connections, and troubleshooting network issues. 
 
@@ -7,26 +7,19 @@ Networking in Linux encompasses a wide array of activities, ranging from configu
 Understanding and managing network interfaces is essential for configuring and troubleshooting network connections in Linux systems. 
 To gather information about network interfaces in Linux, two commonly used commands are `ifconfig` and `ip`.
 
-1. `ifconfig` 
-
+1. `ifconfig` </br>
 `ifconfig -a` = Displays information about all network interfaces, including both enabled and disabled ones.
 Note: `ifconfig` is part of the net-tools package, which may need to be installed separately (`sudo apt install net-tools` on Debian-based systems).
 
-2. `ip`
-
-`ip address show` = Displays detailed information about network interfaces.
-
-Both `ifconfig` and `ip address show` provide similar output, typically listing interfaces such as enp0s3 (Ethernet interface) and lo (Loopback interface).
-
+2. `ip`</br>
+`ip address show` = Displays detailed information about network interfaces. </br>
+Both `ifconfig` and `ip address show` provide similar output, typically listing interfaces such as enp0s3 (Ethernet interface) and lo (Loopback interface).</br>
 To obtain specific information about a particular interface, you can use commands like `ifconfig <interface-name>` or `ip address show dev <interface-name>`.
 For example, `ifconfig enp0s3` or `ip address show dev enp0s3`
 
-3. `route`
-
-The `route` command is primarily used to display and manipulate the IP routing table on Linux systems, which includes information about network routes and gateways. It provides details about how network packets should be forwarded to their destinations.
-
-To ensure proper communication on the internet, a system requires a default gateway, which serves as the exit point for traffic leaving the local network. The default gateway is typically configured as part of the network settings and is crucial for routing packets to destinations outside the local subnet.
-
+3. `route`</br>
+The `route` command is primarily used to display and manipulate the IP routing table on Linux systems, which includes information about network routes and gateways. It provides details about how network packets should be forwarded to their destinations.</br>
+To ensure proper communication on the internet, a system requires a default gateway, which serves as the exit point for traffic leaving the local network. The default gateway is typically configured as part of the network settings and is crucial for routing packets to destinations outside the local subnet.</br>
 The `route` command, available in the net-tools package, is commonly used to display and manipulate the IP routing table on Linux systems. When used without options, the `route` command provides a human-readable output showing the routing table, including the default gateway.
 
 Here's an example of the output from the route command:
@@ -216,39 +209,24 @@ The DNS resolution system will use the first name server for an attempted lookup
 The `dig` and `host` commands are both used for DNS-related tasks but have slightly different functionalities and use cases. Collectively, these commands are used for DNS querying, resolving hostnames to IP addresses, and retrieving detailed DNS information about a domain. </br></br>
 
 
-1. **THE `dig` COMMAND**
-
-There may be times when you need to test the functionality of the DNS server that your host is using. One way of doing this is to use the `dig` command, which performs queries on the DNS server to determine if the information needed is available on the server.
-
-In the following example, the `dig` command is used to determine the IP address of the example.com host:
-
-`root@ubuntu-22-04-3:~# dig example.com`
-
-If the DNS server doesn't have the requested information, it is configured to ask other DNS servers. If none of them have the requested information, an error message displays.
-
-To resolve a fully-qualified domain name (FQDN), you simply provide the domain name as an argument to the `dig` command. 
-
-`dig example.com`
-
-And you can use the `dig` command to resolve the IP address 192.168.1.2 to a hostname:
-
+1. **THE `dig` COMMAND**</br>
+There may be times when you need to test the functionality of the DNS server that your host is using. One way of doing this is to use the `dig` command, which performs queries on the DNS server to determine if the information needed is available on the server.</br>
+In the following example, the `dig` command is used to determine the IP address of the example.com host:</br>
+`root@ubuntu-22-04-3:~# dig example.com`</br>
+If the DNS server doesn't have the requested information, it is configured to ask other DNS servers. If none of them have the requested information, an error message displays.</br>
+To resolve a fully-qualified domain name (FQDN), you simply provide the domain name as an argument to the `dig` command. </br>
+`dig example.com`</br>
+And you can use the `dig` command to resolve the IP address 192.168.1.2 to a hostname:</br>
 `dig -x 192.168.1.2` = The `-x` option tells dig to perform a reverse DNS lookup.</br></br> 
 
 
-2. **THE `host` COMMAND**
-
-In its simplest form, the `host` command works with DNS to associate a hostname with an IP address.
-
-`root@ubuntu-22-04-3:~# host example.com`   
-
-The `host` command can also be used in reverse if an IP address is known, but the domain name is not.
-
-`root@ubuntu-22-04-3:~# host 192.168.1.2`
-
-A comprehensive list of DNS information regarding example.com can be found using the `-a` all option:
-
-`root@ubuntu-22-04-3:~# host -a example.com`      
-
+2. **THE `host` COMMAND**</br>
+In its simplest form, the `host` command works with DNS to associate a hostname with an IP address.</br>
+`root@ubuntu-22-04-3:~# host example.com`   </br>
+The `host` command can also be used in reverse if an IP address is known, but the domain name is not.</br>
+`root@ubuntu-22-04-3:~# host 192.168.1.2`</br>
+A comprehensive list of DNS information regarding example.com can be found using the `-a` all option:</br>
+`root@ubuntu-22-04-3:~# host -a example.com`      </br>
 Sometimes, a system may be configured to not respond to ping requests. Therefore, the lack of a response to a `ping` command does not mean a system is not connected to a network. A quick response to a `ping` command does indicate, however, that a system is connected to a network.
 
 
@@ -495,25 +473,18 @@ The wget command is a powerful tool for downloading files from the internet. Her
 
 Checking for listening ports on a system is crucial for network administration and security monitoring. `netstat`, `ss`, and `lsof` are commonly used to display open ports on the current system or locate hosts. Here are several methods and tools commonly used for this purpose:
 
-1. **The `netstat` command** (now “ss”)
-
-The `netstat` command is a powerful tool that provides a large amount of network information. It can be used to display information about network connections as well as display the routing table similar to the `route` command. To display statistics regarding network traffic, use the `-i` option to the `netstat` command.
-
-- `root@localhost:~# netstat -i`</br>                                                 
+1. **The `netstat` command** (now “ss”)</br></br>
+The `netstat` command is a powerful tool that provides a large amount of network information. It can be used to display information about network connections as well as display the routing table similar to the `route` command. To display statistics regarding network traffic, use the `-i` option to the `netstat` command.</br></br>
+`root@localhost:~# netstat -i`</br>                                                 
 `Kernel Interface table`</br>                                                        
 `Iface   MTU Met   RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR Flg`</br>
 `eth0       1500 0       137      0      4 0        12      0      0      0 BMRU`</br>
-`lo        65536 0        18      0      0 0        18      0      0      0 LRU`
-
-The most important statistics from the output above are the TX-OK and TX-ERR. A high percentage of TX-ERR may indicate a problem on the network, such as too much network traffic.
-
-To use the `netstat` command to display routing information, use the `-r` option:
-
-The `netstat` command is also commonly used to display open ports. A port is a unique number that is associated with a service provided by a host. If the port is open, then the service is available for other hosts.
-
-To see a list of all currently open ports, use the following command:
-
-- `root@ubuntu-22-04-3:~# netstat -tln`</br>
+`lo        65536 0        18      0      0 0        18      0      0      0 LRU`</br></br>
+The most important statistics from the output above are the TX-OK and TX-ERR. A high percentage of TX-ERR may indicate a problem on the network, such as too much network traffic.</br></br>
+To use the `netstat` command to display routing information, use the `-r` option:</br>
+The `netstat` command is also commonly used to display open ports. A port is a unique number that is associated with a service provided by a host. If the port is open, then the service is available for other hosts.</br>
+To see a list of all currently open ports, use the following command:</br></br>
+`root@ubuntu-22-04-3:~# netstat -tln`</br>
 `Active Internet connections (only servers)`</br>
 `Proto Recv-Q Send-Q Local Address           Foreign Address         State` </br>
 `tcp        0      0 192.168.1.2:53          0.0.0.0:*               LISTEN`</br>
@@ -522,34 +493,33 @@ To see a list of all currently open ports, use the following command:
 `tcp        0      0 127.0.0.1:953           0.0.0.0:*               LISTEN`</br>
 `tcp6       0      0 :::53                   :::*                    LISTEN`</br>
 `tcp6       0      0 :::22                  :::*                    LISTEN`</br>
-`tcp6       0      0 ::1:953                 :::*                    LISTEN`
-
-In the previous example, `-t` stands for TCP, `-l` stands for listening (which ports are listening), and `-n` stands for show numbers, not names.
-
-Sometimes showing the names can be more useful. This can be achieved by dropping the `-n` option
-
+`tcp6       0      0 ::1:953                 :::*                    LISTEN`</br></br>
+In the previous example, `-t` stands for TCP, `-l` stands for listening (which ports are listening), and `-n` stands for show numbers, not names.</br>
+Sometimes showing the names can be more useful. This can be achieved by dropping the `-n` option</br>
 This program is obsolete. The replacement for `netstat` is `ss`.</br> 
 The replacement for `netstat -r` is `ip route`. </br>
 The replacement for `netstat -i` is `ip -s link`. </br>
-The replacement for `netstat -g` is `ip maddr`.
-
-- `netstat -tupan` = This command shows all open ports. 
-
+The replacement for `netstat -g` is `ip maddr`.</br></br>
+`netstat -tupan` = This command shows all open ports. 
 	- `-t` = shows TCP ports </br>
 	- `-u` = shows UDP ports </br>
 	- `-p` = Show the process ID and name associated with each socket. </br>
 	- `-a` = Display all sockets (both listening and non-listening). </br>
 	- `-n` =  Show numerical addresses and port numbers instead of resolving them to hostnames and services. 
+</br></br>
+`sudo netstat -tupan | grep :22 = searches for all port : 22` = This command searches for all port : 22 </br></br>
 
-`sudo netstat -tupan | grep :22 = searches for all port : 22` = This command searches for all port : 22 
 
-
-2. **The `ss` Command**
-
-The `ss` command is designed to show socket statistics and supports all the major packet and socket types. Meant to be a replacement for and to be similar in function to
-the `netstat` command, it also shows a lot more information and has more features.
-
-When you run `ss`, the output is very similar to the output of the `netstat` command with no options. The columns above are:
+2. **The `ss` Command**</br></br>
+The `ss` command is designed to show socket statistics and supports all the major packet and socket types. Meant to be a replacement for and to be similar in function to the `netstat` command, it also shows a lot more information and has more features.</br></br>
+The format of the output of the `ss` command can change dramatically, given the options specified, such as the use of the `-s` option, which displays mostly the types of sockets, statistics about their existence, and numbers of actual packets sent and received via each socket type.</br></br>
+**TCP**
+Local Address: This is the local IP address and port number. In this case, it is "0.0.0.0:22." The IP address "0.0.0.0" means that the server is listening on all available network interfaces, and ":22" is the port number.</br>
+Foreign Address: For a listening socket, the foreign address is usually "0.0.0.0:\*," indicating that it can accept connections from any remote IP address on any port.</br></br>
+**UDP**
+Local Address: This is the local IP address and port number. In this case, ":::5353". The ":::" notation represents all available IPv6 addresses on the system, and "5353" is the port number.</br>
+Foreign Address: For a listening socket, the foreign address is usually ":::*," indicating that it can accept connections from any remote IPv6 address on any port. </br></br>
+When you run `ss`, the output is very similar to the output of the `netstat` command with no options. The columns above are: 
 
 | Field | Description |
 |-----|-----|
@@ -560,19 +530,8 @@ When you run `ss`, the output is very similar to the output of the `netstat` c
 | Local Address	| The address and port of the local host’s portion of the connection |
 | Peer Address	| The address and port of the remote host’s portion of the connection |
 
-The format of the output of the `ss` command can change dramatically, given the options specified, such as the use of the `-s` option, which displays mostly the types of sockets, statistics about their existence, and numbers of actual packets sent and received via each socket type.
-
-**TCP**
-Local Address: This is the local IP address and port number. In this case, it is "0.0.0.0:22." The IP address "0.0.0.0" means that the server is listening on all available network interfaces, and ":22" is the port number.
-Foreign Address: For a listening socket, the foreign address is usually "0.0.0.0:*," indicating that it can accept connections from any remote IP address on any port.
-
-**UDP**
-Local Address: This is the local IP address and port number. In this case, ":::5353". The ":::" notation represents all available IPv6 addresses on the system, and "5353" is the port number.
-Foreign Address: For a listening socket, the foreign address is usually ":::*," indicating that it can accept connections from any remote IPv6 address on any port.
-
-
-3. **The `lsof` command**
-
+</br></br>
+3. **The `lsof` command**</br></br>
 - `lsof` (List Open Files) is a command-line utility used to display information about files and processes currently open or in use by the system.
 - `sudo ls -u username` = This command lists files and processes that are currently open by the user. 
 - `lsof -u ^ikechukwu` = The negation symbol can be used to see all files opened except a specific user.
@@ -580,19 +539,15 @@ Foreign Address: For a listening socket, the foreign address is usually ":::*," 
 	* `-iTCP`: Specifies that the information should be related to the TCP (Internet protocol) family.
 	* `-sTCP:LISTEN`: Filters the results to show only those connections in the LISTEN state (i.e., processes that are actively listening for incoming connections).
 	* `-nP`: Prevents `lsof` from resolving hostnames (numeric output) and from converting port numbers to service names (numeric port output).
-- `sudo lsof -iTCP:22 -sTCP:LISTEN -nP` = This command is used to identify which file has opened a specific port (e.g., port 22 in this example).
+- `sudo lsof -iTCP:22 -sTCP:LISTEN -nP` = This command is used to identify which file has opened a specific port (e.g., port 22 in this example).</br></br>
 
 
-4. **The `telnet` command**
-
-To check what ports are open in another system, scan the ports on that system using `telnet` command. For example; 
-
-- `telnet IP Port number` - `telnet 192.168.64.1 22` = If the connection is successful, you'll typically see a blank screen or a message indicating that the connection has been established. If the connection fails, you may receive an error message indicating the reason for the failure.
-
-To quit telnet, press "Ctrl + ]" and then type quit.
+4. **The `telnet` command**</br></br>
+To check what ports are open in another system, scan the ports on that system using `telnet` command. For example; </br>
+- `telnet IP Port number` - `telnet 192.168.64.1 22` = If the connection is successful, you'll typically see a blank screen or a message indicating that the connection has been established. If the connection fails, you may receive an error message indicating the reason for the failure.</br></br>
+To quit telnet, press "Ctrl + ]" and then type quit.</br></br>
 
 
-5. **The `nmap` command**
-
+5. **The `nmap` command**</br></br>
 For professional port scanning, nmap is a widely used tool. Install it using `sudo apt install nmap` and use commands like `nmap -p 80 linux.com` to see the status of a specific port.
 Please see for more information on the `nmap` command.
