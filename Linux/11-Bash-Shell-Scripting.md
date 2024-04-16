@@ -742,20 +742,130 @@ Case statement allows us to test strings and numbers and is a simpler form of th
 
 **SYNTAX**
 
-
-`case`
-` EXPRESSION `
-`in`
-`  PATTERN_1)`
-`    STATEMENTS`
-`    ;;`
-`  PATTERN_2)`
-`    STATEMENTS`
-`    ;;`
-`  PATTERN_N)`
-`    STATEMENTS`
-`    ;;`
-`  *)`
-`    STATEMENTS`
-`    ;;`
+`case` </br>
+` EXPRESSION` </br> 
+`in` </br>
+`  PATTERN_1)` </br>
+`    STATEMENTS` </br>
+`    ;;` </br>
+`  PATTERN_2)` </br>
+`    STATEMENTS` </br>
+`    ;;` </br>
+`  PATTERN_N)` </br>
+`    STATEMENTS`</br>
+`    ;;` </br>
+`  *)` </br>
+`    STATEMENTS` </br>
+`    ;;` </br>
 `esac`
+
+
+**USE CASE**
+
+`#!/bin/bash` </br>
+`read -p "Enter a day of the week: " day` </br>
+`case $day in` </br>  # Start of the case statement, evaluating the value of 'day'
+`    "Monday")` </br>
+`        echo "It's the start of the week."` </br>
+`        ;;` </br> # End of the case block
+`    "Tuesday" | "Wednesday" | "Thursday")` </br> # If 'day' equals "Tuesday", "Wednesday", or "Thursday"
+`        echo "It's a weekday."` </br>
+`        ;;` </br> # End of the case block
+`    "Friday")` </br>
+`        echo "TGIF! It's Friday."` </br>
+`        ;;` </br> # End of the case block
+`    "Saturday" | "Sunday")` </br>
+`        echo "It's the weekend."` </br>
+`        ;;`</br> # End of the case block
+`    *)`</br>
+`        echo "Invalid day entered."`</br>
+`        ;;` </br> # End of the case block
+`esac` 
+
+This Bash script prompts the user to enter a day of the week. Based on the input provided by the user, it uses a case statement to determine the day of the week and then prints out a corresponding message.
+
+* The user is prompted to enter a day of the week (`read -p "Enter a day of the week: " day`).
+* The `case` statement evaluates the value of the variable $day against various patterns specified after each ).
+* The `;;` syntax is used to terminate each pattern block. While the `*)` pattern serves as a catch-all or default case, similar to the default case in other languages. </br></br>
+
+
+`#!/bin/bash`</br>
+`if [[ $# -ne 2 ]]` # Code to execute if the number of arguments is not equal to 2 </br>
+`then`</br>
+`         echo "Run the script with two arguments: Signal and PID"`</br>
+`         exit` # Exit the script if arguments are incorrect</br> 
+`fi`</br></br>
+`case "$1" in`  # Start of the case statement to determine signal based on argument 1 </br>
+`         1)`</br>
+`                echo "Sending the SIGHUP signal to $2"`</br>
+`                 kill -SIGHUP $2` # Send SIGHUP signal to process specified by argument 2 </br>
+`                 ;;`</br>
+`         2)`</br>
+`                 echo "Sending the SIGINT signal to $2"`</br>
+`                 kill -SIGINT $2` # Send SIGINT signal to process specified by argument 2 </br>
+`                 ;;`</br>
+`         15)`</br>
+`                 echo "Sending the SIGTERM signal to $2"`</br>
+`                 kill -SIGTERM $2` # Send SIGTERM signal to process specified by argument 2</br>
+`                 ;;`</br>
+`         *)`</br>
+`                 echo "The signal number $1 will not be delivered"`</br>
+`esac`
+
+
+
+The script is designed to be run with two command-line arguments: a signal number and a process ID. It then uses a case statement to determine the corresponding signal to send to the specified process. If the number of arguments is not exactly two, it provides a usage message and exits.
+
+
+FUNCTIONS IN BASH
+
+We use functions to organise our codes in blocks that can be later reused without the need to rewrites copy and paste that block of code. 
+Functions are useful for organizing code, improving reusability, and making scripts more modular.
+
+`#!/bin/bash` </br>
+\# Function definition </br>
+`function my_function() {` </br>
+    # Commands to be executed </br>
+`    echo "Hello from the function!"` </br>
+`}` </br>
+\# Function invocation </br>
+`my_function`
+
+**DO NOT INPUT ANY DATA INSIDE THE PARENTHESIS IN FUNCTIONS.**
+
+If you want the functions to process some data, then you send it to the function in a similar way to passing command line arguments to a script. 
+Use $1 for the first argument of the function, and $2 for the second.
+
+`#!/bin/bash` </br>
+`function create_file () {  # Function to create two files and set permissions` </br>
+`        echo "Creating $1"` </br>
+`        touch $1` </br>
+`        chmod 700 $1` </br>
+`        echo "Creating $2"` </br>
+`        touch $2` </br>
+`        chmod 700 $2` </br>
+`        return 10` </br>
+`}`</br>
+`function lines_in_file () {`  # Function to count lines containing a pattern in a file </br>
+`        grep -c "$1" "$2"` </br>
+`}` </br></br>
+
+`create_file new_me.txt life.txt`  # Create files and set permissions</br>
+`n=$(lines_in_file "usb" "/var/log/dmesg")`  # Count lines containing "usb" in /var/log/dmesg and store the result in n</br>
+`echo $n`  # Print the result
+
+**EXPLANATIONS:**
+
+* Function Definition (create_file):
+    * Declares a Bash function named create_file.
+    * Takes two arguments, $1 and $2, representing filenames.
+    * Prints messages indicating the creation of each file using echo.
+    * Uses touch to create the files.
+    * Sets the file permissions to read, write, and execute only for the owner using chmod 700.
+* Function Invocation (create_file new_me.txt life.txt):
+    * Calls the create_file function with two arguments: "new_me.txt" and "life.txt."
+* It then calls lines_in_file with the pattern "usb" and the file "/var/log/dmesg" and stores the result in the variable n.
+* Finally, it echoes the value of n, which represents the number of lines containing "usb" in the specified log file.
+
+When you run this script, it will create two files, "new_me.txt" and "life.txt," in the current directory, and set their permissions to allow only the owner to read, write, and execute. It also print the number of lines in "/var/log/dmesg" that contain the pattern "USB."
+
