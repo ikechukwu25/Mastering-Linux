@@ -177,7 +177,7 @@ In summary, by using different host ports for each container instance, you can r
 
 `docker container ls -a` or `docker ps -a`: These commands are equivalent and can be used interchangeably. Both commands provide a list of all containers on your system, including both running and stopped containers.
 
-`docker container ls -a -f status=exited -q` = This command is used to list the IDs of all exited or stopped containers. 
+`docker container ls -a -f status=exited -q`: This command is used to list the IDs of all exited or stopped containers. 
 * `docker`: Indicates that you're using the Docker CLI.
 * `container ls`: Lists containers.
 * `-a`: Shows all containers, including those that are currently running or have exited.
