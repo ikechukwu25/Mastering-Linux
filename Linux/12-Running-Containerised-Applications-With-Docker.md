@@ -75,7 +75,7 @@ Explore Docker Hub for pre-built images at [hub.docker.com](https://hub.docker.c
 
 The Docker client, also known as the Docker image and container CLI, interacts with the Docker daemon to manage Docker images and containers. To see information about your Docker installation, you can run docker info.
 
-`docker container run hello-world`: This commandused to run a Docker container that executes the "Hello World" program. This is often used as a simple test to verify that Docker is installed and configured correctly on your system.
+`docker container run hello-world`: This command is used to run a Docker container that executes the "Hello World" program. This is often used as a simple test to verify that Docker is installed and configured correctly on your system.
 
 * 	Docker Image Pull: If the "hello-world" Docker image is not already available locally, the Docker engine will automatically pull it from the Docker Hub, which is the default registry for Docker images.
 * 	Container Execution: Once the image is available, Docker will create and run a container based on that image. The container will execute a simple program that prints a "Hello from Docker!" message along with some information about the Docker installation.
