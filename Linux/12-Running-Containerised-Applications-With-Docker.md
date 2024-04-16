@@ -111,7 +111,7 @@ N/B: Image tags convey useful information about a specific image version
 
 Collectively, these commands below demonstrate different approaches to creating and starting Docker containers:
 
-- These set of commands offers more explicit control over container creation and starting
+- This set of commands offers more explicit control over container creation and starting
   - `docker container create httpd`: Creates a Docker container based on the httpd image. However, it does not start the container immediately.
   - `docker container ls -a`: Lists all containers, including those that are created but not running. This command is used to check the status of the newly created httpd container.
   - `docker container start httpd`: Starts the httpd container that was previously created but not running.
