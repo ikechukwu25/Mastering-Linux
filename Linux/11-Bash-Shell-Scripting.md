@@ -897,3 +897,147 @@ Scope refers to each part of a script where a variable is visible. Variable scop
 * The function func1 is called.
 * After calling the function, the script prints the values of var1 and var2 in the global scope.
 
+The script defines a function func1 and demonstrates variable scoping in Bash. It initializes two global variables (var1 and var2), modifies var1 within the function's scope, and declares a local variable var2. After calling the function, it prints the values of var1 and var2 to illustrate their scope and any changes made within the function.
+
+
+### MENUS IN BASH (THE SELECT STATEMENT)
+
+The select statement in Bash allows you to create interactive menus for users to make choices from predefined options. 
+
+**SYNTAX:** The select statement follows this syntax:
+
+`select VARIABLE in OPTION1 OPTION2 OPTION3 ...;` </br>
+`do`</br> 
+    # Commands to execute for each selected option </br>
+`done`
+
+**USE CASE:**
+
+`#!/bin/bash` # Set the prompt for the select command </br>
+`PS3="Select your Bank name: "` </br>
+`select BANKS in UBA GTB "Zenith Bank" "Optimus Bank"` # Use select to generate a menu </br>
+`do`  # $BANKS contains the selected value </br> 
+`    echo "Bank is $BANKS"` </br>
+`    echo "Reply is $REPLY"`  # $REPLY contains the number corresponding to the user's choice </br> 
+`done`
+
+* PS3 Variable (Line 2):
+    * PS3 is a variable that determines the prompt used by the select statement.
+* select Statement (Lines 4-8):
+    * select is used to generate a menu for the user to choose from.
+    * The user can select a bank name from the list (UBA, GTB, Zenith Bank, Optimus Bank).
+    * The selected value is stored in the variable $BANKS.
+    * The variable $REPLY contains the number corresponding to the user's choice.
+    * The statements within the do and done block are executed for each iteration of the select loop.
+* echo Statements (Lines 6-7):
+    * Print the selected bank name ($BANKS) and the corresponding number ($REPLY).
+ 
+This script demonstrates the use of the select statement in Bash to generate a menu for the user to choose from. The user can select a bank name from the list (UBA, GTB, Zenith Bank, Optimus Bank), and the selected value is stored in the variable $BANKS. The variable $REPLY contains the number corresponding to the user's choice. The script continuously prompts the user to select a bank name until the user decides to exit the loop.
+
+**ANOTHER USE CASE BELOW:**
+
+`#!/bin/bash` </br>
+`PS3="Select your language: "` # Set the prompt for the select command</br>
+`select COUNTRY in USA France Germany "United Kingdom" Quit` # Use select to generate a menu</br>
+`do`</br>
+`    # Use a case statement to handle different choices`</br>
+`    case $REPLY in`</br>
+`        1)`</br>
+`            echo "You speak American English"`</br>
+`            ;;`</br>
+`        2)`</br>
+`            echo "You speak French"`</br>
+`            ;;`</br>
+`        3)`</br>
+`            echo "You speak German"`</br>
+`            ;;`</br>
+`        4)`</br>
+`            echo "You speak British English"`</br>
+`            ;;`</br>
+`        5)`</br>
+`            echo "Ending session"`</br>
+`            sleep 1`</br>
+`            break`</br>
+`            ;;`</br>
+`        *)`</br>
+`            echo "Invalid input $REPLY"`</br>
+`    esac`</br>
+`done`
+
+This Bash script uses the select statement along with a case statement to create a menu for selecting a language or ending the session. 
+
+* PS3 Variable (Line 2):
+    * PS3 is a variable that determines the prompt used by the select statement.
+* select Statement (Lines 3-21):
+    * select is used to generate a menu for the user to choose from (USA, France, Germany, United Kingdom, Quit).
+    * The selected value is stored in the variable $COUNTRY.
+* case Statement (Lines 5-25):
+    * A case statement is used to handle different choices based on the value of $REPLY.
+    * Each case corresponds to a different language based on the country chosen.
+    * The case with value 5 corresponds to Quit, and it ends the session with a break statement.
+* sleep Statement (Line 20):
+    * Introduces a 1-second delay before breaking out of the loop.
+* * Case (Line 23):
+    * Handles any other input that doesn't match the specified cases.
+   
+
+`#!/bin/bash`</br>
+`PS3="Your choice: "` # Set the prompt for the select command</br>
+`select ITEM in "Add User" "List All Processes" "Kill Process" "Install Program" "Quit" # Use select to generate a menu`</br>
+`do`</br>
+`    if [[ $REPLY -eq 1 ]]; then` # Check the user's choice using a series of if-elif-else statements</br>
+        # Option: Add User</br>
+`        echo -n "Enter your username: "`</br>
+`        read username`</br>
+`        output=$(grep -w $username /etc/passwd)`</br>
+`        if [[ -n $output ]]; then`</br>
+`            echo "The username $username already exists"`</br>
+`            grep -w $username /etc/passwd`</br>
+`        else`</br>
+`            read -p "Input new username: " newusername`</br>
+`            sudo useradd -m -s /bin/bash "$newusername"`</br>
+`            if [[ $? -eq 0 ]]; then`</br>
+`                echo "The username $newusername has been created"`</br>
+`                tail -n 1 /etc/passwd`</br>
+`            else`</br>
+`                echo "There was an error"`</br>
+`            fi`</br>
+`        fi`</br>
+`    elif [[ $REPLY -eq 2 ]]; then`</br>
+        # Option: List All Processes</br>
+`        echo "Listing all processes...."`</br>
+`        sleep 2`</br>
+`        ps -ef`</br>
+`    elif [[ $REPLY -eq 3 ]]; then`</br>
+        # Option: Kill Process</br>
+`        read -p "Enter the process name to kill: " name`</br>
+`        pkill $name`</br>
+`    elif [[ $REPLY -eq 4 ]]; then`</br>
+        # Option: Install Program</br>
+`        read -p "Enter the program to install: " program`</br>
+`        sudo apt update && sudo apt install $program`</br>
+`    elif [[ $REPLY -eq 5 ]]; then`</br>
+        # Option: Quit</br>
+`        echo "Quitting..."`</br>
+`        sleep 2`</br>
+`        break`</br>
+`    else`</br>
+`        echo "Invalid input $REPLY"`</br>
+`    fi`</br>
+`done`
+
+* PS3 Variable (Line 2):
+    * PS3 is a variable that determines the prompt used by the select statement.
+* select Statement (Lines 3-46):
+    * select is used to generate a menu for the user to choose from ("Add User," "List All Processes," "Kill Process," "Install Program," "Quit").
+* If-Elif-Else Statements (Lines 5-44):
+    * The script checks the value of $REPLY (the user's choice) using a series of if-elif-else statements.
+        * Each option corresponds to a different action:
+        * If the user chooses "Add User," it prompts for a username, checks if it already exists, and adds a new user if it doesn't.
+        * If the user chooses "List All Processes," it lists all processes using `ps -ef`.
+        * If the user chooses "Kill Process," it prompts for a process name and uses `pkill` to kill the specified process.
+        * If the user chooses "Install Program," it prompts for a program name and installs it using sudo apt install.
+        * If the user chooses "Quit," it prints a message and exits the loop with `break`.
+        * If the user provides an invalid input, it prints an error message.
+
+This script provides a menu-driven interface for system administration tasks. It allows the user to choose from various options such as adding a user, listing all processes, killing a process, installing a program, or quitting. Each option corresponds to different actions implemented using if-elif-else statements. The script guides the user through the chosen task, interacts with system utilities like `useradd`, `ps`, `pkill`, and `apt`, and provides feedback based on the user's input.
