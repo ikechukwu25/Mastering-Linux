@@ -10,6 +10,8 @@ Virtual Machines and containers provide isolation for running applications, they
 
 **DIFFERENCE BETWEEN A Virtual Machine AND A CONTAINER**
 ￼
+<img width="944" alt="Pasted Graphic 1" src="https://github.com/ikechukwu25/Mastering-Linux/assets/64879420/06cf3a02-0b29-46b9-bc80-412893402dfa">
+
 Containers and virtual machines (VMs) are both technologies that enable the isolation and execution of applications, but they operate at different levels of abstraction and have distinct characteristics.
 
 - Abstraction Level:
