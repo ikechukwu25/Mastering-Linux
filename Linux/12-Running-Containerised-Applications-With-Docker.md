@@ -68,7 +68,24 @@ Refer to [Docker's official documentation](https://docs.docker.com/engine/instal
 
 `cat /etc/apt/sources.list.d/docker.list` - This command is used to display the content of the file located at /etc/apt/sources.list.d/docker.list in a Linux system. This file typically contains information about Docker repositories for the APT package manager.
 
-Explore Docker Hub for pre-built images at [hub.docker.com](https://hub.docker.com/). You can also experiment with Docker using resources like [Play with Docker](https://labs.play-with-docker.com/).
+Explore Docker Hub for pre-built images at [hub.docker.com](https://hub.docker.com/). You can also experiment with Docker using resources like [Play with Docker](https://labs.play-with-docker.com/). </br></br>
+
+
+**IMPORTANT NOTES:**
+
+In case of an error like the below; 
+Failed to set locale, defaulting to C.UTF-8 
+CentOS Linux 8 - AppStream 863 B/s | 38 B 00:00
+Error: Failed to download metadata for repo 'appstream': Cannot prepare internal mirrorlist: No URLs in mirrorlist
+
+Run the following command to comment out the mirrorlist entries in the repository configuration files; 
+`sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*`
+Replace the mirror base URLs with an alternative source by executing the following command:
+`sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*`
+After making these changes, proceed to update your packages using the following command:
+`sudo yum update -y`
+
+When building or running Docker containers, they often need to install packages or dependencies from the configured package repositories. If the Docker host or container network has connectivity issues, or if there are misconfigured repository URLs inside the Docker image, you may encounter errors similar to the one mentioned.
 
 
 ### DOCKER CLIENT
@@ -185,3 +202,63 @@ In summary, by using different host ports for each container instance, you can r
 * `-q`: Displays only the container IDs.
 
 
+### REMOVING IMAGES AND CONTAINERS
+
+To remove a container, you must first stop it and then remove it using the following commands:
+
+`docker container stop CONTAINERID`: to stop the container</br>
+`docker container rm CONTAINERID`: to remove the container. </br></br>
+
+OR </br></br>
+
+`docker container rm -f CONTAINERID`: To remove the container forcefully without stopping it.  </br></br>
+
+To remove all the stopped out exited containers, use the command substitution below;</br></br>
+
+`docker container rm $(docker container ls -a -f status=exited -q)`</br></br>
+
+To remove an image, follow these steps:</br></br>
+
+`docker container stop CONTAINERID`: To stop the container if it’s still running. </br>
+`docker container rm CONTAINERID`: To remove the container. </br>
+`docker image rm IMAGENAME`: To remove the image </br></br>
+
+OR </br></br>
+
+`docker image rm -f IMAGENAME`: To remove the container forcefully without stopping it.  </br></br>
+
+In Docker, "dangling images" refer to images that are not associated with any containers. These images have been created at some point but are not currently being used by any active containers.
+
+`docker image ls -f "dangling=true"`: This command lists Dangling Images.</br>
+`docker image prune`: This command is used to remove Dangling Images.</br>
+`docker system prune`: Used to clean up the Docker system by removing unused data, including stopped containers, dangling images, and more.</br>
+`docker system prune -a`: It’s a powerful Docker command used to free up disk space by removing unused resources.
+
+
+### GETTING SHELL ACCESS TO A CONTAINER
+
+`docker container run --name=mywebsite -it centos`: This command is used to run a Docker container based on the CentOS image with the specified name "mywebsite" in interactive mode.
+ * `docker`: Indicates that you're using the Docker CLI.
+ * `container run`: Instructs Docker to run a new container.
+ * `--name mywebsite`: Specifies the name "mywebsite" for the container. This provides a human-readable identifier for the running container.
+ * `-it`: Combines two options:
+ * `-i` (or --interactive): Keeps STDIN open even if not attached, allowing you to interact with the container.
+ * `-t` (or --tty): Allocates a pseudo-TTY, which is a terminal emulation. tty = teletypewriter. 
+ * `centos`: Specifies the Docker image to use for creating the container. In this case, it's the CentOS base image.
+
+`-it` option: Sets up an interactive terminal within the container, allowing you to interact with the command line.
+
+You can exit from running container without stopping - Ctrl + P + Q
+exit - to exit from a running container’s terminal
+
+docker container exec -it 996cc6b47081 bash - used to execute an interactive shell (bash) within a running Docker container.
+If a container is listed listed in - docker container ls -a, and it’s not exited, run the above command to return to the pseudo terminal. 
+
+***********************************
+docker container run debian
+docker container ls -a
+docker container run -it debian
+exit
+docker container start CONTAINERID
+docker container exec -it CONTAINERID bash
+Ctrl + P+ Q
