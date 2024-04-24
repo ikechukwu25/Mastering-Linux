@@ -216,7 +216,7 @@ The sudoers file can be organised easily by grouping things in aliases, here's h
 Running a Denial of Service (DoS) attack without root access is possible through various means, such as resource-intensive scripts or network flooding. Below are steps on how to create a fork bomb script: 
 
 - `vim bomb`: Create a new shell script
-  - #!/bin/bash
+  - `#!/bin/bash`: Shebang
   - `$0 && $0 &` - This command will hang/crash the system and hence result to force a reboot. This command can be run by the user without administrative access. This script performs a denial of service attack that makes use of the fork system call to create an infinite number of processes. $0 is a special variable that represents the script itself. So, the script is running itself recursively two times and is going in the background for another recursive call. & at the end puts the process in the background. So new child processes cannot die and start eating the system resources. 
 
 ### HOW TO PREVENT A FORK BOMB. 
