@@ -518,16 +518,14 @@ When scanning machines that aren’t yours, you often want to hide your real IP 
 
 NOTE: The hosts you use as decoys should be up or you might accidentally confuse your target. It will be easy to determine which host is scanning if only one is actually up on the network. 
 
-`vim hosts.txt`: “Input host names, IP addresses”
-`nmap -p 80 -iL hosts.txt`: This command instructs Nmap to scan port 80 on the hosts listed in the file hosts.txt using the -iL option.
+`vim hosts.txt`: “Input host names, IP addresses” </br>
+`nmap -p 80 -iL hosts.txt`: This command instructs `nmap` to scan port 80 on the hosts listed in the file hosts.txt using the `-iL` option.
 Here's a breakdown of the command:
   * `nmap`: This is the command-line utility for network exploration and security auditing.
   * `-p 80`: This option specifies that Nmap should scan port 80, which is commonly associated with the HTTP service.
   * `-iL hosts.txt`: This option tells Nmap to read the list of target hosts from the file hosts.txt. Each host should be listed on a separate line in the file.
 
 To speed up this scan, you can deactivate the reverse DNS lookup which is done by default using the `-n` option: `nmap -p 80 -iL hosts.txt -n`
-
-Reverse DNS (Domain Name System) is a process that maps an IP address to a domain name.
 
 The `-T` option in Nmap specifies the timing template or timing options for the scan. It allows you to control the speed and aggressiveness of the scan. The `-T` option followed by a timing template can be used to set the timing parameters for the scan.
 
@@ -543,3 +541,5 @@ Here are the timing templates available with Nmap:
 For example: `nmap -T4 scanme.nmap.org`, In this example, `nmap` is the command used to initiate the scan.
   - `-T4` specifies the timing template for the scan, which is set to "Aggressive". This means that the scan will be faster and more aggressive in probing the target network.
   - `scanme.nmap.org` is the target host or IP address that will be scanned.
+
+N/B: Reverse DNS (Domain Name System) is a process that maps an IP address to a domain name.
