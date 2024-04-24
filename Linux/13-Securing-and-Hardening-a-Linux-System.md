@@ -170,5 +170,98 @@ N/B: There will be an exclamation mark in the hash password of the user in /etc/
 
 ## GIVING LIMITED ROOT PRIVILEGES (sudoers and visudo)
 
-To manage users' access to administrative tasks using sudo, you can configure the sudoers file (/etc/sudoers) on Unix-like systems. It's crucial to use the `visudo` command to edit this file, as it provides syntax checking and prevents simultaneous edits by multiple users.
+To manage users' access to administrative tasks using `sudo`, you can configure the sudoers file (/etc/sudoers) on Unix-like systems. `etc/sudoers` is a critical configuration file that defines the rules and permissions for allowing or denying users and groups the ability to execute commands as superusers (root) or other users through the sudo command. The file should only be edited using the `visudo` command, which provides syntax checking and prevents simultaneous edits by multiple users.
 
+`visudo` command is used to edit the sudoers file (/etc/sudoers) on Unix-like systems. The reason for using visudo instead of directly editing the sudoers file with a regular text editor (such as nano or vim) is to ensure proper syntax and avoid potential errors.
+
+`cat /etc/group | grep -i sudo`: This command is used to view the users that can run administrative tasks using `sudo`. 
+`sudo update-alternatives --config editor`: This command on Linux is used to set the default text editor for system-wide use. When executed, it presents a menu that allows you to choose from the available text editors installed on your system. 
+
+After giving the sudo password for the first time, it caches the credentials on the terminal for 15 minutes. After that, any other administrative sudo command will request a password. 
+
+If a user is in the sudo group, he/she can run all administrative tasks. However, you can limit this access to allow the user to be able to update the system and not edit the configuration files. To do this, follow the steps below;
+
+- `sudo visudo`: Open the configuration file of the users that can use the sudo command.
+- `Defaults        secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"`: Configure the secure path that will be used for the sudo commands. 
+- In the "User privilege specification" section, specify the users and commands they're allowed to run as root.
+  - \# User privilege specification
+  - root                  ALL=(ALL:ALL) ALL
+  - `USERNAME     ALL=(root)                    (path to the command it is allowed to run as root)
+      - Replace USERNAME with the actual username and specify the path to the commands they can run with sudo.
+- `which ls`: This command shows the path to the command `ls`, do the same for the command which you intend to give sudo access to the user. 
+- `peter     ALL=(root)      PASSWD:/usr/bin/cat,/usr/bin/ls,NOPASSWD:/usr/bin/apt`: To set specific privileges like password requirements or exclusion. This example allows the user to run `ls` and `cat` commands with a password prompt, while `apt` can be run without a password.
+
+
+The sudoers file can be organised easily by grouping things in aliases, here's how it works:
+
+`User_Alias MYADMIN=peter,stephen`</br>
+\# User alias specification: Defines a user alias named MYADMIN, including users like peter and stephen. This alias simplifies management by grouping multiple users.
+
+`Cmnd_Alias FILE=/usr/bin/cp,/usr/bin/ls/,/usr/bin/touch,/usr/bin/rm`</br>
+\# Cmnd alias specification: Specifies a command alias named FILE, containing commands related to file manipulation (cp, ls, touch, rm). This alias makes it easier to manage permissions for multiple commands.
+
+`root    ALL=(ALL:ALL) ALL` </br>
+`peter   ALL=(root)      PASSWD:/usr/bin/cat,/usr/bin/ls,NOPASSWD:/usr/bin/apt`</br>
+`MYADMIN ALL=(root)      FILE`</br>
+\# User privilege specification: Assigns privileges to users or user aliases. Here, root has full access. peter can run ls and cat with a password prompt, and apt without a password prompt. Members of the MYADMIN alias have access to commands specified in the FILE alias.
+
+
+* MYADMIN: This is a user alias defined earlier in the file, including users like peter and stephen. The alias is used to group multiple users for the sake of brevity and easier management.
+* ALL=(root): This part specifies that the members of the MYADMIN alias can run commands as the root user.
+* FILE: This is a command alias defined earlier in the file, including commands related to file manipulation like /usr/bin/cp, /usr/bin/ls, /usr/bin/touch, and /usr/bin/rm.
+
+
+## SETTING USERS’ LIMITS (Running a DoS Attack Without root Access)
+
+Running a Denial of Service (DoS) attack without root access is possible through various means, such as resource-intensive scripts or network flooding. Below are steps on how to create a fork bomb script: 
+
+- `vim bomb`: Create a new shell script
+  - #!/bin/bash
+  - `$0 && $0 &` - This command will hang/crash the system and hence result to force a reboot. This command can be run by the user without administrative access. This script performs a denial of service attack that makes use of the fork system call to create an infinite number of processes. $0 is a special variable that represents the script itself. So, the script is running itself recursively two times and is going in the background for another recursive call. & at the end puts the process in the background. So new child processes cannot die and start eating the system resources. 
+
+### HOW TO PREVENT A FORK BOMB. 
+
+A fork bomb is a type of denial-of-service (DoS) attack that exploits the fork() system call in Unix-like operating systems. The fork bomb's goal is to overwhelm the system by creating a large number of processes, causing resource exhaustion and making the system unresponsive. E.g `$0 && $0 &` as described above. 
+
+- `ulimit -u` is used to display or set the user process resource limit, specifically the maximum number of processes a user can create.
+  * When used without any arguments, `ulimit -u` displays the current maximum process limit for the user.
+  * When used with an argument, such as `ulimit -u 100`, it sets the maximum process limit for the user to the specified value (100 in this case).
+
+To prevent the fork bomb, we’ll reduce the number of processes the user can start. The processes cannot continue to replicate themselves. 
+
+`/etc/security/limits.conf` file is used to set resource limits for user processes in Unix-like operating systems. It allows system administrators to define specific limits on resources such as CPU time, memory, file descriptors, and more for individual users or groups.
+
+- `sudo vim /etc/security/limit.conf`: 
+- `ikechukwu       hard    nproc           2000 @admin          hard    nproc           4000` # End of file
+  * `User "ikechukwu"`:
+    * `ikechukwu hard nproc 2000`: This sets a hard limit for the user "ikechukwu" to a maximum of 2000 processes.
+  * Group "@admin":
+    * `@admin hard nproc 4000`: This sets a hard limit for the group "@admin" to a maximum of 4000 processes.
+
+
+DIFFERENCE
+* Editing `/etc/security/limits.conf` is a way to set default resource limits for users globally on the system. Changes in this file affect all future logins for the specified users or groups.
+* Using the `ulimit` command is a way for a user to adjust resource limits for the current session only. These changes are temporary and do not persist after the user logs out.
+
+
+## INTRO TO CRACKING PASSWORDS
+
+Cracking Passwords
+
+1. Brute-force or dictionary attack: It means using automated software that systematically checks all possible passwords until the correct one is found. It's a trial-and-error process in which the hacker computes the hash of each word in a dictionary or a word list and then compares the resulting hash to the hash of the password.
+
+2. Rainbow tables: These are precomputed tables used for reversing cryptographic hash functions, usually used for cracking password hashes.
+
+DIFFERENCES
+
+**Brute Force**
+* Method: Brute force is a straightforward and exhaustive method where the attacker systematically tries every possible combination until the correct one is found.
+* Efficiency: It is often time-consuming and resource-intensive, especially for complex and strong passwords.
+* Applicability: Brute force attacks are applicable to any encryption or authentication system. They don't rely on precomputed data.
+
+**Rainbow Table**
+* Method: Rainbow table attacks involve using precomputed tables containing hashes of many possible passwords. These tables significantly reduce the time needed to crack a password.
+* Efficiency: Rainbow tables are more efficient than brute force because they eliminate the need to compute the hash for each attempted password during the attack. Once the tables are generated, the attack becomes a simple lookup process.
+* Applicability: Rainbow tables are effective against hashed passwords. They exploit the fact that many users use common passwords, and the precomputed tables store these hashes for quick retrieval.
+
+Visit the website - [have i been pwned?](https://haveibeenpwned.com/), to check if your account has been compromised in a data breach. If your email is on the list, it means that the hackles have the hash of your password and they could try to hack it offline. 
