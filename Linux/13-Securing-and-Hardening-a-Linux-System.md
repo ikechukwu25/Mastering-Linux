@@ -350,15 +350,14 @@ If you want to encrypt only the partition and not the entire disk, and a partiti
 
 2. `dd if=/dev/urandom of=/dev/sdb status=progress`: This is a dangerous command that writes random data from /dev/urandom to the entire disk /dev/sdb. This operation effectively overwrites all existing data on the disk with random data, which makes the data irrecoverable.
 
-3. `sudo cryptsetup -y -v luksFormat /dev/sdb`: The option `-y` is used to ask for a passphrase `-v` is for verbose. This command is used to format a block device (/dev/sdb in this case) with LUKS (Linux Unified Key Setup) encryption, which is commonly used to encrypt disk partitions on Linux systems.</br></br> Here's what each part of the command does: </br>
-    * cryptsetup: This is the command-line tool used to manage encrypted volumes on Linux.
-    * -v: This option stands for "verbose" and instructs cryptsetup to provide more detailed output during the formatting process.
-    * -y: This option prompts the user to confirm before overwriting existing data on the device. It's a safety measure to prevent accidental data loss.
-    * luksformat: This sub-command tells cryptsetup to format the specified block device with LUKS encryption.
-    * /dev/sdb: This is the path to the block device that will be formatted with LUKS encryption. It's important to ensure that you specify the correct device, as formatting will erase all data on it.
+3. `sudo cryptsetup -y -v luksFormat /dev/sdb`: The option `-y` is used to ask for a passphrase `-v` is for verbose. This command is used to format a block device (/dev/sdb in this case) with LUKS (Linux Unified Key Setup) encryption, which is commonly used to encrypt disk partitions on Linux systems. Let's break down the components of the command: </br>
+    * `cryptsetup`: This is the command-line tool used to manage encrypted volumes on Linux.
+    * `-v`: This option stands for "verbose" and instructs cryptsetup to provide more detailed output during the formatting process.
+    * `-y`: This option prompts the user to confirm before overwriting existing data on the device. It's a safety measure to prevent accidental data loss.
+    * `luksformat`: This sub-command tells cryptsetup to format the specified block device with LUKS encryption.
+    * `/dev/sdb`: This is the path to the block device that will be formatted with LUKS encryption. It's important to ensure that you specify the correct device, as formatting will erase all data on it.
 
-4. `cryptsetup luksOpen /dev/sdb secretdata`: This command is used to open a LUKS-encrypted partition/device (/dev/sdb in this case) and map it to a device mapper device named secretdata.</br></br>
-Here's what each part of the command does:</br>
+4. `cryptsetup luksOpen /dev/sdb secretdata`: This command is used to open a LUKS-encrypted partition/device (/dev/sdb in this case) and map it to a device mapper device named secretdata. Let's break down the components of the command: </br>
     * `cryptsetup`: This is the command-line utility used to manage encrypted volumes on Linux systems.
     * `luksOpen`: This sub-command is used to open a LUKS-encrypted device.
     * `/dev/sdb`: This is the path to the LUKS-encrypted block device you want to open. It could be a partition or an entire disk.
@@ -366,8 +365,7 @@ Here's what each part of the command does:</br>
 
 5. `ls -l /dev/mapper/secretdata`: Lists information about the device mapper device secretdata, confirming that it has been successfully created.
 
-6. `mkfs.ext4 /dev/mapper/secretdata`: Creates an Ext4 file system on the device mapper device /dev/mapper/secretdata, allowing the encrypted data to be stored in a usable file system format.</br></br>
-Here's a breakdown of the command:
+6. `mkfs.ext4 /dev/mapper/secretdata`: Creates an Ext4 file system on the device mapper device /dev/mapper/secretdata, allowing the encrypted data to be stored in a usable file system format. Let's break down the components of the command: </br>
     * `mkfs.ext4`: This is the command used to create an Ext4 file system on a block device. Ext4 is a widely used file system type in Linux environments.
     * `/dev/mapper/secretdata`: This is the device mapper device representing the LUKS-encrypted device you previously opened. After unlocking the LUKS volume and mapping it, you can create a file system on it using `mkfs.ext4`.
 
@@ -382,3 +380,168 @@ Here's a breakdown of the command:
 11. `cryptsetup luksClose /dev/mapper/secretdata`: Closes the LUKS volume represented by /dev/mapper/secretdata after unmounting the encrypted file system, ensuring that the encrypted data is no longer accessible.
 
 These commands provide a step-by-step process for encrypting disks and partitions in Linux, ensuring data security while also allowing controlled access to decrypted data when needed.
+
+
+### UNLOCKING LUKS ENCRYPTED DRIVES WITH A KEY FILE
+
+1. `root@ubuntu-22-04-3:/home/ikechukwu# dd if=/dev/urandom of=/root/keyfile bs=1024 count=4`: This command generates a file named keyfile in the /root directory filled with random data sourced from /dev/urandom. Let's break down the components of the command: </br>
+    * `dd`: This command is used for converting and copying files. It's commonly used for low-level operations like copying data between devices.
+    * `if=/dev/urandom`: The if flag specifies the input file. In this case, `/dev/urandom` is a special file in Unix-like operating systems that provides an endless stream of pseudo-random bytes.
+    * `of=/root/keyfile`: The of flag specifies the output file. In this case, it's `/root/keyfile`, meaning the generated random data will be written to a file named keyfile in the /root directory.
+    * `bs=1024`: The bs flag sets the block size, which determines how much data is read and written at a time. In this case, it's set to 1024 bytes (1 KB).
+    * `count=4`: The count flag sets the number of blocks to copy. In this case, it's set to 4, so the command will generate a file containing 4 KB of random data.
+
+Optionally, for extra security, you can encrypt the key file symmetrically using the GPG. GPG stands for GNU Privacy Guard, which is a free and open-source encryption software that provides cryptographic privacy and authentication for data communication. It's commonly used for encrypting and decrypting files, emails, and messages to ensure confidentiality and integrity.
+
+2. `chmod 400 /root/keyfile`: This command sets the permissions of the keyfile to read-only for the owner (root) and denies all permissions to others, ensuring that only the root user can read the keyfile.
+
+3. `cryptsetup luksAddkey /dev/sdb /root/keyfile`: This command will prompt you to enter the passphrase for the LUKS-encrypted device `/dev/sdb`. After entering the passphrase, it will add the new key contained in the keyfile `/root/keyfile` to the LUKS key slot associated with the device. The key will be added as an additional authorisation method. 
+
+
+## STEGANOGRAPHY EXPLAINED
+
+Steganography is the practice of concealing a message, file, image, or video within another message, file, image, or video in such a way that the existence of the hidden content is not obvious to observers.
+
+The Least Significant Bit (LSB) is the rightmost bit in a binary number, representing the smallest (least significant) value. In a binary number, each bit represents a power of 2, with the LSB representing  2 raised to the power of 0 (which equals 1). 
+
+For example, in the binary number 1011, the LSB is 1, because it represents 2 raised to the power of 0 while the next bit to the left represents 2 raised to the power of 1, and so forth.
+
+In the context of digital media and steganography, the concept of LSB refers to the technique of embedding information by manipulating the least significant bits of pixels in an image or samples in audio files. Since the changes in the LSB typically cause minimal alteration to the overall appearance or sound of the media, LSB steganography is often used to conceal data within images or audio without obvious distortion.
+
+* Image LSB Steganography: In digital images, each pixel is represented by color channels (e.g., red, green, and blue for RGB images). By modifying the least significant bits of these channels, one can embed secret data. Since the LSBs represent the smallest value changes, they are less likely to be noticed by human observers.
+* Audio LSB Steganography: In audio files, each sample typically consists of multiple bits representing the amplitude of the sound wave. By altering the LSBs of these samples, one can embed additional data into the audio file without significantly affecting its audible quality.
+
+Steganography will allow you to embed much less information in order not to be detected. 
+
+Color = RGB(255, 255, 0)</br>
+Converted to Binary = (11111111, 11111111, 00000000)</br>
+The last digit is the “Least Significant Bit - LSB”
+
+
+When encrypting, at first, the secret data is compressed and encrypted then a sequence of position of pixels in the cover file is created based on a pseudo-random number generator initialised with the passphrase. The secret data will be embedded in the pixels at those positions.
+If those positions do not need to be changed because they already contain the correct value by chance are sorted out. 
+
+Audio samples are used in audio instead of pixels. 
+
+By default, encryption algorithms is Advanced Encryption Standard which is an extremely strong encryption algorithm. 
+
+- Download the image or audio to be embedded. 
+- Copy the file since one will be embedded. 
+- `sha256sum main_file.jpg copied_file.jpg`: Files will have the same hashes
+- `ikechukwu@ubuntu-22-04-3:~/Desktop$ steghide embed -cf mona_lisa_steg.jpg -ef steg_file.txt`: This command is using `steghide`, a popular steganography tool, to embed a file (steg_file.txt) into another file (mona_lisa_steg.jpg), creating a steganographic image. 
+Here's a breakdown of the command:
+  * `steghide`: This is the command-line utility used for embedding and extracting data from digital media files using steganography techniques.
+  * `embed`: This is the sub-command used to embed data into a cover file.
+  * `-cf mona_lisa_steg.jpg`: This option specifies the cover file, which is the file that will contain the embedded data. In this case, it's mona_lisa_steg.jpg.
+  * `-ef steg_file.txt`: This option specifies the file to embed, which is the data that will be hidden within the cover file. In this case, it's steg_file.txt. 
+- `sha256sum main_file.jpg copied_file.jpg`: Files will have different hashes.
+- `mv steg_file.txt steg_file_backup.txt`
+- `steghide extract -sf mona_lisa_steg.jpg`: appears to be an attempt to extract hidden data from an image file named mona_lisa_steg.jpg using the steghide tool.  Here's a breakdown of the command:
+  * `steghide`: This is a command-line tool used for hiding data within various types of image and audio files using steganography techniques.
+  * `extract`: This sub-command is used to extract hidden data from a steganographic file.
+  * `-sf mona_lisa_steg.jpg`: This option specifies the steganographic file from which you want to extract hidden data. In this case, it's mona_lisa_steg.jpg. 
+
+N/B: It is always better to use a unique image for steganography e.g. an image taken with a digital camera.
+
+
+## NMAP
+
+Nmap (Network Mapper) is a free and open-source network scanning tool used to discover hosts and services on a computer network, thus creating a "map" of the network. NMAP is a network discovery and security auditing tool.
+
+- TCP Scans: TCP SYN Scan (`-sS`):
+  * Also known as half-open scanning, it sends SYN packets to target ports and analyzes responses to determine open (response), closed (reset), or filtered (no response) ports. It's fast and stealthy. Half-open cos it doesn’t open a full TCP connection. 
+  * SYN Scan:`-sS` (root only)
+  * Connect Scan: `-sT`
+
+- UDP Scan: UDP Scan (`-sU`):
+  * This scan type is used to identify open UDP ports on target systems. UDP scans can be more time-consuming and less reliable compared to TCP scans due to the stateless nature of UDP.
+
+- ICMP Scan: `-sn` or `-sP`
+  - Example:  `nmap -sS -p 22,100 -sV 192.168.0.1`
+
+`sudo apt install nmap`: to install nmap for the terminal while The GUI is Zenmap - The official Nmap security scanner GUI. 
+
+`sudo nmap 192.168.1.1` (must be root) - This command uses Nmap to perform a default scan on the target host 192.168.1.1.
+Here's a breakdown of the command:
+  * `nmap`: This is the command-line utility for network exploration and security auditing.
+  * `192.168.1.1`: This is the target IP address on which the scan will be performed. In many home network setups, 192.168.1.1 is commonly used as the default gateway IP address, which is the IP address of the router.
+
+`nmap -sS 192.168.1.1`: This command uses the TCP SYN scan (`-sS` option) to scan the target host.
+`nmap -sT 192.168.1.1`: This command uses the TCP Connect scan (`-sT` option) to scan the target host.
+
+By default, `nmap` scans the most common 1000 ports for each protocol TCP and UDP. But if a service has been moved to a non-standard port like SSH is listening to port 50005
+
+`nmap -p 50005,80,22 192.168.1.1`: This command instructs Nmap to scan the target host 192.168.1.1 for specific TCP ports: 50005, 80, and 22.
+Here's a breakdown of the command:
+  * `nmap`: This is the command-line utility for network exploration and security auditing.
+  * `-p 50005,80,22`: This option specifies the ports to scan. In this case, Nmap will scan ports 50005, 80 (HTTP), and 22 (SSH) on the target host.
+  * `192.168.1.1`: This is the target IP address on which the scan will be performed.
+
+However, in this case, it doesn’t show who’s listening we can run a version detection on the target port as seen below;
+
+<img width="551" alt="STATE SERVICE" src="https://github.com/ikechukwu25/Mastering-Linux/assets/64879420/e4842a13-eba8-4641-9404-9a55c493f22e">
+
+To display who’s listening, run;
+
+`nmap -p 2266,80,22 -sV 192.168.64.2`: This command instructs Nmap to perform a TCP port scan with version detection (`-sV`) on the target host 192.168.64.2, specifically on ports 2266, 80 (HTTP), and 22 (SSH). Here's a breakdown of the command:
+  * `nmap`: This is the command-line utility for network exploration and security auditing.
+  * `-p 2266,80,22`: This option specifies the ports to scan. `nmap` will scan ports 2266, 80 (HTTP), and 22 (SSH) on the target host.
+  * `-sV`: This option enables version detection. Nmap will attempt to determine the version and type of services running on the open ports.
+
+The output is seen below:
+
+<img width="822" alt="STATE SERVICE VERSION" src="https://github.com/ikechukwu25/Mastering-Linux/assets/64879420/9698f97e-ce07-45e1-9a21-342afece0c11">
+
+`nmap -p- 192.168.64.2`: This command instructs `nmap` to perform a scan on all 65,535 TCP ports on the target host 192.168.64.2. Here's a breakdown of the command:
+  * `nmap`: This is the command-line utility for network exploration and security auditing.
+  * `-p-`: This option specifies scanning all ports in the range 1-65535. The hyphen - indicates that Nmap should scan all ports.
+  * `192.168.64.2`: This is the target IP address on which the scan will be performed.
+Press enter to see the percentage of the progress. 
+
+Visit [Nmap Reference Guide](https://nmap.org/book/man.html) for more info.
+
+### NMAP ADVANCED
+
+To get around firewalls and routers that block ping packets we need to suppress nmaps default behaviour of sending out the initial ping. We can do this using the -Pn option. 
+
+`nmap -Pn 192.168.64.2`: This command instructs Nmap to skip host discovery and treat the target host 192.168.64.2 as if it were online, regardless of whether it responds to ping probes or not. Here's a breakdown of the command:
+  * `nmap`: This is the command-line utility for network exploration and security auditing.
+  * `-Pn`: This option tells Nmap to skip host discovery and assume that the target host is online. It disables ping probes (-Pn stands for "No ping").
+  * `192.168.64.2`: This is the target IP address on which the scan will be performed.
+
+When scanning machines that aren’t yours, you often want to hide your real IP address. Obviously, every source must contain a source IP, otherwise, there will be no response from the target. The recommended solution to obfuscate your real IP is to use decoys.  This is generally an effective technique for hiding your IP addresses. 
+
+`nmap -p 22 -sV 192.168.64.2 -D 192.168.0.1,192.168.64.33,192.168.64.290`: This command instructs Nmap to perform a TCP port scan with version detection (-sV) on port 22 of the target host 192.168.64.2. Additionally, it uses the -D option to specify decoy hosts as part of the scan. Here's a breakdown of the command:
+  * `nmap`: This is the command-line utility for network exploration and security auditing.
+  * `-p 22`: This option specifies that Nmap should scan port 22, which is commonly associated with the SSH service.
+  * `-sV`: This option enables version detection. Nmap will attempt to determine the version and type of service running on port 22.
+  * `192.168.64.2`: This is the target IP address on which the scan will be performed.
+  * `-D 192.168.0.1,192.168.64.33,192.168.64.290`: This option specifies decoy hosts that Nmap will use to obfuscate the origin of the scan. In this case, Nmap will use the IP addresses 192.168.0.1, 192.168.64.33, and 192.168.64.290 as decoy hosts.
+
+NOTE: The hosts you use as decoys should be up or you might accidentally confuse your target. It will be easy to determine which host is scanning if only one is actually up on the network. 
+
+`vim hosts.txt`: “Input host names, IP addresses”
+`nmap -p 80 -iL hosts.txt`: This command instructs Nmap to scan port 80 on the hosts listed in the file hosts.txt using the -iL option.
+Here's a breakdown of the command:
+  * `nmap`: This is the command-line utility for network exploration and security auditing.
+  * `-p 80`: This option specifies that Nmap should scan port 80, which is commonly associated with the HTTP service.
+  * `-iL hosts.txt`: This option tells Nmap to read the list of target hosts from the file hosts.txt. Each host should be listed on a separate line in the file.
+
+To speed up this scan, you can deactivate the reverse DNS lookup which is done by default using the `-n` option: `nmap -p 80 -iL hosts.txt -n`
+
+Reverse DNS (Domain Name System) is a process that maps an IP address to a domain name.
+
+The `-T` option in Nmap specifies the timing template or timing options for the scan. It allows you to control the speed and aggressiveness of the scan. The `-T` option followed by a timing template can be used to set the timing parameters for the scan.
+
+Here are the timing templates available with Nmap:
+
+* -T0 (Paranoid): This timing template is the slowest and most stealthy option. It is designed to evade detection and minimize the impact on the target network.
+* -T1 (Sneaky): This timing template is slightly faster than Paranoid but still conservative. It's suitable for network reconnaissance when you want to minimize the chance of detection.
+* -T2 (Polite): This timing template is slower than the default and is intended to be considerate of network resources and avoid triggering alarms.
+* -T3 (Normal): This timing template is the default setting for Nmap scans. It strikes a balance between speed and stealth and is suitable for most situations.
+* -T4 (Aggressive): This timing template increases the speed of the scan and is more aggressive in probing the target network. It may be more likely to be detected by intrusion detection systems (IDS) or firewalls.
+* -T5 (Insane): This timing template is the fastest and most aggressive option. It performs scans at maximum speed and may overwhelm the target network or trigger security measures. 
+
+For example: `nmap -T4 scanme.nmap.org`, In this example, `nmap` is the command used to initiate the scan.
+  - `-T4` specifies the timing template for the scan, which is set to "Aggressive". This means that the scan will be faster and more aggressive in probing the target network.
+  - `scanme.nmap.org` is the target host or IP address that will be scanned.
