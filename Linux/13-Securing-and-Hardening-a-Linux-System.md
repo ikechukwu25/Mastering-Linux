@@ -391,8 +391,6 @@ These commands provide a step-by-step process for encrypting disks and partition
     * `bs=1024`: The bs flag sets the block size, which determines how much data is read and written at a time. In this case, it's set to 1024 bytes (1 KB).
     * `count=4`: The count flag sets the number of blocks to copy. In this case, it's set to 4, so the command will generate a file containing 4 KB of random data.
 
-Optionally, for extra security, you can encrypt the key file symmetrically using the GPG. GPG stands for GNU Privacy Guard, which is a free and open-source encryption software that provides cryptographic privacy and authentication for data communication. It's commonly used for encrypting and decrypting files, emails, and messages to ensure confidentiality and integrity.
-
 2. `chmod 400 /root/keyfile`: This command sets the permissions of the keyfile to read-only for the owner (root) and denies all permissions to others, ensuring that only the root user can read the keyfile.
 
 3. `cryptsetup luksAddkey /dev/sdb /root/keyfile`: This command will prompt you to enter the passphrase for the LUKS-encrypted device `/dev/sdb`. After entering the passphrase, it will add the new key contained in the keyfile `/root/keyfile` to the LUKS key slot associated with the device. The key will be added as an additional authorisation method. 
