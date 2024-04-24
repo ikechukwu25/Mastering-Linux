@@ -1,3 +1,5 @@
+# SECURING AND HARDENING A LINUX SYSTEM
+
 Securing and hardening a Linux system involves implementing various measures to enhance the security posture of the system. This includes configuring security settings, restricting access, monitoring for suspicious activities, and implementing best practices to mitigate potential vulnerabilities.
 
 ## LINUX SECURITY CHECKLIST
@@ -106,30 +108,67 @@ The process of securing the GRUB bootloader involves several steps listed below:
 
 ## ENFORCING PASSWORD POLICY
 
-Enforcing a password policy is essential for maintaining strong security practices within a system. These are the set of rules that must be satisfied usually defining password aging, length and complexity, number of login failures, and if resting old password is allowed or denied. 
+Enforcing a password policy is essential for maintaining strong security practices within a system. These are the set of rules that must be satisfied usually defining password aging, length and complexity, number of login failures, and if resting old password is allowed or denied. Below are important component;
 
 - etc/login.defs: This is a configuration file used by the `login` and `passwd` commands on Linux systems. It contains various settings and parameters that influence user authentication, password aging, and other login-related behaviors. 
-  - `PASS_MAX_DAYS`:
-Specifies the maximum number of days a password is valid. After this period, the user is required to change their password.
-  - `PASS_MIN_DAYS`:
-Specifies the minimum number of days that must pass before a user can change their password again.
-  - `PASS_WARN_AGE`:
-Specifies the number of days of warning before a password expires and a user is notified.
-  - `PASS_MIN_LEN`:
-Sets the minimum acceptable password length.
+  - `PASS_MAX_DAYS`: Specifies the maximum number of days a password is valid. After this period, the user is required to change their password.
+  - `PASS_MIN_DAYS`: Specifies the minimum number of days that must pass before a user can change their password again.
+  - `PASS_WARN_AGE`: Specifies the number of days of warning before a password expires and a user is notified.
+  - `PASS_MIN_LEN`: Sets the minimum acceptable password length.
 
 - `man login.defs`: To view the manual page for the /etc/login.defs configuration file, you can use the man command followed by the path to the file. This command will display the manual page for the login.defs file, providing detailed information about its configuration options and parameters.
 
-
 To adjust the password expiration settings for existing user accounts, you can use the `chage` command. Below are ways to utilise the command:
-
 - `sudo chage -M MAX_DAYS USERNAME`: To set the maximum number of days between password changes (-M option). Replace MAX_DAYS with the desired maximum number of days between password changes, and USERNAME with the username of the user whose password expiration settings you want to modify.
 - `sudo chage -l USERNAME`: To display the current password aging information (-l option). Replace USERNAME with the username of the user whose password aging information you want to view.
 
 
-##### PAM
+#### PAM
 
 PAM, or Pluggable Authentication Modules, is a critical framework in Unix-like operating systems for providing a flexible and extensible authentication mechanism. By separating authentication processes from applications requiring authentication, PAM allows system administrators to centrally manage and configure authentication policies. 
 
 One common use of PAM is enforcing password complexities in Linux distributions. The `/etc/pam.d/common-password` file (or `/etc/pam.d/system-auth` in Red Hat and CentOS) plays a vital role in this by defining PAM rules and modules related to password management shared across multiple services.
+
+To implement password complexity rules using PAM in Ubuntu-based distributions, you can follow these steps:
+
+- `sudo apt install libpam-pwquality`: Install the libpam-pwquality package, which provides PAM support for password quality checking.
+- `sudo vim /etc/pam.d/common-password`: Open the /etc/pam.d/common-password file for editing.
+- `password requisite pam_pwquality.so retry=3 minlen=8 difok=3 ucredit=-1 lcredit=-1 dcredit=-1 ocredit=-1`
+  - password: This indicates that the line is related to password management.
+  - requisite: This is a control flag, and it means that if this module fails, the authentication process is immediately aborted, and the user is denied access.
+  - pam_pwquality.so: This is the PAM module responsible for checking password quality. It enforces rules related to password strength, including length, character composition, etc.
+  - retry=3: If the password fails to meet the specified criteria, the user is given three attempts (retry=3) to set a valid password.
+  - minlen=8: Specifies the minimum length for the password. In this case, the minimum length is set to 8 characters.
+  - difok=3: Specifies the number of characters that must differ when changing a password. In this case, at least 3 characters must be different from the previous password.
+  - ucredit=-1, lcredit=-1, dcredit=-1, ocredit=-1: These settings control the requirements for uppercase (ucredit), lowercase (lcredit), digit (dcredit), and 	other (ocredit) characters in the password. A value of -1 means that there is no requirement for that category.
+    * ucredit=-1: implies that the password should have at least an uppercase character
+    * lcredit=-1: implies that the password should have at least a lowercase characters
+    * dcredit=-1: implies that the password should have at least a digital character - number
+    * ocredit=-1: implies that the password should have at least another (special) character.
+
+## LOCKING OR DISABLING USER ACCOUNTS
+
+To lock or disable user accounts in Linux, you can use various commands to control access and ensure security as seen below:
+
+- `sudo passwd - -lock/-l USERNAME`: This command is used to lock a specific user’s account. 
+- `sudo passwd - -status/-S USERNAME`: This command is used to display the status of a user account.
+  - Output: USERNAME LK 2023-01-01 0 99999 7 -1 (Password locked.)
+    * USERNAME: The username for which you are checking the password status.
+    * LK: Indicates that the password is locked.
+    * 2023-01-01: Date of the last password change.
+    * 0: Minimum number of days between password changes.
+    * 99999: Maximum number of days the password is valid.
+    * 7: Number of days before a password is set to expire that the user is warned.
+    * -1: Number of days after a password has expired before the account is disabled.
+
+N/B: There will be an exclamation mark in the hash password of the user in /etc/shadow, which denotes that the user is currently locked.
+
+- `sudo usermod --expiredate 1 USERNAME`: To completely disable an account, use this command. The command `sudo usermod --expiredate` command in Linux is used to set the expiration date for a user account. The `--expiredate` option specifies the date when the user account should be disabled. In your command, you have set the expiration date to 1, which means the user account will be disabled starting from January 1, 1970 (the Unix epoch).
+
+- `sudo usermod --expiredate "" iyke`: To reenable the account and change the expiry date to never, use this command.
+
+
+## GIVING LIMITED ROOT PRIVILEGES (sudoers and visudo)
+
+To manage users' access to administrative tasks using sudo, you can configure the sudoers file (/etc/sudoers) on Unix-like systems. It's crucial to use the `visudo` command to edit this file, as it provides syntax checking and prevents simultaneous edits by multiple users.
 
