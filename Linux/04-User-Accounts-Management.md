@@ -242,6 +242,8 @@ The `useradd` command serves as the backend utility for `adduser`, offering a mo
 
 Similarly, `userdel` and deluser are counterparts in the user management realm, both facilitating the removal of users from the system.
 
+N/B: When creating a new user, `sudo useradd` is different from `sudo adduser` adduser is a higher-level command that provides a more interactive and user-friendly experience. It automatically creates a home directory for the user, copies default configurations, and sets up the environment. While `useradd` is a low-level command that is used for creating new user accounts. Additional steps are often required to set the user's password, create a home directory, and add the user to groups.
+
 
 **CONFIGURATION FILES**
 
