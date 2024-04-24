@@ -264,4 +264,121 @@ DIFFERENCES
 * Efficiency: Rainbow tables are more efficient than brute force because they eliminate the need to compute the hash for each attempted password during the attack. Once the tables are generated, the attack becomes a simple lookup process.
 * Applicability: Rainbow tables are effective against hashed passwords. They exploit the fact that many users use common passwords, and the precomputed tables store these hashes for quick retrieval.
 
-Visit the website - [have i been pwned?](https://haveibeenpwned.com/), to check if your account has been compromised in a data breach. If your email is on the list, it means that the hackles have the hash of your password and they could try to hack it offline. 
+Visit the website - [have i been pwned?](https://haveibeenpwned.com/), to check if your email address has been compromised in a data breach. If your email is on the list, it means that the hacker has the hash of your password and they could try to hack it offline. 
+
+### CRACKING LINUX PASSWORDS USING JOHN THE RIPPER
+
+JTR has three cracking modes: John the Ripper is a widely used open-source password-cracking software. It supports various cracking modes or attack methods to attempt to recover passwords. Some of the key cracking modes in John the Ripper include:
+
+1. Single crack mode: It uses the login names together with other fields from the passwd file, also with a large set of mangling rules applied. This is the fastest cracking mode and is applicable to very simple passwords.
+2. Dictionary Attack / Wordlist Attack: In this mode, you need to supply a dictionary file that contains one word per line and a password file. You can enable word mangling rules which are used to modify or "mangle" words producing other likely passwords.
+3. "Incremental" mode: This is the most powerful cracking mode because it will try all possible character combinations as passwords. If you supply a random password with a length of more than 12-14 chars will never terminate and you’ll have to interrupt it manually.
+
+**FOR SINGLE CRACK MODE**: 
+
+`sudo apt install john`: Install the package for John the Ripper. 
+`john -test`: This command is used to test if John the Ripper is working correctly on your system.
+`unshadow /etc/passwd /etc/shadow > unshadow.txt`: Combine /etc/passwd and /etc/shadow into a file (e.g., unshadow.txt), which contains the necessary information for password cracking.
+`cat unshadow.txt`: Displays the contents of the unshadow.txt file to verify that the combination was successful.
+`john --single --format=crypt unshadow.txt`: Here, john is the command to execute John the Ripper. The `--single` flag indicates that we're using single crack mode. The `--format=crypt` flag specifies the hash format. unshadow.txt is the input file containing the combined password hashes.
+`john --show unshadow.txt`: This command displays the cracked passwords found by John the Ripper.
+`cat ~/.john/john.pot`: The file contains the cracked password hashes. This command displays the contents of that file.
+
+The ~/.john/john.pot file in John the Ripper contains the cracked password hashes. It's essentially a "pot" where John stores the results of its successful password-cracking attempts. Each line in this file typically represents a cracked password and its corresponding hash.
+
+**FOR DICTIONARY ATTACK**:
+
+/usr/share/john directory typically contains various resources used by the tool, including wordlists, rules, and configuration files.
+
+/usr/share/dict/american_english typically contains a list of words from the American English language. This file is often used as a wordlist in various applications, including password-cracking tools, spell checkers, and other linguistic applications.
+
+`john --wordlist=/usr/share/john/password.lst --rules unshadowed.txt`: In this command, `--wordlist=/usr/share/john/password.lst` specifies the path to the wordlist file to be used for the dictionary attack. `--rules` option enables rule-based mangling of words. unshadowed.txt is the input file containing password hashes obtained using unshadow.
+
+
+## SCANNING FOR ROOTKITS (rkhunter and chkrootkit)
+
+A rootkit is a collection of malicious computer software designed to enable access to a computer that is not otherwise allowed. After a successful intrusion into a system, usually the intruder will install a so-called "rootkit" to secure further access. Rootkit detection is difficult because a rootkit may be able to subvert the software that is intended to find it (rootkit scanners, antivirus).  
+
+Rootkit Scanners: 
+- Rootkit Hunter (rkhunter) 
+  - `rkhunter --check`
+- chkrootkit 
+  - `chkrootkit -q`
+
+**Rootkit Hunter (rkhunter)**
+
+One of the checks `rkhunter` performs is to compare various current file properties of various commands against those it has preciously stored. 
+
+`sudo apt update && sudo apt install rkhunter`</br>
+`sudo rkhunter --propupd`: used with Rootkit Hunter (rkhunter) to update its file properties database. When you run `rkhunter --propupd`, you are updating the baseline information about the system's file properties. This information includes checksums, file permissions, and other attributes that `rkhunter` uses to identify changes that might be indicative of a compromise.</br>
+`sudo rkhunter --check`: This command performs various checks on the local system. The result of each test will be displayed on the terminal and if anything suspicious is found, then a warning will be displayed. A log file of the test and results will be automatically created in /var/log. </br>
+`sudo rkhunter --check --report-warnings-only`: used to run a security scan with `rkhunter` while instructing it to report only warnings, not informational messages.
+
+When `rkhunter` reports a warning that is a false positive, you can mute the warning by whitelisting the file in the `rkhunter` config file - `vim /etc/rkhunter.conf` and append - `SCRIPTWHITELIST=/usr/bin/lwp-request`.
+
+
+**chkrootkit**
+
+`sudo chkrootkit -q`: It is a security tool used to check for the presence of rootkits on a Linux system. Similar to `rkhunter`, it scans the system for signs of known rootkits, suspicious files, and other indicators of compromise. With the `-q` option, it runs in quiet mode.
+
+
+## SCANNING FOR VIRUSES WITH ClamAV
+
+Antivirus isn’t necessary in a Linux system but for the Windows systems which could carry a malicious virus from a file and can be transferred into another file in another Windows system. Hence, they are being installed to protect the Windows devices from other Windows devices. E.g ClamAV 
+
+ClamAV is an open-source antivirus engine designed for detecting various types of malicious software, including viruses, malware, and phishing. It's primarily used for scanning files on Linux systems, but it can also be deployed on other platforms.
+
+`clamd`: This is the ClamAV daemon, and it plays a crucial role in providing real-time antivirus scanning capabilities. The daemon runs in the background, continuously monitoring files, processes, and data streams for potential malware.
+
+`clamdscan`: This is used as a client to communicate with the ClamAV daemon (clamd). The ClamAV daemon runs in the background and provides real-time scanning capabilities, making it more efficient for continuous monitoring of files for malware.
+
+`clamscan`: It is used for scanning files and directories on a Linux system to detect and remove potential malware, viruses, or other malicious software. It's the on-demand scanner component of ClamAV, and it allows users to initiate manual scans as needed
+
+`systemctl status clamav-freshclam.service`: Used to check the status of the ClamAV Freshclam service.
+
+`systemctl status clamav-daemon.service`: Used to check the status of the ClamAV daemon service.
+
+
+## FULL DISK ENCRYPTION USING DM-CRYPT AND LUKS
+
+Encrypting disks and partitions in Linux which keeps data secured using dm-crypt and LUKS. It is recommended to backup the drive first before running the commands as the commands will Destroy all data on the disk. 
+
+It is a full disk encryption solution for Linux based OS and if you want to access the encrypt disk, you must install another software. Below is a comprehensive guide to encrypting disks and partitions in Linux using dm-crypt and LUKS.
+
+1. `sudo apt install cryptsetup`: Install the `cryptsetup` which is used for setting up encrypted filesystems and managing encrypted volumes. It provides a command-line interface for creating, accessing, and managing encrypted partitions or disk volumes. </br>
+If you want to encrypt only the partition and not the entire disk, and a partition's name always ends in a digit. 
+
+2. `dd if=/dev/urandom of=/dev/sdb status=progress`: This is a dangerous command that writes random data from /dev/urandom to the entire disk /dev/sdb. This operation effectively overwrites all existing data on the disk with random data, which makes the data irrecoverable.
+
+3. `sudo cryptsetup -y -v luksFormat /dev/sdb`: The option `-y` is used to ask for a passphrase `-v` is for verbose. This command is used to format a block device (/dev/sdb in this case) with LUKS (Linux Unified Key Setup) encryption, which is commonly used to encrypt disk partitions on Linux systems.</br></br> Here's what each part of the command does: </br>
+    * cryptsetup: This is the command-line tool used to manage encrypted volumes on Linux.
+    * -v: This option stands for "verbose" and instructs cryptsetup to provide more detailed output during the formatting process.
+    * -y: This option prompts the user to confirm before overwriting existing data on the device. It's a safety measure to prevent accidental data loss.
+    * luksformat: This sub-command tells cryptsetup to format the specified block device with LUKS encryption.
+    * /dev/sdb: This is the path to the block device that will be formatted with LUKS encryption. It's important to ensure that you specify the correct device, as formatting will erase all data on it.
+
+4. `cryptsetup luksOpen /dev/sdb secretdata`: This command is used to open a LUKS-encrypted partition/device (/dev/sdb in this case) and map it to a device mapper device named secretdata.</br></br>
+Here's what each part of the command does:</br>
+    * `cryptsetup`: This is the command-line utility used to manage encrypted volumes on Linux systems.
+    * `luksOpen`: This sub-command is used to open a LUKS-encrypted device.
+    * `/dev/sdb`: This is the path to the LUKS-encrypted block device you want to open. It could be a partition or an entire disk.
+    * `secretdata`: This is the name you're assigning to the mapped device. After successfully running this command, you'll be able to access the decrypted data on /dev/mapper/secretdata.
+
+5. `ls -l /dev/mapper/secretdata`: Lists information about the device mapper device secretdata, confirming that it has been successfully created.
+
+6. `mkfs.ext4 /dev/mapper/secretdata`: Creates an Ext4 file system on the device mapper device /dev/mapper/secretdata, allowing the encrypted data to be stored in a usable file system format.</br></br>
+Here's a breakdown of the command:
+    * `mkfs.ext4`: This is the command used to create an Ext4 file system on a block device. Ext4 is a widely used file system type in Linux environments.
+    * `/dev/mapper/secretdata`: This is the device mapper device representing the LUKS-encrypted device you previously opened. After unlocking the LUKS volume and mapping it, you can create a file system on it using `mkfs.ext4`.
+
+7. `mount /dev/mapper/secretdata /mnt/`: Finally, we mount the encrypted file system to the file tree - `mount /dev/mapper/secretdata /mnt`. Data is protected when the disk is not mounted, but when it’s mounted, it is accessible by usually anyone. When you unmount the disk, data will be inaccessible.
+
+8. `umount /mnt/`: Unmounts the encrypted file system from the mount point /mnt/, ensuring that the data is no longer accessible or you can mount to a new directory.
+
+9. `mkdir /root/secretdata`: Creates a new directory named secretdata in the /root/ directory to mount the encrypted file system.
+
+10. `mount /dev/mapper/secretdata /root/secretdata`: Mounts the encrypted file system represented by /dev/mapper/secretdata to the directory /root/secretdata, providing access to the decrypted data.
+
+11. `cryptsetup luksClose /dev/mapper/secretdata`: Closes the LUKS volume represented by /dev/mapper/secretdata after unmounting the encrypted file system, ensuring that the encrypted data is no longer accessible.
+
+These commands provide a step-by-step process for encrypting disks and partitions in Linux, ensuring data security while also allowing controlled access to decrypted data when needed.
