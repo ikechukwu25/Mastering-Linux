@@ -465,10 +465,10 @@ The `lsblk` command in Linux is used to list information about all available blo
 `sr0     11:0    1   4.7G  0 rom  /media/ikechukwu/Ubuntu 22.04.3 LTS amd641`</br></br>
 We will see the main volumes - `sda` which has multiple partitions, `sdb` with one partition and `sr0` with no partition, it represents the first SCSI CD/DVD-ROM device in the system. 
 
-2. **Partition the Disk** - `sudo fdisk /dev/sdb`: When you run sudo fdisk `/dev/sdb`, fdisk will display information about the existing partitions on `/dev/sdb`, if any, and allow you to create, delete, or modify partitions as needed. You can use fdisk commands to interactively manage the disk's partition table.
+2. **Partition the Disk** - `sudo fdisk /dev/sdb`: When you run the command, `fdisk` will display information about the existing partitions on `/dev/sdb`, if any, and allow you to create, delete, or modify partitions as needed. You can use `fdisk` commands to manage the disk's partition table interactively.
         - `fdisk`: This is a command-line utility used for disk partitioning. It allows users to create, delete, and manipulate disk partitions on a storage device.
-        - `/dev/sdb`: This is the block device representing the entire disk. It could be a physical disk (e.g., a hard drive or SSD) or a virtual disk (e.g., a virtual disk in a virtual machine). The device name is followed by a letter indicating the drive and a number indicating the partition. </br></br>
-A prompt pops up when you input the above command - `Command (m for help)`, select `n` to create a new partition, and select 'p' for primary or 'e' for entended. You can choose the default option for the rest. Lastly, you select the size of the partition with a "+" prefix `+40G`. See screenshot below:</br></br>
+        - `/dev/sdb`: This block device represents the entire disk. It could be a physical disk (e.g., a hard drive or SSD) or a virtual disk (e.g., a virtual disk in a virtual machine). The device name is followed by a letter indicating the drive and a number indicating the partition. </br></br>
+A prompt pops up when you input the above command - `Command (m for help)`, select `n` to create a new partition, and select 'p' for primary or 'e' for entended. You can choose the default option for the rest. Lastly, you select the partition size with a "+" prefix `+40G`. See screenshot below:</br></br>
 ![image](https://github.com/ikechukwu25/Mastering-Linux/assets/64879420/e9b8c7dc-3c79-4352-8d82-81d431407d65)</br></br>
 Press 'p' when the command prompt pops up to make sure the details of the newly created partition are accurate. </br>
 Afterwards, press 'w' to save the newly created partition. </br>
@@ -559,5 +559,4 @@ Linux boot process has the following phases;
 - Root File System Initialization: The kernel locates and mounts the root file system as specified in the bootloader configuration. It may be located on a local disk, network drive, or other storage devices. Once the root file system is mounted, the kernel transitions control to the init process.
 - Systemd Initialization: On modern Linux distributions, systemd is the initialization system that takes control after the kernel initializes. systemd starts as the first process with PID 1. It manages system services, mounts additional file systems, sets up network interfaces, and performs other initialization tasks necessary for the system to become fully operational.
 - Service Initialization: systemd continues the boot process by starting essential system services in parallel. This parallelization improves boot times by executing services concurrently rather than sequentially. Once all necessary services are started, the system is ready for user interaction.
-
 
