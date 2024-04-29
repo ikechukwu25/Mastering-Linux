@@ -418,7 +418,7 @@ Symbolic links do not increase the link count of files with which they are linke
 
 In computing, a filesystem governs the storage and retrieval of data, organizing files on storage media. Without a filesystem, stored information would be an undifferentiated mass, making it impossible to discern individual pieces. The filesystem assigns names to files, storing data and maintaining a directory of files and directories, including their locations, sizes, and other attributes on the storage medium. The below steps are to be followed to create a filesystem:
 
-1. The first you have to do while creating a filesystem is to identify volumes using the command `lsblk`. </br>
+1. **Identify the Disk or Partition**: The first you have to do while creating a filesystem is to identify volumes using the command `lsblk`. </br>
 The `lsblk` command in Linux is used to list information about all available block devices, including hard drives, USB drives, CD/DVD drives, and partitions.</br></br>
 `root@ubuntu-22-04-3:/home/ikechukwu# lsblk` </br>
 `NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS` </br>
@@ -432,7 +432,7 @@ The `lsblk` command in Linux is used to list information about all available blo
 `sr0     11:0    1   4.7G  0 rom  /media/ikechukwu/Ubuntu 22.04.3 LTS amd641`</br></br>
 We will see the main volumes - `sda` which has multiple partitions, `sdb` with one partition and `sr0` with no partition, it represents the first SCSI CD/DVD-ROM device in the system. 
 
-2. `sudo fdisk /dev/sdb`: When you run sudo fdisk `/dev/sdb`, fdisk will display information about the existing partitions on `/dev/sdb`, if any, and allow you to create, delete, or modify partitions as needed. You can use fdisk commands to interactively manage the disk's partition table.
+2. **Partition the Disk** - `sudo fdisk /dev/sdb`: When you run sudo fdisk `/dev/sdb`, fdisk will display information about the existing partitions on `/dev/sdb`, if any, and allow you to create, delete, or modify partitions as needed. You can use fdisk commands to interactively manage the disk's partition table.
         - `fdisk`: This is a command-line utility used for disk partitioning. It allows users to create, delete, and manipulate disk partitions on a storage device.
         - `/dev/sdb`: This is the block device representing the entire disk. It could be a physical disk (e.g., a hard drive or SSD) or a virtual disk (e.g., a virtual disk in a virtual machine). The device name is followed by a letter indicating the drive and a number indicating the partition. </br></br>
 A prompt pops up when you input the above command - `Command (m for help)`, select `n` to create a new partition, and select 'p' for primary or 'e' for entended. You can choose the default option for the rest. Lastly, you select the size of the partition with a "+" prefix `+40G`. See screenshot below:</br></br>
@@ -449,13 +449,14 @@ To validate the recently created partition, run the `lsblk` command. </br></br>
 `  ├─vg-root  253:0    0    50G  0 lvm  /` </br>
 `  └─vg-home  253:1    0   414G  0 lvm  /home` </br>
 `sdb       8:16   0   1.8T  0 disk ` </br>
-`└─sdb1    8:17   0   1.8T  0 part /mnt/data` </br>
+`  └─sdb1    8:17   0   1.8T  0 part /mnt/data` </br>
 `sr0     11:0    1   4.7G  0 rom  /media/ikechukwu/Ubuntu 22.04.3 LTS amd641`</br></br>
 
-3. `mkdir testfile`: This command creates a new directory named testfile in the current directory. The -p option can be used to create parent directories if they don't already exist.
-4. `mkfs.ext4 /dev/sdb1`: This command creates an ext4 filesystem on the partition /dev/sdb1. It formats the partition, making it ready for use as a filesystem. After running this command, /dev/sdb1 will contain the ext4 filesystem.
-5. `mount /dev/sdb1 testfile/`: This command mounts the filesystem located on /dev/sdb1 to the directory testfile/. After mounting, any files or directories within the filesystem on /dev/sdb1 will be accessible via the testfile/ directory.
-6. `umount testfile/`: This command unmounts the filesystem previously mounted on the testfile/ directory. After running this command, the filesystem on /dev/sdb1 will no longer be accessible via the testfile/ directory.
+3. **Create the Mount Point Directory** - `mkdir testfile`: This command creates a new directory named testfile in the current directory. The `-p` option can be used to create parent directories if they don't already exist.
+4. **Create the Filesystem** - `mkfs.ext4 /dev/sdb1`: This command creates an ext4 filesystem on the partition `/dev/sdb1`. It formats the partition, making it ready for use as a filesystem. After running this command, `/dev/sdb1` will contain the ext4 filesystem.
+5. **Mount the Filesystem** - `mount /dev/sdb1 testfile/`: This command mounts the filesystem located on `/dev/sdb1` to the directory `testfile/`. After mounting, any files or directories within the filesystem on /dev/sdb1 will be accessible via the `testfile/` directory.
+6. **Configure Auto-Mount (Optional)**: To ensure that the filesystem is automatically mounted during system boot, you can add an entry to the `/etc/fstab` file. This file contains information about filesystems and their associated mount points, options, and other parameters.
+7. **Unmount the Filesystem (Optional)** - `umount testfile/`: This command unmounts the filesystem previously mounted on the `testfile/` directory. After running this command, the filesystem on `/dev/sdb1` will no longer be accessible via the testfile/ directory.
 
 
 
