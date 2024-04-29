@@ -230,8 +230,8 @@ In Linux, the ">" symbol is used for output redirection, allowing users to redir
 
 To redirect another command to the same file and not overwrite = `ls -l > ls.txt`
 
-'>' = overwrite </br>
-'>>' = append
+`>` = overwrite </br>
+`>>` = append
 
 
 ## ADVANCED CONSTRUCTS FOR STREAM MANAGEMENT:
@@ -322,7 +322,7 @@ Press each of the following keys once or twice and observe how the cursor moves.
 
 Additionally, you can customize Vim settings by creating a `.vimrc` configuration file in your home directory.
 
-Different command line options can be used to open multiple files simultaneously or to display files in split windows for comparison, such as -o or -d for `vimdiff` mode.
+Different command line options can be used to open multiple files simultaneously or to display files in split windows for comparison, such as `-o` or `-d` for `vimdiff` mode.
 
 To practice Vim, you can run `vimtutor` in your terminal. Here's an example of how to use Vim; 
 
@@ -351,7 +351,7 @@ Every file on a partition has a unique identification number called an inode nu
 `ikechukwu@ubuntu-22-04-3:~$ ls -i /tmp/file.txt`                                    
 `215220874 /tmp/file.txt`  
 
-Like users and groups, what defines a file is not its name, but rather the number it has been assigned.　For each file, there is also an entry that is stored in a directory's data area (data block) that links the file's name with its inode number. Eg
+Like users and groups, what defines a file is not its name, but rather the number it has been assigned.　For each file, there is also an entry that is stored in a directory's data area (data block) that links the file's name with its inode number. Eg.
 
 | File Name | Inode Number |
 |----------|----------|
@@ -397,7 +397,7 @@ N/B: A symbolic link has an l as the file type "lrwxrwxrwx", while a hard link d
 
 **DIFFERENCE**
 
-1. Using hard links offers the advantage that every file name pointing to the same file content is equal. If you have multiple files hard linked together, deleting any of them won't delete the actual file contents, as long as at least one hard link remains. This is because each hard link refers to the same unique inode number, ensuring the file data persists as long as at least one hard link exists. In symlink,  if the original file is deleted in a symbol Link is deleted as well. 
+1. Using hard links offers the advantage that every file name pointing to the same file content is equal. If you have multiple files hard linked together, deleting any of them won't delete the actual file contents, as long as at least one hard link remains. This is because each hard link refers to the same unique inode number, ensuring the file data persists as long as at least one hard link exists. In symlink,  if the original file is deleted in a symbol link is deleted as well. 
 
 2. Soft links are much more visual, not requiring any extra commands beyond the ls command to determine the link. If you encounter a regular file with a link count greater than one and need to find its hard links, you can use the find command with the -inum search criteria. First, you would use the `ls -i` command to find the inode number of the file in question. Then, you can use `find` to locate other files with the same inode number.
    
@@ -449,7 +449,7 @@ To validate the recently created partition, run the `lsblk` command. </br></br>
 `  ├─vg-root  253:0    0    50G  0 lvm  /` </br>
 `  └─vg-home  253:1    0   414G  0 lvm  /home` </br>
 `sdb       8:16   0   1.8T  0 disk ` </br>
-`  └─sdb1    8:17   0   1.8T  0 part /mnt/data` </br>
+` └─sdb1    8:17   0   1.8T  0 part /mnt/data` </br>
 `sr0     11:0    1   4.7G  0 rom  /media/ikechukwu/Ubuntu 22.04.3 LTS amd641`</br></br>
 
 3. **Create the Mount Point Directory** - `mkdir testfile`: This command creates a new directory named testfile in the current directory. The `-p` option can be used to create parent directories if they don't already exist.
