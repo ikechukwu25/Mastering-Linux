@@ -465,8 +465,8 @@ The `lsblk` command in Linux is used to list information about all available blo
 `sr0     11:0    1   4.7G  0 rom  /media/ikechukwu/Ubuntu 22.04.3 LTS amd641`</br></br>
 We will see the main volumes - `sda` which has multiple partitions, `sdb` with one partition and `sr0` with no partition, it represents the first SCSI CD/DVD-ROM device in the system. 
 
-2. **Partition the Disk** - `sudo fdisk /dev/sdb`: When you run the command, `fdisk` will display information about the existing partitions on `/dev/sdb`, if any, and allow you to create, delete, or modify partitions as needed. You can use `fdisk` commands to manage the disk's partition table interactively.
-        - `fdisk`: This is a command-line utility used for disk partitioning. It allows users to create, delete, and manipulate disk partitions on a storage device.
+2. **Partition the Disk** - `sudo fdisk /dev/sdb`: When you run the command, `fdisk` will display information about the existing partitions on `/dev/sdb`, if any, and allow you to create, delete, or modify partitions as needed. You can use `fdisk` commands to manage the disk's partition table interactively; </br>
+        - `fdisk`: This is a command-line utility used for disk partitioning. It allows users to create, delete, and manipulate disk partitions on a storage device.</br>
         - `/dev/sdb`: This block device represents the entire disk. It could be a physical disk (e.g., a hard drive or SSD) or a virtual disk (e.g., a virtual disk in a virtual machine). The device name is followed by a letter indicating the drive and a number indicating the partition. </br></br>
 A prompt pops up when you input the above command - `Command (m for help)`, select `n` to create a new partition, and select 'p' for primary or 'e' for entended. You can choose the default option for the rest. Lastly, you select the partition size with a "+" prefix `+40G`. See screenshot below:</br></br>
 ![image](https://github.com/ikechukwu25/Mastering-Linux/assets/64879420/e9b8c7dc-3c79-4352-8d82-81d431407d65)</br></br>
@@ -485,11 +485,11 @@ To validate the recently created partition, run the `lsblk` command. </br></br>
 ` └─sdb1    8:17   0   1.8T  0 part /mnt/data` </br>
 `sr0     11:0    1   4.7G  0 rom  /media/ikechukwu/Ubuntu 22.04.3 LTS amd641`</br></br>
 
-3. **Create the Mount Point Directory** - `mkdir testfile`: This command creates a new directory named testfile in the current directory. The `-p` option can be used to create parent directories if they don't already exist.
-4. **Create the Filesystem** - `mkfs.ext4 /dev/sdb1`: This command creates an ext4 filesystem on the partition `/dev/sdb1`. It formats the partition, making it ready for use as a filesystem. After running this command, `/dev/sdb1` will contain the ext4 filesystem.
-5. **Mount the Filesystem** - `mount /dev/sdb1 testfile/`: This command mounts the filesystem located on `/dev/sdb1` to the directory `testfile/`. After mounting, any files or directories within the filesystem on /dev/sdb1 will be accessible via the `testfile/` directory.
-6. **Configure Auto-Mount (Optional)**: To ensure that the filesystem is automatically mounted during system boot, you can add an entry to the `/etc/fstab` file. This file contains information about filesystems and their associated mount points, options, and other parameters.
-7. **Unmount the Filesystem (Optional)** - `umount testfile/`: This command unmounts the filesystem previously mounted on the `testfile/` directory. After running this command, the filesystem on `/dev/sdb1` will no longer be accessible via the testfile/ directory.
+4. **Create the Mount Point Directory** - `mkdir testfile`: This command creates a new directory named testfile in the current directory. The `-p` option can be used to create parent directories if they don't already exist.
+5. **Create the Filesystem** - `mkfs.ext4 /dev/sdb1`: This command creates an ext4 filesystem on the partition `/dev/sdb1`. It formats the partition, making it ready for use as a filesystem. After running this command, `/dev/sdb1` will contain the ext4 filesystem.
+6. **Mount the Filesystem** - `mount /dev/sdb1 testfile/`: This command mounts the filesystem located on `/dev/sdb1` to the directory `testfile/`. After mounting, any files or directories within the filesystem on /dev/sdb1 will be accessible via the `testfile/` directory.
+7. **Configure Auto-Mount (Optional)**: To ensure that the filesystem is automatically mounted during system boot, you can add an entry to the `/etc/fstab` file. This file contains information about filesystems and their associated mount points, options, and other parameters.
+8. **Unmount the Filesystem (Optional)** - `umount testfile/`: This command unmounts the filesystem previously mounted on the `testfile/` directory. After running this command, the filesystem on `/dev/sdb1` will no longer be accessible via the testfile/ directory.
 
 
 
