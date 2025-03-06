@@ -45,13 +45,46 @@ These are notes from the DevOps Bootcamp course on Zero to Mastery and the Linux
   - []()
   - []()
 
-- [04-User Account Management](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/04-User-Accounts-Management.md)
-  - [Linux-File-System](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/03-Linux-File-System.md)
-  - [File-Paths-in-Linux](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/03-Linux-File-System.md#file-paths-in-linux)
-  - [File-Types-in-linux](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/03-Linux-File-System.md#file-types-in-linux)
+- [04-User-Account-Management](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/04-User-Accounts-Management.md)
+  - [User-Account-Management](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/04-User-Accounts-Management.md)
+  - [System-Accounts](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/04-User-Accounts-Management.md#system-accounts)
+  - [Managing-Users-and-Groups](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/04-User-Accounts-Management.md#managing-users-and-groups)
+ 
+- [05-Linux-File-Permissions](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/05-Linux-File-Permissions.md)
+  - [Linux-File-Permissions](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/05-Linux-File-Permissions.md)
+  - [Changing-Group-and-File-Ownership](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/05-Linux-File-Permissions.md#changing-groups)
+  - [Understanding-File-Directory-Permission-in-Linux](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/05-Linux-File-Permissions.md#understanding-file-directory-permissions-in-linux)
+  - [SETGID](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/05-Linux-File-Permissions.md#understanding-file-directory-permissions-in-linux)
+  - [Sticky-Bit](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/05-Linux-File-Permissions.md#sticky-bit)
+  - [Understanding-File-Attributes](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/05-Linux-File-Permissions.md#understanding-files-attributes)
+  - []()
+  - []()
+  - []()
+  - []()
+  - []()
+  - []()
+  - []()
 
-
-
+- [06-Linux-Process-Management](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/06-Linux-Process-Management.md)
+  - [Linux-Process-Management](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/06-Linux-Process-Management.md)
+  - [Processes-and-Pseudo-Filesystem](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/06-Linux-Process-Management.md#processes-and-pseudo-filesystems)
+  - [Process-Heirarchy](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/06-Linux-Process-Management.md#process-hierarchy)
+  - [Linux-Process-Management-Commands](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/06-Linux-Process-Management.md#linux-process-management-commands)
+ 
+- [07-Networking-In-Linux](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/07-Networking-In-Linux.md)
+  - [Network-Interfaces](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/07-Networking-In-Linux.md#network-interfaces)
+  - [Network-Configuration](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/07-Networking-In-Linux.md#network-configuration)
+  - [Network-Interface-Configration](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/07-Networking-In-Linux.md#network-interface-configuration)
+  - [Setting-up-Static-IP-on-Ubuntu](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/07-Networking-In-Linux.md#setting-up-static-ip-on-ubuntu-netplan)
+  - [Testing-and-Troubleshooting-Network-Conectivity](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/07-Networking-In-Linux.md#testing-and-troubleshooting-network-connectivity)
+  - [Using SSH](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/07-Networking-In-Linux.md#using-ssh)
+  - [Troubleshooting SSH](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/07-Networking-In-Linux.md#troubleshooting-ssh)
+  - [Firewall-Rules-in-Linux](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/07-Networking-In-Linux.md#firewall-rules-in-linux)
+  - [Securing the OpenSSH Server](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/07-Networking-In-Linux.md#securing-the-openssh-server-sshd)
+  - [Copying-Files-Over-the-Network](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/07-Networking-In-Linux.md#copying-files-over-the-network-scp)
+  - [SFTP](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/07-Networking-In-Linux.md#sftp)
+  - [Synchronizing FIles and Directories Using RSYNC](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/07-Networking-In-Linux.md#synchronizing-files-and-directories-using-rsync)
+  - [Checking for Listening Ports](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/07-Networking-In-Linux.md#checking-for-listening-ports)
 
 
 
