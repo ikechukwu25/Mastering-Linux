@@ -76,7 +76,7 @@ Utilize the below options to secure the OpenSSH server (sshd) to enhance the sec
     - `iptables -A INPUT -p tcp --dport 2245 -j DROP`
 - `LoginGraceTime`: This parameter specifies the time window during which a user must authenticate after establishing an SSH connection. If the user fails to authenticate within this grace period, the connection is terminated.
 - `ClientAliveIntervals`: This parameter specifies the interval at which the server sends keep-alive messages to connected SSH clients. These keep-alive messages help maintain the SSH connection by checking if the client is still responsive.
-- `ClientAliveMaxCount`: This parameter determines the maximum number of client alive messages (keep-alive messages) that can be sent without any response from the client. If the client does not respond to the keep-alive messages within this count, the SSH server will terminate the connection.This helps improve resource utilization and security by closing inactive connections in a timely manner.
+- `ClientAliveMaxCount`: This parameter determines the maximum number of client alive messages (keep-alive messages) that can be sent without any response from the client. If the client does not respond to the keep-alive messages within this count, the SSH server will terminate the connection. This helps improve resource utilization and security by closing inactive connections in a timely manner.
 - `MaxAuthTries`: This determines the maximum number of authentication attempts permitted per connection. If a user exceeds this limit while attempting to authenticate (e.g., by entering incorrect passwords), the SSH server will terminate the connection.
 
 N/B: DO NOT FORGET TO REMOVE COMMENTS AFTER EDITING
@@ -99,16 +99,16 @@ The boot sequence order outlines the steps involved in starting a computer syste
 The process of securing the GRUB bootloader involves several steps listed below:
 
 - **Generate Hashed Password**: Use the command - `grub-mkpasswd-pbkdf2` in the GRUB bootloader to generate hashed passwords using the PBKDF2 algorithm.
-- **Edit GRUB Configuration**: The next step is to edit the GRUB main config file and add the hash of the password so your actual password is not visible in the GRUB scripts and a possible hacker cannot see it. The config file is `/boot/grub/grub.cfg`. </br> However, this file can’t be modified directly by the user. It is overwritten by certain grub updates whenever a kernel is added or removed or when the user runs the `update-grub2` command. So, grub uses a series of scripts to build this configuration file which are located in `/etc/grub.d`. We need to change the files in this directory and run `update-grub2`. This command based on the content of the files in `/etc/grub.d` will generate `grub.cfg` the main configuration file. 
+- **Edit GRUB Configuration**: The next step is to edit the GRUB main config file and add the hash of the password so your actual password is not visible in the GRUB scripts and a possible hacker cannot see it. The config file is `/boot/grub/grub.cfg`. </br> However, this file can’t be modified directly by the user. It is overwritten by certain grub updates whenever a kernel is added or removed or when the user runs the `update-grub2` command. So, grub uses a series of scripts to build this configuration file which are located in `/etc/grub.d`. We need to change the files in this directory and run `update-grub2`. This command is based on the content of the files in `/etc/grub.d` will generate `grub.cfg`, the main configuration file. 
 - **Edit 40_custom Script** (`sudo vim /etc/grub.d/40_custom`): Using the vim text editor to open and edit the file `40_custom` in the `/etc/grub.d/` directory. This file is part of the GRUB bootloader configuration and allows you to add custom menu entries.
 - **Add Password Hash**: Add the following commands to input the hash for the password in the config file; `set superuser=“root”` and `password_pbkdf2 root HASH`
-- **Update GRUB Configuration**:The command - `sudo update-grub2` will generate the new `grub.cfg` file - `/boot/grub/grub.cfg`. 
+- **Update GRUB Configuration**: command - `sudo update-grub2` will generate the new `grub.cfg` file - `/boot/grub/grub.cfg`. 
 - **Reboot**: Reboot the system (`sudo reboot`) to confirm that it prompts for the password upon booting. Enter the username (root) and the password when prompted.
 
 
 ## ENFORCING PASSWORD POLICY
 
-Enforcing a password policy is essential for maintaining strong security practices within a system. These are the set of rules that must be satisfied usually defining password aging, length and complexity, number of login failures, and if resting old password is allowed or denied. Below are important component;
+Enforcing a password policy is essential for maintaining strong security practices within a system. These are the set of rules that must be satisfied, usually defining password aging, length and complexity, number of login failures, and if the old password is allowed or denied. Below are important components;
 
 - etc/login.defs: This is a configuration file used by the `login` and `passwd` commands on Linux systems. It contains various settings and parameters that influence user authentication, password aging, and other login-related behaviors. 
   - `PASS_MAX_DAYS`: Specifies the maximum number of days a password is valid. After this period, the user is required to change their password.
@@ -140,9 +140,9 @@ To implement password complexity rules using PAM in Ubuntu-based distributions, 
   - retry=3: If the password fails to meet the specified criteria, the user is given three attempts (retry=3) to set a valid password.
   - minlen=8: Specifies the minimum length for the password. In this case, the minimum length is set to 8 characters.
   - difok=3: Specifies the number of characters that must differ when changing a password. In this case, at least 3 characters must be different from the previous password.
-  - ucredit=-1, lcredit=-1, dcredit=-1, ocredit=-1: These settings control the requirements for uppercase (ucredit), lowercase (lcredit), digit (dcredit), and 	other (ocredit) characters in the password. A value of -1 means that there is no requirement for that category.
+  - ucredit=-1, lcredit=-1, dcredit=-1, ocredit=-1: These settings control the requirements for uppercase (ucredit), lowercase (lcredit), digit (dcredit), and other (ocredit) characters in the password. A value of -1 means that there is no requirement for that category.
     * ucredit=-1: implies that the password should have at least an uppercase character
-    * lcredit=-1: implies that the password should have at least a lowercase characters
+    * lcredit=-1: implies that the password should have at least a lowercase character
     * dcredit=-1: implies that the password should have at least a digital character - number
     * ocredit=-1: implies that the password should have at least another (special) character.
 
@@ -163,7 +163,7 @@ To lock or disable user accounts in Linux, you can use various commands to contr
 
 N/B: There will be an exclamation mark in the hash password of the user in /etc/shadow, which denotes that the user is currently locked.
 
-- `sudo usermod --expiredate 1 USERNAME`: To completely disable an account, use this command. The command `sudo usermod --expiredate` command in Linux is used to set the expiration date for a user account. The `--expiredate` option specifies the date when the user account should be disabled. In your command, you have set the expiration date to 1, which means the user account will be disabled starting from January 1, 1970 (the Unix epoch).
+- `sudo usermod --expiredate 1 USERNAME`: To completely disable an account, use this command. The command `sudo usermod --expiredate` in Linux is used to set the expiration date for a user account. The `--expiredate` option specifies the date when the user account should be disabled. In your command, you have set the expiration date to 1, which means the user account will be disabled starting from January 1, 1970 (the Unix epoch).
 
 - `sudo usermod --expiredate "" iyke`: To reenable the account and change the expiry date to never, use this command.
 
@@ -217,7 +217,7 @@ Running a Denial of Service (DoS) attack without root access is possible through
 
 - `vim bomb.sh`: Create a new shell script
   - `#!/bin/bash`: Shebang
-  - `$0 && $0 &` - This command will hang/crash the system and hence result to force a reboot. This command can be run by the user without administrative access. This script performs a denial of service attack that makes use of the fork system call to create an infinite number of processes. $0 is a special variable that represents the script itself. So, the script is running itself recursively two times and is going in the background for another recursive call. & at the end puts the process in the background. So new child processes cannot die and start eating the system resources. 
+  - `$0 && $0 &` - This command will hang/crash the system and hence result to a force reboot. This command can be run by the user without administrative access. This script performs a denial of service attack that makes use of the fork system call to create an infinite number of processes. $0 is a special variable that represents the script itself. So, the script is running itself recursively two times and is going in the background for another recursive call. & at the end puts the process in the background. So new child processes cannot die and start eating the system resources. 
 
 ### HOW TO PREVENT A FORK BOMB. 
 
@@ -271,7 +271,7 @@ Visit the website - [have i been pwned?](https://haveibeenpwned.com/), to check 
 JTR has three cracking modes: John the Ripper is a widely used open-source password-cracking software. It supports various cracking modes or attack methods to attempt to recover passwords. Some of the key cracking modes in John the Ripper include:
 
 1. Single crack mode: It uses the login names together with other fields from the passwd file, also with a large set of mangling rules applied. This is the fastest cracking mode and is applicable to very simple passwords.
-2. Dictionary Attack / Wordlist Attack: In this mode, you need to supply a dictionary file that contains one word per line and a password file. You can enable word mangling rules which are used to modify or "mangle" words producing other likely passwords.
+2. Dictionary Attack / Wordlist Attack: In this mode, you need to supply a dictionary file that contains one word per line and a password file. You can enable word mangling rules, which are used to modify or "mangle" words, producing other likely passwords.
 3. "Incremental" mode: This is the most powerful cracking mode because it will try all possible character combinations as passwords. If you supply a random password with a length of more than 12-14 chars will never terminate and you’ll have to interrupt it manually.
 
 **FOR SINGLE CRACK MODE**: 
@@ -324,7 +324,7 @@ When `rkhunter` reports a warning that is a false positive, you can mute the war
 
 ## SCANNING FOR VIRUSES WITH ClamAV
 
-Antivirus isn’t necessary in a Linux system but for the Windows systems which could carry a malicious virus from a file and can be transferred into another file in another Windows system. Hence, they are being installed to protect the Windows devices from other Windows devices. E.g ClamAV 
+Antivirus isn’t necessary in a Linux system, but for the Windows systems, which could carry a malicious virus from a file and can be transferred into another file in another Windows system. Hence, they are being installed to protect the Windows devices from other Windows devices. E.g. ClamAV 
 
 ClamAV is an open-source antivirus engine designed for detecting various types of malicious software, including viruses, malware, and phishing. It's primarily used for scanning files on Linux systems, but it can also be deployed on other platforms.
 
@@ -341,7 +341,7 @@ ClamAV is an open-source antivirus engine designed for detecting various types o
 
 ## FULL DISK ENCRYPTION USING DM-CRYPT AND LUKS
 
-Encrypting disks and partitions in Linux which keeps data secured using dm-crypt and LUKS. It is recommended to backup the drive first before running the commands as the commands will Destroy all data on the disk. 
+Encrypting disks and partitions in Linux, which keeps data secured using dm-crypt and LUKS. It is recommended to backup the drive first before running the commands as the commands will destroy all data on the disk. 
 
 It is a full disk encryption solution for Linux based OS and if you want to access the encrypt disk, you must install another software. Below is a comprehensive guide to encrypting disks and partitions in Linux using dm-crypt and LUKS.
 
@@ -350,7 +350,7 @@ If you want to encrypt only the partition and not the entire disk, and a partiti
 
 2. `dd if=/dev/urandom of=/dev/sdb status=progress`: This is a dangerous command that writes random data from /dev/urandom to the entire disk /dev/sdb. This operation effectively overwrites all existing data on the disk with random data, which makes the data irrecoverable.
 
-3. `sudo cryptsetup -y -v luksFormat /dev/sdb`: The option `-y` is used to ask for a passphrase `-v` is for verbose. This command is used to format a block device (/dev/sdb in this case) with LUKS (Linux Unified Key Setup) encryption, which is commonly used to encrypt disk partitions on Linux systems. Let's break down the components of the command: </br>
+3. `sudo cryptsetup -y -v luksFormat /dev/sdb`: The option `-y` is used to ask for a passphrase, `-v` is for verbose. This command is used to format a block device (/dev/sdb in this case) with LUKS (Linux Unified Key Setup) encryption, which is commonly used to encrypt disk partitions on Linux systems. Let's break down the components of the command: </br>
     * `cryptsetup`: This is the command-line tool used to manage encrypted volumes on Linux.
     * `-v`: This option stands for "verbose" and instructs cryptsetup to provide more detailed output during the formatting process.
     * `-y`: This option prompts the user to confirm before overwriting existing data on the device. It's a safety measure to prevent accidental data loss.
