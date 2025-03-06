@@ -154,7 +154,7 @@ By specifying /etc/*, the command examines all files within the /etc/ directory.
 The output includes descriptive information about each file's type, such as ASCII text, directory, symbolic link, shell script, etc.
 
 
-# VIEWING FILES
+# VIEWING LINUX FILES
 
 Viewing files in Linux can be accomplished using various commands, these commands offer flexibility and convenience in viewing files of different sizes and formats, catering to the diverse needs of Linux users. Listed below are the primary commands utilized for accessing a file:
 
