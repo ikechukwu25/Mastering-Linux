@@ -44,3 +44,15 @@ These are notes from the DevOps Bootcamp course on Zero to Mastery and the Linux
   - [Links](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/03-Linux-File-System.md#links)
   - []()
   - []()
+
+- [04-User Account Management](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/04-User-Accounts-Management.md)
+  - [Linux-File-System](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/03-Linux-File-System.md)
+  - [File-Paths-in-Linux](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/03-Linux-File-System.md#file-paths-in-linux)
+  - [File-Types-in-linux](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/03-Linux-File-System.md#file-types-in-linux)
+
+
+
+
+
+
+
