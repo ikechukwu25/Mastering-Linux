@@ -16,7 +16,7 @@ These are notes from the DevOps Bootcamp course on Zero to Mastery and the Linux
   - [Open Source Software and Licensing](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/01-Introduction.md#open-source-software-and-licensing)
   - [Directory Structure](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/01-Introduction.md#directory-structure)
 
-2. [Interacting With Shell](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/02-Interacting-With-Shell.md)
+- [02. Interacting With Shell](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/02-Interacting-With-Shell.md)
   - [Why Use the Terminal?](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/02-Interacting-With-Shell.md#why-use-the-terminal)
   - [Shell Explained](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/02-Interacting-With-Shell.md#shell-explained)
   - [File Paths](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/02-Interacting-With-Shell.md#file-paths)
@@ -33,7 +33,7 @@ These are notes from the DevOps Bootcamp course on Zero to Mastery and the Linux
   - []()
   - []()
 
-3. [Linux File System](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/03-Linux-File-System.md)
+- [03. Linux File System](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/03-Linux-File-System.md)
   - [Linux File System](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/03-Linux-File-System.md)
   - [File Paths in Linux](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/03-Linux-File-System.md#file-paths-in-linux)
   - [File Types in linux](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/03-Linux-File-System.md#file-types-in-linux)
@@ -45,12 +45,12 @@ These are notes from the DevOps Bootcamp course on Zero to Mastery and the Linux
   - []()
   - []()
 
-4. [User Account Management](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/04-User-Accounts-Management.md)
+- [04. User Account Management](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/04-User-Accounts-Management.md)
   - [User Account Management](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/04-User-Accounts-Management.md)
   - [System Accounts](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/04-User-Accounts-Management.md#system-accounts)
   - [Managing Users and Groups](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/04-User-Accounts-Management.md#managing-users-and-groups)
  
-5. [Linux File Permissions](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/05-Linux-File-Permissions.md)
+- [05. Linux File Permissions](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/05-Linux-File-Permissions.md)
   - [Linux File Permissions](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/05-Linux-File-Permissions.md)
   - [Changing Group and File Ownership](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/05-Linux-File-Permissions.md#changing-groups)
   - [Understanding File Directory Permission in Linux](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/05-Linux-File-Permissions.md#understanding-file-directory-permissions-in-linux)
@@ -65,13 +65,13 @@ These are notes from the DevOps Bootcamp course on Zero to Mastery and the Linux
   - []()
   - []()
 
-6. [Linux Process Management](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/06-Linux-Process-Management.md)
+- [06. Linux Process Management](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/06-Linux-Process-Management.md)
   - [Linux Process Management](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/06-Linux-Process-Management.md)
   - [Processes and Pseudo Filesystem](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/06-Linux-Process-Management.md#processes-and-pseudo-filesystems)
   - [Process Heirarchy](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/06-Linux-Process-Management.md#process-hierarchy)
   - [Linux-Process-Management-Commands](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/06-Linux-Process-Management.md#linux-process-management-commands)
  
-7. [Networking In Linux](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/07-Networking-In-Linux.md)
+- [07. Networking In Linux](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/07-Networking-In-Linux.md)
   - [Network Interfaces](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/07-Networking-In-Linux.md#network-interfaces)
   - [Network Configuration](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/07-Networking-In-Linux.md#network-configuration)
   - [Network Interface Configuration](https://github.com/ikechukwu25/Mastering-Linux/blob/main/Linux/07-Networking-In-Linux.md#network-interface-configuration)
