@@ -20,8 +20,8 @@ The shell gets started when the user logs in to the terminal.
 
 These are fundamental commands used in shell environments to retrieve information about the shell environment and user configurations:
 
-`echo $0`: This command reveals the shell that was launched upon login.
-`cat /etc/shells`: Displays a catalog of all installed shells.
+`echo $0`: This command reveals the shell that was launched upon login. </br>
+`cat /etc/shells`: Displays a catalog of all installed shells. </br>
 `cat /etc/passwd`: Reveals user account information, including default shells, like `pr2:x:1004:1006:Back-End:/home/pr2:/bin/bash`.
 
 A shell script, an executable text file, encompasses shell commands along with structures like variables and functions, executed sequentially. It serves as a potent tool for automating repetitive tasks, and enhancing productivity. Whenever you find yourself running a task over and over, you should use shell scripting. 
@@ -47,7 +47,7 @@ Below are the ways to run the bash scripts.
   - `/home/ikechukwu/scripts/first_script.sh`
 2. Relative Path: Navigate to the directory where the script is located and run it using its relative path.
   - `./first_script.sh`: Make sure you are in the directory where the script is located.
-3. Using Bash or Python Interpreter: Execute the script by invoking the Bash or Python interpreter, for example:
+3. Using Bash or Python Interpreter: Execute the script by invoking the Bash or Python interpreter, for example: 
   - `bash first_script.sh` or `python3 first_script`: Make sure you are in the directory where the script is located. In this pattern, the user does not need the execute permission to run the script and it. This way will also overwrite the shebang directive. 
 4. Using source or . Command: Execute the script using the source command or its shorthand, for example;
   - `source first_script.sh` or `. first_script`: It does not require execution permission and the source command reads and executes the command from the file specified as its argument in the current shell environment.
@@ -57,7 +57,7 @@ These methods provide flexibility in running Bash scripts, catering to various u
 
 ## SHELL CUSTOMIZATION
 
-Shell customization refers to the process of tailoring the shell environment to suit individual preferences and optimize workflow efficiency. It involves configuring various aspects of the shell, such as aliases, variables, etc to enhance usability and productivity.
+Shell customization refers to the process of tailoring the shell environment to suit individual preferences and optimize workflow efficiency. It involves configuring various aspects of the shell, such as aliases, variables, etc, to enhance usability and productivity.
 
 They allow users to personalize their shell environment by creating shortcuts (aliases) for frequently used commands and storing data or values (variables) for easy reference and manipulation within scripts.
 
